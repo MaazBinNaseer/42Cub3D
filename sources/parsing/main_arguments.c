@@ -1,24 +1,6 @@
 #include "../../inc/Cube3D.h"
 // #include <stdio.h>
 
-int	ft_strncmp(const char *s1, const char *s2, size_t num)
-{
-	size_t			i;
-	unsigned char	*ptr1;
-	unsigned char	*ptr2;
-
-	ptr1 = (unsigned char *)s1;
-	ptr2 = (unsigned char *)s2;
-	i = 0;
-	if (num == 0)
-		return (0);
-	while ((i < num - 1) && (ptr1[i] != '\0' && ptr2[i] != '\0')
-		&& (ptr1[i] == ptr2[i]))
-		i++;
-	return (ptr1[i] - ptr2[i]);
-}
-
-
 /* ---------------------------------------------------------------
 * @brief: To allow the user to handle incorrect inputs
 * @return: Should throw an error when the argument fails more than 2 
@@ -26,9 +8,13 @@ int	ft_strncmp(const char *s1, const char *s2, size_t num)
 void read_arguments_valid(char *arg)
 {
     int length = 0;
+    //* Intialized list --- needs to have a separate function
     t_map map;
     map.rows = 0;
     map.map = NULL;
+    map.player_position = 0;
+    map.player = 0;
+
     // count the length of the string
     while(arg[length] != '\0')
         length++;
@@ -40,15 +26,13 @@ void read_arguments_valid(char *arg)
             read_map(arg, &map);
             check_map_is_surronded(&map);
             get_player_position(&map);
-             for(int i = 0; i < map.rows; i++)
-            {
-                free(map.map[i]);
-            }
-            free(map.map);
-            // free(read);
+            // printf("The player position is [%d]\n", map.player_position);
         }
     else
-        printf("Error\n");
+        printf("No such file exsist\n");
+    for(int i = 0; i < map.rows; i++)
+         free(map.map[i]);
+     free(map.map);
 }
 
 int main(int argc, char **argv)

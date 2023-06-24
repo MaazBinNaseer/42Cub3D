@@ -37,7 +37,6 @@ int read_map(const char *filename, t_map *map_read)
     return (0);
 }
 
-
 /* --------------------------------------------
 * Checks the coloums and the rows of the wall to be 
 * validated first. 
@@ -52,7 +51,7 @@ int check_map_is_surronded(t_map *map_read)
     {
         if(map_read->map[0][i] != '1'|| map_read->map[map_read->rows- 1][i] != '1')
         {
-            printf("Invalid Map [ Map is supposed to be surrounded by Walls !]");
+            printf(RED "Invalid Map [ Map is supposed to be surrounded by Walls !]\n" RESET);
             return (1);
         }
         i++;
@@ -62,38 +61,60 @@ int check_map_is_surronded(t_map *map_read)
     {
         if(map_read->map[j][0] != '1' || map_read->map[j][map_read->coloumns - 1] != '1')
         {
-            printf("Invalid Map [ Map is supposed to be surrounded by Walls !]");
+            printf(RED "Invalid Map [ Map is supposed to be surrounded by Walls !]" RESET);
             return (1);
         }
         j++;
     }
     return (0);
 }
-
+/* -------------------------------------------------------
+* Finds the coordinates of the player in any position of 
+* the map, no duplications of the player is allowed. 
+--------------------------------------------------------*/
 int get_player_position(t_map *map_read)
 {
     int i = 0;
-    map_read->player_position = 0;
 
     while(i < map_read->rows)
     {
         int j = 0;
         while(j < map_read->coloumns)
         {
-            if(map_read->map[i][j] == 'N')
+            if (map_read->map[i][j] == 'N' || map_read->map[i][j] == 'S' ||
+                map_read->map[i][j] == 'E' || map_read->map[i][j] == 'W')
             {
-                printf("I have found N at position [%d][%d].\n", i, j);
-                map_read->player_position = i * map_read->coloumns + j;  // assuming player position is a linear index
-            }
-            else
-            {
-                printf("Player is Nowehere to be found in the map !");
-                return (EXIT_FAILURE);
+                // printf("I have found the player at position [%d][%d].\n", i, j);
+                map_read->player_position = i * map_read->coloumns + j;
+                map_read->player++;
+                // printf("The total number of players are %d\n", map_read->player);
+                break;
             }
             j++;
         }
         i++;
     }  
-    return (0);
+    check_for_error_map(map_read);
+    return (map_read->player_position);
+}
+bool check_for_error_map(t_map *map_read)
+{
+    if(map_read->player > 1)
+    {
+        printf( RED "The player should be only 1. [No Duplications are allowed]\n");
+        printf("[-- We have found [%d] players in the map --]\n" RESET, map_read->player);
+        return (EXIT_FAILURE);
+    }
+    else if (map_read->player == 0)
+    {
+        printf(RED "Player is Nowhere to be found in the map !\n" RESET);
+        return (EXIT_FAILURE);
+    }
+    else if(map_read->rows > 100)
+    {
+        printf(RED "Too many lines of rows are there! Reduction required\n" RESET);
+        return (EXIT_FAILURE);
+    }
+    return (EXIT_SUCCESS);
 }
 
