@@ -41,40 +41,9 @@ int read_map(const char *filename, t_map *map_read)
 * Checks the coloums and the rows of the wall to be 
 * validated first. 
 -----------------------------------------------*/
-int check_map_is_surronded(t_map *map_read)
+int check_map_is_surrounded(t_map *map_read)
 {
-    int i;
-
-    i = 0;
-    while(map_read->map[0][i] != '\0') // checking first row (top wall)
-    {
-        if(map_read->map[0][i] != '1')
-        {
-            printf(RED "Invalid Map [ Map is supposed to be surrounded by Walls !]\n" RESET);
-            return (1);
-        }
-        i++;
-    }
-
-    i = 0;
-    while(map_read->map[map_read->rows - 1][i] != '\0') // checking last row (bottom wall)
-    {
-        if(map_read->map[map_read->rows - 1][i] != '1')
-        {
-            printf(RED "Invalid Map [ Map is supposed to be surrounded by Walls !]\n" RESET);
-            return (1);
-        }
-        i++;
-    }
-
-    for(i = 1; i < map_read->rows - 1; i++) // checking all other rows
-    {
-        if(map_read->map[i][0] != '1' || map_read->map[i][ft_strlen(map_read->map[i]) - 1] != '1')
-        {
-            printf(RED "Invalid Map [ Map is supposed to be surrounded by Walls !]\n" RESET);
-            return (1);
-        }
-    }
+   
     return (0);
 }
 

@@ -37,7 +37,7 @@ typedef struct s_map
 ---------------------------------------------------------- */
 // char *read_map(const char *filename, t_map *map);
 int read_map(const char *filename, t_map *map);
-int check_map_is_surronded(t_map *map_read);
+int check_map_is_surrounded(t_map *map_read);
 int get_player_position(t_map *map_read);
 bool check_for_error_map(t_map *map_read);
 
