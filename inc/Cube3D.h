@@ -15,13 +15,20 @@
 /* --------------------------------------------------------
 # ------------------------- STRUCTS ------------------
 ---------------------------------------------------------- */
+typedef struct s_pos
+{
+    int x;
+    int y;
+} t_pos;
+
 typedef struct s_map
 {
     char **map;
     int rows;
     int coloumns;
-    int player_position; 
+    // int player_position; 
     int player;
+    t_pos player_position;
 } t_map;
 
 

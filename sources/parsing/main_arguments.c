@@ -12,7 +12,8 @@ void read_arguments_valid(char *arg)
     t_map map;
     map.rows = 0;
     map.map = NULL;
-    map.player_position = 0;
+    map.player_position.x = 0;
+    map.player_position.y = 0;
     map.player = 0;
 
     // count the length of the string
