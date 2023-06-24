@@ -4,6 +4,7 @@
 * This function need to open the file and read the 
 * contents of the map that is rows and coloumns to be used 
 * later for validating map
+//! Error for more than 100 lines (implementation)
 ---------------------------------------------------------- */
 int read_map(const char *filename, t_map *map_read)
 {
@@ -21,7 +22,7 @@ int read_map(const char *filename, t_map *map_read)
     map_read->coloumns = 0;
     while((line = get_next_line(fd_map) )!= NULL)
     {
-     
+      
         map_read->map[map_read->rows] = ft_calloc(ft_strlen(line) + 1, sizeof(char));
         ft_strcpy(map_read->map[map_read->rows], line);
         current_columns = ft_strlen(line);
@@ -36,6 +37,11 @@ int read_map(const char *filename, t_map *map_read)
     return (0);
 }
 
+
+/* --------------------------------------------
+* Checks the coloums and the rows of the wall to be 
+* validated first. 
+-----------------------------------------------*/
 int check_map_is_surronded(t_map *map_read)
 {
     int i;
@@ -51,7 +57,6 @@ int check_map_is_surronded(t_map *map_read)
         }
         i++;
     }
-    
     j= 1;
     while(j < (map_read->rows - 1))
     {
@@ -62,6 +67,33 @@ int check_map_is_surronded(t_map *map_read)
         }
         j++;
     }
+    return (0);
+}
+
+int get_player_position(t_map *map_read)
+{
+    int i = 0;
+    map_read->player_position = 0;
+
+    while(i < map_read->rows)
+    {
+        int j = 0;
+        while(j < map_read->coloumns)
+        {
+            if(map_read->map[i][j] == 'N')
+            {
+                printf("I have found N at position [%d][%d].\n", i, j);
+                map_read->player_position = i * map_read->coloumns + j;  // assuming player position is a linear index
+            }
+            else
+            {
+                printf("Player is Nowehere to be found in the map !");
+                return (EXIT_FAILURE);
+            }
+            j++;
+        }
+        i++;
+    }  
     return (0);
 }
 

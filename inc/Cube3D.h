@@ -13,6 +13,7 @@ typedef struct s_map
     char **map;
     int rows;
     int coloumns;
+    int player_position; 
 
 } t_map;
 
@@ -23,7 +24,7 @@ typedef struct s_map
 // char *read_map(const char *filename, t_map *map);
 int read_map(const char *filename, t_map *map);
 int check_map_is_surronded(t_map *map_read);
-
+int get_player_position(t_map *map_read);
 
 
 /* --------------------------------------------------------

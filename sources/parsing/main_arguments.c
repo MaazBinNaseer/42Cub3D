@@ -39,6 +39,7 @@ void read_arguments_valid(char *arg)
             printf("Valid Argument\n");
             read_map(arg, &map);
             check_map_is_surronded(&map);
+            get_player_position(&map);
              for(int i = 0; i < map.rows; i++)
             {
                 free(map.map[i]);
