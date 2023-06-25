@@ -1,5 +1,9 @@
 #include "../../inc/Cube3D.h"
 
+//todo: Need to implement the white spaces ---> valid
+//todo: Need to implement the empty lines --> valid
+//todo: Except for the map content which always has to be the last, each type of element can be set in any order in the file
+
 /* --------------------------------------------------------
 * This function need to open the file and read the 
 * contents of the map that is rows and coloumns to be used 
@@ -51,14 +55,15 @@ int check_map_is_surrounded_rows(t_map *map_read)
                 return (EXIT_FAILURE);
             }
     }
-    i = -1;
-    while((size_t)i++ < last_row)
+    i = 0;
+    while((size_t)i < last_row)
     {
          if(map_read->map[map_read->rows - 1][i] != '1')
             {
-                printf(RED "INVALID MAP\n" RESET);
+                printf(RED "INVALID MAP: LAST ROW\n" RESET);
                 return (EXIT_FAILURE);
             }
+        i++;
     }
     return (0);
 }
