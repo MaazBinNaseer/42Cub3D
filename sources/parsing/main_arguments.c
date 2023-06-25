@@ -25,8 +25,7 @@ void read_arguments_valid(char *arg)
         {
             printf("Valid Argument\n");
             read_map(arg, &map);
-            check_map_is_surrounded(&map);
-            get_player_position(&map);
+            check_map(&map);
             // printf("The player position is [%d]\n", map.player_position);
         }
     else

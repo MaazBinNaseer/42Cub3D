@@ -22,7 +22,6 @@ int read_map(const char *filename, t_map *map_read)
     map_read->coloumns = 0;
     while((line = get_next_line(fd_map) )!= NULL)
     {
-      
         map_read->map[map_read->rows] = ft_calloc(ft_strlen(line) + 1, sizeof(char));
         ft_strcpy(map_read->map[map_read->rows], line);
         current_columns = ft_strlen(line);
@@ -37,15 +36,66 @@ int read_map(const char *filename, t_map *map_read)
     return (0);
 }
 
-/* --------------------------------------------
-* Checks the coloums and the rows of the wall to be 
-* validated first. 
------------------------------------------------*/
-int check_map_is_surrounded(t_map *map_read)
+/* ------------------------------------------------
+* Checks  the rows of the wall to be validated first. 
+---------------------------------------------------*/
+int check_map_is_surrounded_rows(t_map *map_read)
 {
-   
+    int i = -1;
+ 
+    size_t first_row = ft_strlen(map_read->map[0]) - 1;
+    size_t last_row = ft_strlen(map_read->map[map_read->rows - 1]);
+    while((size_t )i++ < first_row)
+    {
+        if(map_read->map[0][i] != '1')
+            {
+                printf(RED "INVALID MAP\n" RESET);
+                return (EXIT_FAILURE);
+            }
+    }
+    i = -1;
+    while((size_t)i++ < last_row)
+    {
+         if(map_read->map[map_read->rows - 1][i] != '1')
+            {
+                printf(RED "INVALID MAP\n" RESET);
+                return (EXIT_FAILURE);
+            }
+    }
     return (0);
 }
+
+int check_map_is_surrounded_columns(t_map *map_read)
+{
+    size_t rows = map_read->rows;
+    size_t i = 0;
+    while(i < rows) //*Accessing the first row [subjected to change]
+    {
+        if(map_read->map[i][0] != '1')
+        {
+            printf(RED "INVALID MAP\n" RESET);
+            return (EXIT_FAILURE);
+        }      
+        i++;
+    }
+    i= 0;
+    while(i < rows) //* Accessing the last column
+    {
+        size_t row_length = ft_strlen(map_read->map[i]);
+        // printf("The row length is %ld\n", row_length);
+        // printf("Printing the last value of the last columns %c\n", map_read->map[i][row_length - 2]);
+        if(map_read->map[i][row_length - 2] != '1')
+        {
+            printf(RED "INVALID MAP\n" RESET);
+            return (EXIT_FAILURE);
+        }
+        else
+            printf("The last coloumn variables are [%c]\n", map_read->map[i][row_length - 2]);
+        i++;
+    }
+    return (0);
+}
+
 
 /* -------------------------------------------------------
 * Finds the coordinates of the player in any position of 
@@ -58,7 +108,7 @@ int get_player_position(t_map *map_read)
     while(i < map_read->rows)
     {
         int j = 0;
-        int row_length = ft_strlen(map_read->map[i]);  // get the length of the current row
+        int row_length = ft_strlen(map_read->map[i]);
 
         while(j < row_length)   // iterate over the current row only
         {
