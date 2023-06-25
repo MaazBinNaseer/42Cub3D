@@ -30,8 +30,6 @@ int read_map(const char *filename, t_map *map_read)
         map_read->rows++;
         free(line);
     }
-    printf("The columns are as follows: [%d]\n", map_read->coloumns);
-    printf("The rows are as follows: [%d]\n", map_read->rows);
     close(fd_map);
     return (0);
 }
@@ -79,7 +77,7 @@ int check_map_is_surrounded_columns(t_map *map_read)
         i++;
     }
     i= 0;
-    while(i < rows) //* Accessing the last column
+    while(i < rows) //* Accessing the last column [subjected to change because of white spaces]
     {
         size_t row_length = ft_strlen(map_read->map[i]);
         // printf("The row length is %ld\n", row_length);
