@@ -1,16 +1,18 @@
 #include "../../inc/Cube3D.h"
 
 /* ------------------------------------
-* Initial check for chars
-* skips through the empty lines 
+* Initial check for chars in the map
+* If invalid throws the error 
+! Should not skip the empty lines 
 -------------------------------------*/
 bool initial_check_for_chars_in_map(t_map *map_read)
 {
     int i = 0;
     while(i < map_read->rows)
     {
+        bool is_line_empty = true;
         int j = 0;
-        if(map_read->map[i][0] != '\0')  // Check if the line is not empty
+        if(map_read->map[i][j] != '\0')  // Check if the line is not empty
         {
             while(map_read->map[i][j] != '\0')
             {
@@ -21,9 +23,15 @@ bool initial_check_for_chars_in_map(t_map *map_read)
                     printf(RED "We found something there [%c]\n" RESET, map_read->map[i][j]);
                     return (EXIT_FAILURE);
                 }
+                is_line_empty = false;
                 j++;
             }
         }
+         if (is_line_empty)
+             {
+                 printf(RED "The line is empty \n" RESET);
+                 return (EXIT_FAILURE);
+             }
         i++;
     } 
     return (EXIT_SUCCESS);

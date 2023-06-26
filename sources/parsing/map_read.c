@@ -43,17 +43,18 @@ int read_map(const char *filename, t_map *map_read)
 ---------------------------------------------------*/
 int check_map_is_surrounded_rows(t_map *map_read)
 {
-    int i = -1;
+    int i = 0;
  
     size_t first_row = ft_strlen(map_read->map[0]) - 1;
     size_t last_row = ft_strlen(map_read->map[map_read->rows - 1]);
-    while((size_t )i++ < first_row)
+    while((size_t )i < first_row)
     {
         if(map_read->map[0][i] != '1')
             {
-                printf(RED "INVALID MAP\n" RESET);
+                printf(RED "INVALID MAP: FIRST ROW\n" RESET);
                 return (EXIT_FAILURE);
             }
+        i++;
     }
     i = 0;
     while((size_t)i < last_row)
@@ -76,7 +77,7 @@ int check_map_is_surrounded_columns(t_map *map_read)
     {
         if(map_read->map[i][0] != '1')
         {
-            printf(RED "INVALID MAP\n" RESET);
+            printf(RED "INVALID MAP: FIRST COLUMN ISSUE\n" RESET);
             return (EXIT_FAILURE);
         }      
         i++;
@@ -89,7 +90,7 @@ int check_map_is_surrounded_columns(t_map *map_read)
         // printf("Printing the last value of the last columns %c\n", map_read->map[i][row_length - 2]);
         if(map_read->map[i][row_length - 2] != '1')
         {
-            printf(RED "INVALID MAP\n" RESET);
+            printf(RED "INVALID MAP: LAST COLUMN ISSUE\n" RESET);
             return (EXIT_FAILURE);
         }
         else
