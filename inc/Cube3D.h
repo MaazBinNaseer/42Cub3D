@@ -15,6 +15,19 @@
 /* --------------------------------------------------------
 # ------------------------- STRUCTS ------------------
 ---------------------------------------------------------- */
+
+typedef struct s_config_properties
+{
+    char *north_texture;
+    char *south_texture;
+    char *west_texture;
+    char *east_texture;
+    char *floor_texture;
+    char *ceiling_texture;
+    int map_set;
+} t_config_properties;
+
+
 typedef struct s_pos
 {
     int x;
@@ -26,17 +39,27 @@ typedef struct s_map
     char **map;
     int rows;
     int coloumns;
-    // int player_position; 
     int player;
     t_pos player_position;
 } t_map;
+
+
+
+/* --------------------------------------------------------
+*------------------------- CONFIG FILE ------------------
+---------------------------------------------------------- */
+int read_config_file(const char *filename, t_config_properties *file, t_map *map);
+// int read_config_file(const char *filename, t_config_properties *file);
+bool set_order_of_file(const char* filename);
+
 
 
 /* --------------------------------------------------------
 *------------------------- MAP READING ------------------
 ---------------------------------------------------------- */
 // char *read_map(const char *filename, t_map *map);
-int read_map(const char *filename, t_map *map);
+// void read_map(int fd, const char *filename, t_map *map);
+void read_map(int fd, t_map *map, char *first_map_line);
 int check_map_is_surrounded_rows(t_map *map_read);
 bool check_for_zeros_surrounded_map(t_map *map_read);
 int check_map_is_surrounded_columns(t_map *map_read);
@@ -47,8 +70,8 @@ int check_map(t_map *map_check);
 /* --------------------------------------------------------
 *-------------------------UTILS --------------------------
 ---------------------------------------------------------- */
-
-
+void free_map(t_map *map_read);
+void print_map(t_map *map);
 
 
 #endif

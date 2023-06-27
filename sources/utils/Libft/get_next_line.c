@@ -71,33 +71,33 @@ char	*ft_read(int fd, char *tmp_save)
 • The buffer is storing whatever is read intially to temp(line)
 • If the EOF or EOL is found then replace EOL by \n
 --------------------------------------------------------------------*/
-char	*ft_getline(char *read)
-{
-	char	*line;
-	int		i;
+// char	*ft_getline(char *read)
+// {
+// 	char	*line;
+// 	int		i;
 
-	i = 0;
-	if (!read[i])
-		return (NULL);
-	while (read[i] && read[i] != '\n')
-		i++;
-	line = (char *)malloc(sizeof(char) * (i + 2));
-	if (!line)
-		return (NULL);
-	i = 0;
-	while (read[i] && read[i] != '\n')
-	{
-		line[i] = read[i];
-		i++;
-	}
-	if (read[i] == '\n')
-	{
-		line[i] = read[i];
-		i++;
-	}
-	line[i] = '\0';
-	return (line);
-}
+// 	i = 0;
+// 	if (!read[i])
+// 		return (NULL);
+// 	while (read[i] && read[i] != '\n')
+// 		i++;
+// 	line = (char *)malloc(sizeof(char) * (i + 2));
+// 	if (!line)
+// 		return (NULL);
+// 	i = 0;
+// 	while (read[i] && read[i] != '\n')
+// 	{
+// 		line[i] = read[i];
+// 		i++;
+// 	}
+// 	if (read[i] == '\n')
+// 	{
+// 		line[i] = read[i];
+// 		i++;
+// 	}
+// 	line[i] = '\0';
+// 	return (line);
+// }
 
 /*-----FREEING THE BUFFER VARIABLE AND MOVING TO NEXT LINE------------
 • Find the length of the line 
@@ -128,4 +128,27 @@ char	*ft_free_buffer(char *buffer)
 	saving[j] = '\0';
 	free(buffer);
 	return (saving);
+}
+
+char	*ft_getline(char *read)
+{
+	char	*line;
+	int		i;
+
+	i = 0;
+	if (!read[i])
+		return (NULL);
+	while (read[i] && read[i] != '\n')
+		i++;
+	line = (char *)malloc(sizeof(char) * (i + 1)); // Allocate one less byte to exclude '\n'
+	if (!line)
+		return (NULL);
+	i = 0;
+	while (read[i] && read[i] != '\n')
+	{
+		line[i] = read[i];
+		i++;
+	}
+	line[i] = '\0'; // Null terminate the line
+	return (line);
 }

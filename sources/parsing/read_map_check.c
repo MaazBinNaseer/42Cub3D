@@ -63,12 +63,18 @@ bool check_for_rows_surrounded_map(t_map *map_read)
     return (EXIT_SUCCESS);
 }
 
+
+
+
+
 int check_map(t_map *map_check)
 {
     if(initial_check_for_chars_in_map(map_check) == 1)
         return (EXIT_FAILURE);
     // else if (check_map_is_surrounded_rows(map_check) == 1)
     //     return (EXIT_FAILURE);
+    else if (check_diagonals(map_check) == 1)
+        return(EXIT_FAILURE);
     else if(check_for_rows_surrounded_map(map_check) == 1)
             return (EXIT_FAILURE);
     else if (check_map_is_surrounded_columns(map_check) == 1)
@@ -78,3 +84,4 @@ int check_map(t_map *map_check)
 
     return (EXIT_SUCCESS);
 }
+

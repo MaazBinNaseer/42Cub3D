@@ -10,33 +10,50 @@
 * later for validating map
 //! Error for more than 100 lines (implementation)
 ---------------------------------------------------------- */
-int read_map(const char *filename, t_map *map_read)
+void read_map(int fd, t_map *map_read, char *first_map_line)
 {
     char *line;
-    int fd_map;
     int current_columns;
+    int is_map_started = 0;  
 
-    fd_map= open(filename, O_RDONLY);
-    if (fd_map == -1) {
-        perror("Failed to open the map file.\n");
-        return (1);
-    }   
     map_read->map = ft_calloc(100, sizeof(char *));
     map_read->rows = 0;
     map_read->coloumns = 0;
-    while((line = get_next_line(fd_map) )!= NULL)
+    line = first_map_line;
+
+    // Run while there is a valid line to process.
+    while (line)
     {
+        printf("READING FROM THE READ MAP [%s]\n", line);
+        // If the line is empty and we have not started the map, skip it.
+        if(ft_strlen(line) == 0  && !is_map_started)
+        {
+            free(line);
+            line = get_next_line(fd);
+            continue;
+        }
+
+        // If the line is not empty, allocate memory and start the map
         map_read->map[map_read->rows] = ft_calloc(ft_strlen(line) + 1, sizeof(char));
         ft_strcpy(map_read->map[map_read->rows], line);
+        map_read->map[map_read->rows][ft_strlen(line)] = '\0';
         current_columns = ft_strlen(line);
         if(current_columns > map_read->coloumns)
-            map_read->coloumns = current_columns - 1;
+            map_read->coloumns = current_columns;
         map_read->rows++;
         free(line);
+
+        // Flag to indicate that the map has started
+        is_map_started = 1;
+        // Get the next line for the next iteration
+        line = get_next_line(fd);
     }
-    close(fd_map);
-    return (0);
+
+    close(fd);
+    // free_map(map_read);
+    return;
 }
+
 
 /* ------------------------------------------------
 #-----      CHECK MAP SURROUNDED BY ROWS     ------
@@ -79,7 +96,7 @@ int check_map_is_surrounded_columns(t_map *map_read)
     {
         if(map_read->map[i][0] != '1')
         {
-            printf(RED "INVALID MAP: COLUMN ISSUE\n" RESET);
+            printf(RED "INVALID MAP: [1] COLUMN ISSUE\n" RESET);
             return (EXIT_FAILURE);
         }      
         i++;
@@ -88,13 +105,13 @@ int check_map_is_surrounded_columns(t_map *map_read)
     while(i < rows) //* Accessing the last column [subjected to change because of white spaces]
     {
         size_t row_length = ft_strlen(map_read->map[i]);
-        if(map_read->map[i][row_length - 2] != '1')
+        if(map_read->map[i][row_length - 1] != '1')
         {
-            printf(RED "INVALID MAP: COLUMN ISSUE\n" RESET);
+            printf(RED "INVALID MAP: [2] COLUMN ISSUE\n" RESET);
             return (EXIT_FAILURE);
         }
-        else
-            printf("The last coloumn variables are [%c]\n", map_read->map[i][row_length - 2]);
+        // else
+            // printf("The last coloumn variables are [%c]\n", map_read->map[i][row_length - 1]);
         i++;
     }
     return (0);

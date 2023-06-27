@@ -2,7 +2,7 @@ NAME	=	Cub3D
 CC		=	gcc
 CFLAGS	=	-Wall -Wextra -Werror -g
 
-PARSING	=	main_arguments.c map_read.c read_map_check.c
+PARSING	=	main_arguments.c map_read.c read_map_check.c read_config_file.c parsing_utils.c
 OBJPATH = 	./obj/
 LIBFT = 	./sources/utils/Libft
 

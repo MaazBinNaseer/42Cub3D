@@ -15,21 +15,27 @@ void read_arguments_valid(char *arg)
     map.player_position.x = 0;
     map.player_position.y = 0;
     map.player = 0;
-
+    t_config_properties file;
+    file.north_texture = "";
+    file.map_set = 0;
     // count the length of the string
     while(arg[length] != '\0')
         length++;
     if(length >= 4 && ft_strncmp(arg + length - 4, ".cub", 4) == 0)
         {
             printf("Valid Argument\n");
-            read_map(arg, &map);
-            check_map(&map);
+            if( set_order_of_file(arg) == EXIT_FAILURE)
+                return ;
+            
+            read_config_file(arg, &file, &map);
+            // read_map(arg, &map);
+            // check_map(&map);
         }
     else
         printf("No such file exsist\n");
-    for(int i = 0; i < map.rows; i++)
-         free(map.map[i]);
-     free(map.map);
+    // for(int i = 0; i < map.rows; i++)
+    //      free(map.map[i]);
+    //  free(map.map);
 }
 
 int main(int argc, char **argv)
