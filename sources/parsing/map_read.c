@@ -1,7 +1,7 @@
 #include "../../inc/Cube3D.h"
 
-//todo: Need to implement the white spaces ---> valid
-//todo: Need to implement the empty lines --> valid
+//todo: Need to implement the white spaces ---> valid for map and valid for map properties
+//todo: Need to implement the empty lines --> (Invalid) for map and valid for map properties 
 //todo: Except for the map content which always has to be the last, each type of element can be set in any order in the file
 
 /* --------------------------------------------------------
@@ -39,35 +39,37 @@ int read_map(const char *filename, t_map *map_read)
 }
 
 /* ------------------------------------------------
-* Checks  the rows of the wall to be validated first. 
+#-----      CHECK MAP SURROUNDED BY ROWS     ------
+* Checks  the rows of the wall to be validated first.
+* Should go for the second columns and check with the first column
 ---------------------------------------------------*/
-int check_map_is_surrounded_rows(t_map *map_read)
-{
-    int i = 0;
- 
-    size_t first_row = ft_strlen(map_read->map[0]) - 1;
-    size_t last_row = ft_strlen(map_read->map[map_read->rows - 1]);
-    while((size_t )i < first_row)
-    {
-        if(map_read->map[0][i] != '1')
-            {
-                printf(RED "INVALID MAP: FIRST ROW\n" RESET);
-                return (EXIT_FAILURE);
-            }
-        i++;
-    }
-    i = 0;
-    while((size_t)i < last_row)
-    {
-         if(map_read->map[map_read->rows - 1][i] != '1')
-            {
-                printf(RED "INVALID MAP: LAST ROW\n" RESET);
-                return (EXIT_FAILURE);
-            }
-        i++;
-    }
-    return (0);
-}
+// int check_map_is_surrounded_rows(t_map *map_read)
+// {
+//     int i = 0;
+    
+//     size_t first_row = ft_strlen(map_read->map[0]) - 1;
+//     size_t last_row = ft_strlen(map_read->map[map_read->rows - 1]);
+//     while((size_t )i < first_row)
+//     {
+//         if(map_read->map[0][i] != '1')
+//             {
+//                 printf(RED "INVALID MAP: FIRST ROW\n" RESET);
+//                 return (EXIT_FAILURE);
+//             }
+//         i++;
+//     }
+//     i = 0;
+//     while((size_t)i < last_row)
+//     {
+//          if(map_read->map[map_read->rows - 1][i] != '1')
+//             {
+//                 printf(RED "INVALID MAP: LAST ROW\n" RESET);
+//                 return (EXIT_FAILURE);
+//             }
+//         i++;
+//     }
+//     return (0);
+// }
 
 int check_map_is_surrounded_columns(t_map *map_read)
 {
@@ -77,7 +79,7 @@ int check_map_is_surrounded_columns(t_map *map_read)
     {
         if(map_read->map[i][0] != '1')
         {
-            printf(RED "INVALID MAP: FIRST COLUMN ISSUE\n" RESET);
+            printf(RED "INVALID MAP: COLUMN ISSUE\n" RESET);
             return (EXIT_FAILURE);
         }      
         i++;
@@ -86,11 +88,9 @@ int check_map_is_surrounded_columns(t_map *map_read)
     while(i < rows) //* Accessing the last column [subjected to change because of white spaces]
     {
         size_t row_length = ft_strlen(map_read->map[i]);
-        // printf("The row length is %ld\n", row_length);
-        // printf("Printing the last value of the last columns %c\n", map_read->map[i][row_length - 2]);
         if(map_read->map[i][row_length - 2] != '1')
         {
-            printf(RED "INVALID MAP: LAST COLUMN ISSUE\n" RESET);
+            printf(RED "INVALID MAP: COLUMN ISSUE\n" RESET);
             return (EXIT_FAILURE);
         }
         else
@@ -154,3 +154,5 @@ bool check_for_error_map(t_map *map_read)
     return (EXIT_SUCCESS);
 }
 
+// printf("The row length is %ld\n", row_length);
+// printf("Printing the last value of the last columns %c\n", map_read->map[i][row_length - 2]);

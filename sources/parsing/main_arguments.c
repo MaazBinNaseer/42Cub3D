@@ -19,14 +19,11 @@ void read_arguments_valid(char *arg)
     // count the length of the string
     while(arg[length] != '\0')
         length++;
-
-    // check if the last four characters match ".cub"
     if(length >= 4 && ft_strncmp(arg + length - 4, ".cub", 4) == 0)
         {
             printf("Valid Argument\n");
             read_map(arg, &map);
             check_map(&map);
-            // printf("The player position is [%d]\n", map.player_position);
         }
     else
         printf("No such file exsist\n");
