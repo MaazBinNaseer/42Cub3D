@@ -24,7 +24,7 @@ void read_map(int fd, t_map *map_read, char *first_map_line)
     // Run while there is a valid line to process.
     while (line)
     {
-        printf("READING FROM THE READ MAP [%s]\n", line);
+        // printf("READING FROM THE READ MAP [%s]\n", line);
         // If the line is empty and we have not started the map, skip it.
         if(ft_strlen(line) == 0  && !is_map_started)
         {

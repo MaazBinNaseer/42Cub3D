@@ -62,9 +62,39 @@ bool check_for_rows_surrounded_map(t_map *map_read)
     }
     return (EXIT_SUCCESS);
 }
-
-
-
+bool checking_for_diagonal_top_version(t_map *map)
+{
+    print_map(map);
+    int i = 1, j;
+    while(i < map->rows - 1)
+    {
+        j = 1;
+        while (j < map->coloumns)
+        {
+            if(map->map[i][j] == 'S')
+                j++;
+            if(map->map[i][j] == '0')
+            {
+               if ((map->map[i - 1][j - 1] == 'S' && map->map[i - 1][j + 1] == '0')  || (map->map[i - 1][j - 1] == 'S' && map->map[i - 1][j + 1] == '0'))
+                        {
+                            printf("[ -- Position is [S] (i: %d, j: %d) -- ]\n", i, j); 
+                            j++;  
+                        } 
+                if ((map->map[i - 1][j -1] != '1' && map->map[i - 1][j - 1] != '0') || (map->map[i - 1][j + 1] != '0' && map->map[i - 1][j + 1] != '1'))
+                    {
+                        // printf("Found a [%c] on the left diagonal\n", map->map[i - 1][j - 1]);
+                        // printf("Found a [%c] on the right diagonal\n", map->map[i - 1][j + 1]);
+                        // printf("[ -- Position is (i: %d, j: %d) -- ]\n", i, j); 
+                        printf(RED "Error [0] has a diagonal space at (i: %d, j: %d)\n", i, j);
+                        return (EXIT_FAILURE);
+                    }
+            }
+            j++;
+        }
+        i++;
+    }
+    return (EXIT_SUCCESS);
+}
 
 
 int check_map(t_map *map_check)
@@ -73,7 +103,7 @@ int check_map(t_map *map_check)
         return (EXIT_FAILURE);
     // else if (check_map_is_surrounded_rows(map_check) == 1)
     //     return (EXIT_FAILURE);
-    else if (check_diagonals(map_check) == 1)
+    else if (checking_for_diagonal_top_version(map_check) == 1)
         return(EXIT_FAILURE);
     else if(check_for_rows_surrounded_map(map_check) == 1)
             return (EXIT_FAILURE);
@@ -85,3 +115,6 @@ int check_map(t_map *map_check)
     return (EXIT_SUCCESS);
 }
 
+/* ---- PRINTF's
+printf("[%c] at (row : %d, col: %d)\n", map->map[i][j], i, j);  ---> diagonal map 
+*/

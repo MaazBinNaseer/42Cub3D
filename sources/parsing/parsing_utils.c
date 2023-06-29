@@ -8,9 +8,19 @@ void free_map(t_map *map_read)
 }
 
 void print_map(t_map *map) {
+    // Print column indices
+    printf("   ");
+    for (int j = 0; j < map->coloumns; j++) {
+        printf(YELL "%2d "RESET, j);
+    }
+    printf("\n");
+
     for (int i = 0; i < map->rows; i++) {
+        // Print row index
+        printf(GRN "%2d " RESET, i);
+
         for (int j = 0; j < map->coloumns; j++) {
-            printf("%c ", map->map[i][j]);
+            printf(MAG "%2c " RESET, map->map[i][j]);
         }
         printf("\n");
     }
