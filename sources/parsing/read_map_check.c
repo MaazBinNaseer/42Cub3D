@@ -27,7 +27,7 @@ bool initial_check_for_chars_in_map(t_map *map_read)
                 j++;
             }
         }
-         if (is_line_empty) //# [SOME DOUBTS HERE]
+         if (is_line_empty)
              {
                  printf(RED "The line is empty \n" RESET);
                  return (EXIT_FAILURE);

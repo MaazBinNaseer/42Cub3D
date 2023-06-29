@@ -3,29 +3,32 @@ CC		=	gcc
 CFLAGS	=	-Wall -Wextra -Werror -g
 
 PARSING	=	main_arguments.c map_read.c read_map_check.c read_config_file.c parsing_utils.c
+RENDERING = boot_mlx.c
 OBJPATH = 	./obj/
 LIBFT = 	./sources/utils/Libft
 
 GREEN   =   \033[1;32m 
 RESET   =   \033[0m 
 
-SRC = 	$(addprefix sources/parsing, $(PARSING))
-OBJ = 	$(addprefix $(OBJPATH), $(PARSING:.c=.o)) 
+SRC = 	$(addprefix sources/parsing/, $(PARSING)) \
+	 	$(addprefix sources/render/, $(RENDERING)) 
+
+OBJ = 	$(patsubst %.c,$(OBJPATH)%.o,$(SRC))
 
 all		:	$(MAKELIBFT) $(OBJPATH) $(NAME)
 
-
 $(OBJPATH):
-		mkdir $(OBJPATH)
+		mkdir -p $(OBJPATH)sources/parsing/
+		mkdir -p $(OBJPATH)sources/render/
 
 $(NAME)	:	$(OBJ)
 		@echo "$(GREEN)Building $(NAME) $(RESET)..."
 		@make -C $(LIBFT)
-		$(CC) $(CFLAGS) $^ -o $@ $(LIBFT)/libft.a
+		$(CC) $(OBJ) -Lmlx_linux -lmlx_Linux -L/usr/lib $(LIBFT)/libft.a -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
 		@echo "$(GREEN)\033[1mCompilation complete$(RESET)"
 
-$(OBJPATH)%.o:	sources/parsing/%.c
-			$(CC) $(CFLAGS) -c -o $@ $<
+$(OBJPATH)%.o: %.c
+		$(CC) $(CFLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@
 
 clean:
 	rm -rf $(OBJPATH)

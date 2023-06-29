@@ -5,6 +5,8 @@
 #include <stdbool.h>
 #include "../sources/utils/Libft/libft.h"
 #include "../sources/utils/Libft/get_next_line.h"
+#include "../mlx_linux/mlx.h"
+#include "../mlx_linux/mlx_int.h"
 
 /* --------------------------------------------------------
 # ------------------------- COLORS ------------------
