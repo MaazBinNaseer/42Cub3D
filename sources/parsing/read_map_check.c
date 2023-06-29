@@ -37,7 +37,7 @@ bool initial_check_for_chars_in_map(t_map *map_read)
     return (EXIT_SUCCESS);
 }
 
-
+//todo: Need to implement for the bottom row as well
 bool check_for_rows_surrounded_map(t_map *map_read)
 {
     size_t i = 0;
@@ -50,7 +50,7 @@ bool check_for_rows_surrounded_map(t_map *map_read)
     {
        if(map_read->map[1][i] == '0' && map_read->map[0][i] != '1')
         {
-            printf("0 is not surrounded by a wall");
+            printf(RED "0 is not surrounded by a wall either at the top or bottom\n" RESET);
             return (EXIT_FAILURE);
         }
         else if (map_read->map[1][i] == '1' && map_read->map[0][i] != '1')
@@ -76,15 +76,9 @@ bool checking_for_diagonal_top_version(t_map *map)
             if(map->map[i][j] == '0')
             {
                if ((map->map[i - 1][j - 1] == 'S' && map->map[i - 1][j + 1] == '0')  || (map->map[i - 1][j - 1] == 'S' && map->map[i - 1][j + 1] == '0'))
-                        {
-                            printf("[ -- Position is [S] (i: %d, j: %d) -- ]\n", i, j); 
-                            j++;  
-                        } 
+                        j++;  
                 if ((map->map[i - 1][j -1] != '1' && map->map[i - 1][j - 1] != '0') || (map->map[i - 1][j + 1] != '0' && map->map[i - 1][j + 1] != '1'))
                     {
-                        // printf("Found a [%c] on the left diagonal\n", map->map[i - 1][j - 1]);
-                        // printf("Found a [%c] on the right diagonal\n", map->map[i - 1][j + 1]);
-                        // printf("[ -- Position is (i: %d, j: %d) -- ]\n", i, j); 
                         printf(RED "Error [0] has a diagonal space at (i: %d, j: %d)\n", i, j);
                         return (EXIT_FAILURE);
                     }
@@ -116,5 +110,10 @@ int check_map(t_map *map_check)
 }
 
 /* ---- PRINTF's
-printf("[%c] at (row : %d, col: %d)\n", map->map[i][j], i, j);  ---> diagonal map 
+
+* ----------- DIAGONAL MAP ----------------------
+printf("[%c] at (row : %d, col: %d)\n", map->map[i][j], i, j); 
+printf("Found a [%c] on the left diagonal\n", map->map[i - 1][j - 1]);
+printf("Found a [%c] on the right diagonal\n", map->map[i - 1][j + 1]);
+printf("[ -- Position is (i: %d, j: %d) -- ]\n", i, j); 1
 */
