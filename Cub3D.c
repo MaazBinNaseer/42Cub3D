@@ -1,4 +1,5 @@
-#include "../../inc/Cube3D.h"
+#include "inc/Cube3D.h"
+
 // #include <stdio.h>
 
 /* ---------------------------------------------------------------
@@ -9,6 +10,9 @@ void read_arguments_valid(char *arg)
 {
     int length = 0;
     //* Intialized list --- needs to have a separate function
+    t_mlx *mlx = malloc(sizeof(t_mlx));
+    mlx->mlx = NULL;
+    mlx->window = NULL;
     t_map map;
     map.rows = 0;
     map.map = NULL;
@@ -28,11 +32,12 @@ void read_arguments_valid(char *arg)
                 return ;
             
             read_config_file(arg, &file, &map);
-            // read_map(arg, &map);
-            // check_map(&map);
+            create_window(mlx);
+            mlx_loop(mlx->mlx);
         }
     else
         printf("No such file exsist\n");
+    free(mlx);
     // for(int i = 0; i < map.rows; i++)
     //      free(map.map[i]);
     //  free(map.map);

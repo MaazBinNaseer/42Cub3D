@@ -48,6 +48,21 @@ typedef struct s_map
 } t_map;
 
 
+typedef struct s_mlx
+{
+    void    *mlx;
+    void	*img;
+    void    *window;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}   t_mlx;
+
+/* --------------------------------------------------------
+*------------------------- RENDERING ------------------
+---------------------------------------------------------- */
+int create_window();
 
 /* --------------------------------------------------------
 *------------------------- CONFIG FILE ------------------

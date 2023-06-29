@@ -2,8 +2,9 @@ NAME	=	Cub3D
 CC		=	gcc
 CFLAGS	=	-Wall -Wextra -Werror -g
 
-PARSING	=	main_arguments.c map_read.c read_map_check.c read_config_file.c parsing_utils.c
+PARSING	=	map_read.c read_map_check.c read_config_file.c parsing_utils.c
 RENDERING = boot_mlx.c
+MAIN    =	Cub3D.c
 OBJPATH = 	./obj/
 LIBFT = 	./sources/utils/Libft
 
@@ -11,7 +12,8 @@ GREEN   =   \033[1;32m
 RESET   =   \033[0m 
 
 SRC = 	$(addprefix sources/parsing/, $(PARSING)) \
-	 	$(addprefix sources/render/, $(RENDERING)) 
+	 	$(addprefix sources/render/, $(RENDERING)) \
+	 	$(addprefix , $(MAIN))
 
 OBJ = 	$(patsubst %.c,$(OBJPATH)%.o,$(SRC))
 
@@ -20,6 +22,7 @@ all		:	$(MAKELIBFT) $(OBJPATH) $(NAME)
 $(OBJPATH):
 		mkdir -p $(OBJPATH)sources/parsing/
 		mkdir -p $(OBJPATH)sources/render/
+		mkdir -p $(OBJPATH)
 
 $(NAME)	:	$(OBJ)
 		@echo "$(GREEN)Building $(NAME) $(RESET)..."
