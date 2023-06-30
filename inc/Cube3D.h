@@ -91,6 +91,6 @@ int check_map(t_map *map_check);
 ---------------------------------------------------------- */
 void free_map(t_map *map_read);
 void print_map(t_map *map);
-
+void cleanup(t_config_properties *file, t_map *map);
 
 #endif

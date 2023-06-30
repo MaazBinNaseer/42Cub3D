@@ -42,6 +42,7 @@ int read_config_file(const char *filename, t_config_properties *file, t_map *map
         check_map(map);
     }
     close(fd);
+    cleanup(file, map);
     return (0);
 }
 

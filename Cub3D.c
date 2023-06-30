@@ -29,7 +29,7 @@ void read_arguments_valid(char *arg)
         {
             printf("Valid Argument\n");
             if( set_order_of_file(arg) == EXIT_FAILURE)
-                return ;
+                exit(1) ;
             
             read_config_file(arg, &file, &map);
             create_window(mlx);

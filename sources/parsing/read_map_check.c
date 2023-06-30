@@ -7,7 +7,7 @@
 -------------------------------------*/
 bool initial_check_for_chars_in_map(t_map *map_read)
 {
-    print_map(map_read);
+    // print_map(map_read);
     int i = 0;
     while(i < map_read->rows)
     {
@@ -76,11 +76,11 @@ bool checking_for_diagonal_top_version(t_map *map)
                 j++;
             if(map->map[i][j] == '0')
             {
-               if ((map->map[i - 1][j - 1] == 'S' && map->map[i - 1][j + 1] == '0')  || (map->map[i - 1][j - 1] == 'S' && map->map[i - 1][j + 1] == '0'))
+               if ((map->map[i - 1][j - 1] == 'S' && map->map[i - 1][j + 1] == '0')  || (map->map[i - 1][j - 1] == '0' && map->map[i - 1][j + 1] == 'S'))
                         j++;  
                 if ((map->map[i - 1][j -1] != '1' && map->map[i - 1][j - 1] != '0') || (map->map[i - 1][j + 1] != '0' && map->map[i - 1][j + 1] != '1'))
                     {
-                        printf(RED "Error [0] has a diagonal space at (i: %d, j: %d)\n", i, j);
+                        printf(RED "Error [0] has a diagonal space at (i: %d, j: %d)\n" RESET, i, j);
                         return (EXIT_FAILURE);
                     }
             }
@@ -95,17 +95,17 @@ bool checking_for_diagonal_top_version(t_map *map)
 int check_map(t_map *map_check)
 {
     if(initial_check_for_chars_in_map(map_check) == 1)
-        return (EXIT_FAILURE);
+        exit(EXIT_FAILURE);
     // else if (check_map_is_surrounded_rows(map_check) == 1)
     //     return (EXIT_FAILURE);
     else if (checking_for_diagonal_top_version(map_check) == 1)
-        return(EXIT_FAILURE);
+        exit(EXIT_FAILURE);
     else if(check_for_rows_surrounded_map(map_check) == 1)
-            return (EXIT_FAILURE);
+            exit (EXIT_FAILURE);
     else if (check_map_is_surrounded_columns(map_check) == 1)
-        return (EXIT_FAILURE);
+        exit (EXIT_FAILURE);
    else if( get_player_position(map_check) == 1)
-        return (EXIT_FAILURE);
+        exit (EXIT_FAILURE);
 
     return (EXIT_SUCCESS);
 }

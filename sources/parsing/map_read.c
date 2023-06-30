@@ -20,37 +20,25 @@ void read_map(int fd, t_map *map_read, char *first_map_line)
     map_read->rows = 0;
     map_read->coloumns = 0;
     line = first_map_line;
-
-    // Run while there is a valid line to process.
     while (line)
     {
         // printf("READING FROM THE READ MAP [%s]\n", line);
-
-        // If the line is empty and we haven't started the map yet, free it and get the next line
         if(ft_strlen(line) == 0 && !is_map_started)
         {
             free(line);
             line = get_next_line(fd);
             continue;
         }
-        
-        // If the line contains a texture path or color, skip it
         if(line[0] == 'N' || line[0] == 'S' || line[0] == 'W' || line[0] == 'E' || line[0] == 'F' || line[0] == 'C')
         {
             free(line);
             line = get_next_line(fd);
             continue;
         }
-
-        // Start the map from this point onwards
         if (!is_map_started)
-        {
             is_map_started = 1;
-        }
-        
         if (is_map_started)
         {
-            // If the line is not empty, allocate memory and start the map
             map_read->map[map_read->rows] = ft_calloc(ft_strlen(line) + 1, sizeof(char));
             ft_strcpy(map_read->map[map_read->rows], line);
             map_read->map[map_read->rows][ft_strlen(line)] = '\0';
@@ -59,9 +47,7 @@ void read_map(int fd, t_map *map_read, char *first_map_line)
                 map_read->coloumns = current_columns;
             map_read->rows++;
         }
-        
         free(line);
-        // Get the next line for the next iteration
         line = get_next_line(fd);
     }
     close(fd);
