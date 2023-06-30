@@ -5,6 +5,7 @@ CFLAGS	=	-Wall -Wextra -Werror -g
 PARSING	=	map_read.c read_map_check.c read_config_file.c parsing_utils.c
 RENDERING = boot_mlx.c
 MAIN    =	Cub3D.c
+# UTILS   =	intialize_list.c
 OBJPATH = 	./obj/
 LIBFT = 	./sources/utils/Libft
 

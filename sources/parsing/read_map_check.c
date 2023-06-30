@@ -7,6 +7,7 @@
 -------------------------------------*/
 bool initial_check_for_chars_in_map(t_map *map_read)
 {
+    print_map(map_read);
     int i = 0;
     while(i < map_read->rows)
     {
@@ -20,7 +21,7 @@ bool initial_check_for_chars_in_map(t_map *map_read)
                     break;
                 if(!ft_strchr("NSEW01", map_read->map[i][j]))
                 {
-                    printf(RED "We found something there [%c]\n" RESET, map_read->map[i][j]);
+                    printf(RED "We found something there [%c]\n at (i: %d, j: %d)\n" RESET, map_read->map[i][j], i, j);
                     return (EXIT_FAILURE);
                 }
                 is_line_empty = false;
