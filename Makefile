@@ -4,8 +4,8 @@ CFLAGS	=	-Wall -Wextra -Werror -g
 
 PARSING	=	map_read.c read_map_check.c read_config_file.c parsing_utils.c
 RENDERING = boot_mlx.c
+UTILS   =	intialize_list.c
 MAIN    =	Cub3D.c
-# UTILS   =	intialize_list.c
 OBJPATH = 	./obj/
 LIBFT = 	./sources/utils/Libft
 
@@ -14,6 +14,7 @@ RESET   =   \033[0m
 
 SRC = 	$(addprefix sources/parsing/, $(PARSING)) \
 	 	$(addprefix sources/render/, $(RENDERING)) \
+	 	$(addprefix sources/utils/, $(UTILS)) \
 	 	$(addprefix , $(MAIN))
 
 OBJ = 	$(patsubst %.c,$(OBJPATH)%.o,$(SRC))
@@ -23,6 +24,7 @@ all		:	$(MAKELIBFT) $(OBJPATH) $(NAME)
 $(OBJPATH):
 		mkdir -p $(OBJPATH)sources/parsing/
 		mkdir -p $(OBJPATH)sources/render/
+		mkdir -p $(OBJPATH)sources/utils/
 		mkdir -p $(OBJPATH)
 
 $(NAME)	:	$(OBJ)

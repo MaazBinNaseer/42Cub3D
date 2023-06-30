@@ -11,7 +11,7 @@ bool is_map_line(const char *line)
     return true;
 }
 
-int read_config_file(const char *filename, t_config_properties *file, t_map *map)
+void read_config_file(const char *filename, t_config_properties *file, t_map *map)
 {
     char *line; 
     int fd; 
@@ -21,7 +21,7 @@ int read_config_file(const char *filename, t_config_properties *file, t_map *map
     while((line = get_next_line(fd) )!= NULL)
     {
         if(ft_strncmp(line, "NO", 2) == 0)
-            file->north_texture = ft_strdup(line + 3);
+             file->north_texture = ft_strdup(line + 3);
         else if(ft_strncmp(line, "SO", 2) == 0)
             file->south_texture = ft_strdup(line + 3);
         else if(ft_strncmp(line, "WE", 2) == 0)
@@ -42,9 +42,16 @@ int read_config_file(const char *filename, t_config_properties *file, t_map *map
         check_map(map);
     }
     close(fd);
-    cleanup(file, map);
-    return (0);
+    // cleanup(file, map);
+    return ;
 }
+
+//todo: Implementation for Invalid path to the xpm file
+// bool check_valid_path_for_path(t_config_properties *file)
+// {
+//     read_config_file()
+    
+// }
 
 bool set_order_of_file(const char* filename)
 {
@@ -84,7 +91,8 @@ bool set_order_of_file(const char* filename)
 
 
 
-/*
+/* 
+* --------------  FOR READ FILE -------------------
 printf("THE LINE ARE BEING READ ARE: [%s]\n", line);
 printf("The string is %s\n", file->south_texture);
 printf("The string is %s\n", file->east_texture);

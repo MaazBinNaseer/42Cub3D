@@ -67,7 +67,7 @@ int create_window();
 /* --------------------------------------------------------
 *------------------------- CONFIG FILE ------------------
 ---------------------------------------------------------- */
-int read_config_file(const char *filename, t_config_properties *file, t_map *map);
+void read_config_file(const char *filename, t_config_properties *file, t_map *map);
 // int read_config_file(const char *filename, t_config_properties *file);
 bool set_order_of_file(const char* filename);
 
@@ -89,6 +89,8 @@ int check_map(t_map *map_check);
 /* --------------------------------------------------------
 *-------------------------UTILS --------------------------
 ---------------------------------------------------------- */
+void intialize_list_map(t_map *map_file);
+void initialize_list_file(t_config_properties *file);
 void free_map(t_map *map_read);
 void print_map(t_map *map);
 void cleanup(t_config_properties *file, t_map *map);
