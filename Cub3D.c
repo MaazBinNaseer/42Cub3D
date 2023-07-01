@@ -5,24 +5,19 @@
 /* ---------------------------------------------------------------
 * @brief: To allow the user to handle incorrect inputs
 * @return: Should throw an error when the argument fails more than 2 
+todo: Intialized list call should have a separate function call 
 ------------------------------------------------------------------*/
 void read_arguments_valid(char *arg)
 {
     int length = 0;
-    //* Intialized list --- needs to have a separate function
+    
     t_mlx *mlx = malloc(sizeof(t_mlx));
     mlx->mlx = NULL;
     mlx->window = NULL;
-    t_map map;
-    map.rows = 0;
-    map.map = NULL;
-    map.player_position.x = 0;
-    map.player_position.y = 0;
-    map.player = 0;
-    t_config_properties file;
-    file.north_texture = "";
-    file.map_set = 0;
-    // count the length of the string
+    t_map *map = (malloc(sizeof(t_map)));
+    intialize_list_map(map);
+    t_config_properties *file = malloc(sizeof(t_config_properties));
+    initialize_list_file(file);
     while(arg[length] != '\0')
         length++;
     if(length >= 4 && ft_strncmp(arg + length - 4, ".cub", 4) == 0)
@@ -30,17 +25,14 @@ void read_arguments_valid(char *arg)
             printf("Valid Argument\n");
             if( set_order_of_file(arg) == EXIT_FAILURE)
                 exit(1) ;
-            
-            read_config_file(arg, &file, &map);
-            create_window(mlx);
+            read_config_file(arg, file, map);
+            create_window(mlx, map);
             mlx_loop(mlx->mlx);
         }
     else
         printf("No such file exsist\n");
     free(mlx);
-    // for(int i = 0; i < map.rows; i++)
-    //      free(map.map[i]);
-    //  free(map.map);
+    free_map(map);
 }
 
 int main(int argc, char **argv)

@@ -3,7 +3,7 @@ CC		=	gcc
 CFLAGS	=	-Wall -Wextra -Werror -g
 
 PARSING	=	map_read.c read_map_check.c read_config_file.c parsing_utils.c
-RENDERING = boot_mlx.c
+RENDERING = boot_mlx.c draw_map.c
 UTILS   =	intialize_list.c
 MAIN    =	Cub3D.c
 OBJPATH = 	./obj/
