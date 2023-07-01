@@ -65,7 +65,7 @@ bool check_for_rows_surrounded_map(t_map *map_read)
 }
 bool checking_for_diagonal_top_version(t_map *map)
 {
-    print_map(map);
+    // print_map(map);
     int i = 1, j;
     while(i < map->rows - 1)
     {

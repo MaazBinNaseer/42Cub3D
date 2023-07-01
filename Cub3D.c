@@ -17,7 +17,7 @@ void read_arguments_valid(char *arg)
     t_map *map = (malloc(sizeof(t_map)));
     intialize_list_map(map);
     t_config_properties *file = malloc(sizeof(t_config_properties));
-    initialize_list_file(file);
+    initialize_list_file(file);    
     while(arg[length] != '\0')
         length++;
     if(length >= 4 && ft_strncmp(arg + length - 4, ".cub", 4) == 0)

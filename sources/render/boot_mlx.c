@@ -21,10 +21,11 @@ int create_window(t_mlx *mlx, t_map *map)
     mlx->mlx = mlx_init();
     if (!mlx->mlx)
         return -1;
-    (void)map;
+    (void )map;
     mlx->window = mlx_new_window(mlx->mlx, 1080, 1000 ,"HELLO WORLD");
     if (!mlx->window)
         return -1;
+    // draw_line(mlx, 30, 40, 50, 60);
     draw_map(mlx, map);
     mlx_hook(mlx->window, 17, 0, close_windows, mlx);
     return (0);
