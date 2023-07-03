@@ -41,17 +41,10 @@ void read_arguments_valid(char *arg)
 int main(int argc, char **argv)
 {
     if (argc > 2)
-    {
         printf("Too many arguments. Only the second argument will be accepted.\n");
-    }
     else if (argc > 1)
-    {
         read_arguments_valid(argv[1]);
-    }
     else
-    {
         printf("No arguments provided.\n");
-    }
-
     return 0;
 }

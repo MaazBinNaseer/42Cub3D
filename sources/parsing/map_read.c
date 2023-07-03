@@ -157,7 +157,7 @@ bool check_for_error_map(t_map *map_read)
     {
         printf( RED "The player should be only 1. [No Duplications are allowed]\n");
         printf("[-- We have found [%d] players in the map --]\n" RESET, map_read->player);
-        return (EXIT_FAILURE);
+        exit (EXIT_FAILURE);
     }
     else if (map_read->player == 0)
     {
@@ -167,7 +167,7 @@ bool check_for_error_map(t_map *map_read)
     else if(map_read->rows > 100)
     {
         printf(RED "Too many lines of rows are there! Reduction required\n" RESET);
-        return (EXIT_FAILURE);
+        exit (EXIT_FAILURE);
     }
     return (EXIT_SUCCESS);
 }

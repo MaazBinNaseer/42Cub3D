@@ -6,12 +6,6 @@ My keyboard for ESC is 79822912 for some damn reason
 
 int close_windows(t_mlx *mlx)
 {
-    // printf("Keycode: %d\n", keycode);
-
-    // Access the t_map data
-    // printf("Map rows: %d\n", map->rows);
-    // printf("Map columns: %d\n", map->coloumns);
-
     mlx_destroy_window(mlx->mlx, mlx->window);
     exit(1);
     return (0);

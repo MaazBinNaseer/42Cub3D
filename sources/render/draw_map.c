@@ -15,16 +15,42 @@ void draw_box_wall(t_mlx *mlx, int x, int y, int size)
 {
     int i, j;
 
-    int black = 0x000000; // Black color for outline
-    int white = 0xFFFFFF; // White color for filling
+    int black = 0x000000;
+    int white = 0xFFFFFF; 
 
     for (i = 0; i < size; i++) {
         for (j = 0; j < size; j++) {
-            // Check if we are at the edge of the box
             if (i == 0 || i == size - 1 || j == 0 || j == size - 1)
                 mlx_pixel_put(mlx->mlx, mlx->window, x + i, y + j, black);
             else
                 mlx_pixel_put(mlx->mlx, mlx->window, x + i, y + j, white);
+        }
+    }
+}
+void draw_player(t_mlx *mlx, t_map *map, int player_x, int player_y)
+{
+    int x, y;
+    int color = 0xFFFF0000;
+    int player_size = 100; // Size of the player
+
+    for (x = 0; x < map->rows; x++)
+    {
+        for (y = 0; y < map->coloumns; y++)
+        {
+            if (map->map[x][y] == 'S')
+            {
+                map->player_position.x = x;
+                map->player_position.y = y;
+                 player_x = y * player_size;
+                player_y = x * player_size;        
+                for (int px = player_x; px < player_x + player_size; px++)
+                {
+                    for (int py = player_y; py < player_y + player_size; py++)
+                    {
+                        mlx_pixel_put(mlx->mlx, mlx->window, px, py, color);
+                    }
+                }
+            }
         }
     }
 }
@@ -35,8 +61,6 @@ void draw_map(t_mlx *mlx, t_map *map)
     int i, j;
     int size = 100;  // size of each box
     int color;
-    // int offset_x = 0;
-    // int offset_y = 0;
 
     for (i = 0; i < map->rows; i++) {
         for (j = 0; j < map->coloumns; j++) {
@@ -46,13 +70,16 @@ void draw_map(t_mlx *mlx, t_map *map)
             } else if (map->map[i][j] == '1') {
                 color = 0xFFFFFF;
                 draw_box(mlx, j * size, i * size, color, size); // wall color: white
-            } else if (map->map[i][j] == 'S') {
-                color = 0x0000FF;  // start point color: blue
+            } else if (map->map[i][j] == 'S')
+            {
+                 color = 0x000000;  // free space color: yellow
                 draw_box(mlx, j * size, i * size, color, size);
+                draw_player(mlx, map, i * size, j * size);
             }
         }
     }
 }
+
 
 /*
 todo: Find a way to print an image on the screen 

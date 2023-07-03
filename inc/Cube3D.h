@@ -36,8 +36,8 @@ typedef struct s_config_properties
 
 typedef struct s_pos
 {
-    int x;
-    int y;
+    float x;
+    float y;
 } t_pos;
 
 typedef struct s_im
