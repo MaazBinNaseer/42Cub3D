@@ -2,14 +2,18 @@
 
 bool is_map_line(const char *line)
 {
+    bool non_space_found = false;
     while (*line)
     {
         if (*line != '0' && *line != '1' && *line != 'S' && *line != ' ')
             return false;
+        if (*line != ' ')
+            non_space_found = true;
         line++;
     }
-    return true;
+    return non_space_found;
 }
+
 
 void read_config_file(const char *filename, t_config_properties *file, t_map *map)
 {
@@ -29,9 +33,9 @@ void read_config_file(const char *filename, t_config_properties *file, t_map *ma
         else if(ft_strncmp(line, "EA", 2) == 0)
             file->east_texture = ft_strdup(line + 3);
         else if(ft_strncmp(line, "F", 1) == 0)
-            file->floor_texture = ft_strdup(line + 3);
+            file->floor_texture = ft_strdup(line + 2);
         else if(ft_strncmp(line, "C", 1) == 0)
-            file->ceiling_texture = ft_strdup(line + 3);
+            file->ceiling_texture = ft_strdup(line + 2);
         else if (is_map_line(line))
             break;
         free(line);
@@ -58,6 +62,7 @@ bool set_order_of_file(const char* filename)
     int fd;
     char *line;
     int set_value = 0;
+    bool map_started = false;
 
     fd = open(filename, O_RDONLY);
       while((line = get_next_line(fd) )!= NULL)
@@ -75,7 +80,20 @@ bool set_order_of_file(const char* filename)
             else if(ft_strncmp(line, "C", 2) == 0) 
                 set_value = 6;
             else if (is_map_line(line))
-                set_value = 7;
+                {
+                    set_value = 7;
+                    map_started = true;
+                }
+            else if (map_started && (ft_strncmp(line, "NO", 2) == 0 || ft_strncmp(line, "SO", 2) == 0 || 
+                 ft_strncmp(line, "WE", 2) == 0 || ft_strncmp(line, "EA", 2) == 0 || 
+                 ft_strncmp(line, "F", 1) == 0 || ft_strncmp(line, "C", 1) == 0))
+                {
+                    printf("Offending line: '%s'\n", line);
+                    printf(RED "Error: Configuration line found after map lines.\nReturning back \n" RESET);
+                    free(line);
+                    close(fd);
+                    return (EXIT_FAILURE);
+                }
             free(line);
         }
     close (fd);

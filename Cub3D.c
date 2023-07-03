@@ -17,7 +17,8 @@ void read_arguments_valid(char *arg)
     t_map *map = (malloc(sizeof(t_map)));
     intialize_list_map(map);
     t_config_properties *file = malloc(sizeof(t_config_properties));
-    initialize_list_file(file);    
+    initialize_list_file(file);
+    t_im *img = malloc(sizeof(t_img));    
     while(arg[length] != '\0')
         length++;
     if(length >= 4 && ft_strncmp(arg + length - 4, ".cub", 4) == 0)
@@ -26,7 +27,9 @@ void read_arguments_valid(char *arg)
             if( set_order_of_file(arg) == EXIT_FAILURE)
                 exit(1) ;
             read_config_file(arg, file, map);
-            create_window(mlx, map);
+            create_window(mlx);
+            intialize_images(map, img, mlx);
+            draw_map(mlx, map);
             mlx_loop(mlx->mlx);
         }
     else

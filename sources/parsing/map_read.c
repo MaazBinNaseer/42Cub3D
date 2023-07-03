@@ -162,7 +162,7 @@ bool check_for_error_map(t_map *map_read)
     else if (map_read->player == 0)
     {
         printf(RED "Player is Nowhere to be found in the map !\n" RESET);
-        return (EXIT_FAILURE);
+        exit (EXIT_FAILURE);
     }
     else if(map_read->rows > 100)
     {

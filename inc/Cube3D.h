@@ -40,12 +40,19 @@ typedef struct s_pos
     int y;
 } t_pos;
 
+typedef struct s_im
+{
+    void *wall;
+    void *path;
+} t_im;
+
 typedef struct s_map
 {
     char **map;
     int rows;
     int coloumns;
     int player;
+    t_im *img;
     t_pos player_position;
 } t_map;
 
@@ -85,10 +92,10 @@ int check_map(t_map *map_check);
 /* --------------------------------------------------------
 *------------------------- RENDERING ------------------
 ---------------------------------------------------------- */
-int create_window(t_mlx *mlx, t_map *map);
+int create_window(t_mlx *mlx);
+void intialize_images(t_map *map, t_im *img, t_mlx *mlx);
 void draw_map(t_mlx *mlx, t_map *map);
 void draw_line(t_mlx *mlx, int x1, int y1, int x2, int y2);
-
 
 /* --------------------------------------------------------
 *-------------------------UTILS --------------------------
