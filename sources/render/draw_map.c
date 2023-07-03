@@ -31,7 +31,7 @@ void draw_player(t_mlx *mlx, t_map *map, int player_x, int player_y)
 {
     int x, y;
     int color = 0xFFFF0000;
-    int player_size = 100; // Size of the player
+    int player_size = 100;
 
     for (x = 0; x < map->rows; x++)
     {
@@ -59,20 +59,20 @@ void draw_player(t_mlx *mlx, t_map *map, int player_x, int player_y)
 void draw_map(t_mlx *mlx, t_map *map)
 {
     int i, j;
-    int size = 100;  // size of each box
+    int size = 100;
     int color;
 
     for (i = 0; i < map->rows; i++) {
         for (j = 0; j < map->coloumns; j++) {
             if (map->map[i][j] == '0') {
-                color = 0x000000;  // free space color: yellow
+                color = 0x000000;
                 draw_box(mlx, j * size, i * size, color, size);
             } else if (map->map[i][j] == '1') {
                 color = 0xFFFFFF;
-                draw_box(mlx, j * size, i * size, color, size); // wall color: white
+                draw_box(mlx, j * size, i * size, color, size); 
             } else if (map->map[i][j] == 'S')
             {
-                 color = 0x000000;  // free space color: yellow
+                 color = 0x000000; 
                 draw_box(mlx, j * size, i * size, color, size);
                 draw_player(mlx, map, i * size, j * size);
             }
@@ -95,5 +95,4 @@ void intialize_images(t_map *map, t_im *img, t_mlx *mlx)
             printf(RED "Intialize fail\n" RESET);
             exit(1);
         }
-    
 }
