@@ -123,7 +123,7 @@ int check_map_is_surrounded_columns(t_map *map_read)
 * Finds the coordinates of the player in any position of 
 * the map, no duplications of the player is allowed. 
 --------------------------------------------------------*/
-int get_player_position(t_map *map_read)
+float get_player_position(t_map *map_read)
 {
     int i = 0;
 
@@ -132,15 +132,14 @@ int get_player_position(t_map *map_read)
         int j = 0;
         int row_length = ft_strlen(map_read->map[i]);
 
-        while(j < row_length)   // iterate over the current row only
-        {
+        while(j < row_length) {
             if (map_read->map[i][j] == 'N' || map_read->map[i][j] == 'S' ||
                 map_read->map[i][j] == 'E' || map_read->map[i][j] == 'W')
             {
-                map_read->player_position.x = i;
-                map_read->player_position.y = j;
+                map_read->player_position.x = (float)i + 0.5f;
+                map_read->player_position.y = (float)j + 0.5f;
                 map_read->player++;
-                printf("The player position is x: %d | y: %d -- \n", map_read->player_position.x, map_read->player_position.y);
+                printf("The player position is x: %f | y: %f -- \n", map_read->player_position.x, map_read->player_position.y);
                 break;
             }
             j++;

@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdbool.h>
+#include <math.h>
 #include "../sources/utils/Libft/libft.h"
 #include "../sources/utils/Libft/get_next_line.h"
 #include "../mlx_linux/mlx.h"
@@ -17,6 +18,10 @@
 #define MAG "\033[1;38;5;13m"
 #define RESET "\033[0m"
 
+/* ------------------------------------------------------
+# ----------------- MATH && MAP MACROS ------------------
+--------------------------------------------------------*/
+#define PI 3.14159
 #define TILE_SIZE 10
 /* --------------------------------------------------------
 # ------------------------- STRUCTS ------------------
@@ -36,8 +41,10 @@ typedef struct s_config_properties
 
 typedef struct s_pos
 {
-    int x;
-    int y;
+    float x;
+    float y;
+    float dx;
+    float dy;
 } t_pos;
 
 typedef struct s_im
@@ -89,7 +96,7 @@ void read_map(int fd, t_map *map, char *first_map_line);
 int check_map_is_surrounded_rows(t_map *map_read);
 bool check_for_zeros_surrounded_map(t_map *map_read);
 int check_map_is_surrounded_columns(t_map *map_read);
-int get_player_position(t_map *map_read);
+float get_player_position(t_map *map_read);
 bool check_for_error_map(t_map *map_read);
 int check_map(t_map *map_check);
 
@@ -101,8 +108,8 @@ int create_window(t_mlx *mlx);
 void intialize_images(t_map *map, t_im *img, t_mlx *mlx);
 void draw_map(t_mlx *mlx, t_map *map);
 void draw_line(t_mlx *mlx, int x1, int y1, int x2, int y2);
-int key_hook(int keycode, t_all *all);
-void draw_player(t_mlx *mlx, t_map *map, int player_x, int player_y);
+float key_hook(int keycode, t_all *all);
+void draw_player(t_mlx *mlx, t_map *map, float player_x, float player_y);
 /* --------------------------------------------------------
 *-------------------------UTILS --------------------------
 ---------------------------------------------------------- */

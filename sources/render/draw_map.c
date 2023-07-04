@@ -27,7 +27,7 @@ void draw_box(t_mlx *mlx, int x, int y, int color, int size)
     }
 }
 
-void draw_player(t_mlx *mlx, t_map *map, int player_x, int player_y)
+void draw_player(t_mlx *mlx, t_map *map, float player_x, float player_y)
 {
     int color = 0xFFFF0000;
     int player_size = 100;
@@ -35,9 +35,9 @@ void draw_player(t_mlx *mlx, t_map *map, int player_x, int player_y)
     player_x = map->player_position.y * player_size;
     player_y = map->player_position.x * player_size;
 
-    for (int px = player_x; px < player_x + player_size; px++)
+    for (float px = player_x; px < player_x + player_size; px++)
     {
-        for (int py = player_y; py < player_y + player_size; py++)
+        for (float py = player_y; py < player_y + player_size; py++)
         {
             mlx_pixel_put(mlx->mlx, mlx->window, px, py, color);
         }
