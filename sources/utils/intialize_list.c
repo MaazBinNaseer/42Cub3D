@@ -20,8 +20,8 @@ void intialize_list_map(t_map *map_file)
     map_file->rows = 0;
     map_file->player_position.x = 0;
     map_file->player_position.y = 0;
-    map_file->player_position.dx = 0;
-    map_file->player_position.dy = 0;
+    // map_file->player_position.dy = 0;
+    // map_file->player_position.dx = 0;
     map_file->map = NULL;
     
 }

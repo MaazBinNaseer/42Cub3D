@@ -16,6 +16,33 @@ void draw_box_wall(t_mlx *mlx, int x, int y, int size)
         }
     }
 }
+
+void mlx_line(t_mlx *mlx, int x1, int y1, int x2, int y2, int color)
+{
+    int dx = abs(x2 - x1);
+    int dy = abs(y2 - y1);
+    int sx = (x1 < x2) ? 1 : -1;
+    int sy = (y1 < y2) ? 1 : -1;
+    int err = (dx > dy ? dx : -dy) / 2;
+    int e2;
+
+    while (x1 != x2 || y1 != y2)
+    {
+        mlx_pixel_put(mlx->mlx, mlx->window, x1, y1, color);
+        e2 = err;
+        if (e2 > -dx)
+        {
+            err -= dy;
+            x1 += sx;
+        }
+        if (e2 < dy)
+        {
+            err += dx;
+            y1 += sy;
+        }
+    }
+}
+
 void draw_box(t_mlx *mlx, int x, int y, int color, int size)
 {
     int i;
@@ -42,6 +69,10 @@ void draw_player(t_mlx *mlx, t_map *map, float player_x, float player_y)
             mlx_pixel_put(mlx->mlx, mlx->window, px, py, color);
         }
     }
+    int line_length = 200; // Adjust this value as needed
+    int line_end_x = player_x + line_length * cos(map->player_position.player_direction);
+    int line_end_y = player_y + line_length * sin(map->player_position.player_direction);
+    mlx_line(mlx, player_x, player_y, line_end_x, line_end_y, 0x00FF00); // Line color is green
 }
 
 

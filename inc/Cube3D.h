@@ -43,8 +43,9 @@ typedef struct s_pos
 {
     float x;
     float y;
-    float dx;
-    float dy;
+    double dx;
+    double dy;
+    float player_direction;
 } t_pos;
 
 typedef struct s_im
@@ -108,7 +109,7 @@ int create_window(t_mlx *mlx);
 void intialize_images(t_map *map, t_im *img, t_mlx *mlx);
 void draw_map(t_mlx *mlx, t_map *map);
 void draw_line(t_mlx *mlx, int x1, int y1, int x2, int y2);
-float key_hook(int keycode, t_all *all);
+int key_hook(int keycode, t_all *all);
 void draw_player(t_mlx *mlx, t_map *map, float player_x, float player_y);
 /* --------------------------------------------------------
 *-------------------------UTILS --------------------------
