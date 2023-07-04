@@ -18,7 +18,10 @@ void read_arguments_valid(char *arg)
     intialize_list_map(map);
     t_config_properties *file = malloc(sizeof(t_config_properties));
     initialize_list_file(file);
-    t_im *img = malloc(sizeof(t_img));    
+    t_im *img = malloc(sizeof(t_img)); 
+    t_all *all= malloc(sizeof(t_all));
+    all->map_list = map;
+    all->mlx_list = mlx;  
     while(arg[length] != '\0')
         length++;
     if(length >= 4 && ft_strncmp(arg + length - 4, ".cub", 4) == 0)
@@ -29,6 +32,7 @@ void read_arguments_valid(char *arg)
             read_config_file(arg, file, map);
             create_window(mlx);
             intialize_images(map, img, mlx);
+            mlx_key_hook(mlx->window, key_hook, all);
             draw_map(mlx, map);
             mlx_loop(mlx->mlx);
         }

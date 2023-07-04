@@ -36,8 +36,8 @@ typedef struct s_config_properties
 
 typedef struct s_pos
 {
-    float x;
-    float y;
+    int x;
+    int y;
 } t_pos;
 
 typedef struct s_im
@@ -69,6 +69,11 @@ typedef struct s_mlx
 	int		endian;
 }   t_mlx;
 
+typedef struct s_all
+{
+    t_mlx *mlx_list;
+    t_map *map_list;
+} t_all;
 
 /* --------------------------------------------------------
 *------------------------- CONFIG FILE ------------------
@@ -96,12 +101,14 @@ int create_window(t_mlx *mlx);
 void intialize_images(t_map *map, t_im *img, t_mlx *mlx);
 void draw_map(t_mlx *mlx, t_map *map);
 void draw_line(t_mlx *mlx, int x1, int y1, int x2, int y2);
-
+int key_hook(int keycode, t_all *all);
+void draw_player(t_mlx *mlx, t_map *map, int player_x, int player_y);
 /* --------------------------------------------------------
 *-------------------------UTILS --------------------------
 ---------------------------------------------------------- */
 void intialize_list_map(t_map *map_file);
 void initialize_list_file(t_config_properties *file);
+void intialize_all(t_all *all);
 void free_map(t_map *map_read);
 void print_map(t_map *map);
 void cleanup(t_config_properties *file, t_map *map);

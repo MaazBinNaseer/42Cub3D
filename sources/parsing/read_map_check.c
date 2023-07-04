@@ -63,6 +63,9 @@ bool check_for_rows_surrounded_map(t_map *map_read)
     }
     return (EXIT_SUCCESS);
 }
+/*
+todo: S and 1 needs to be handled as that an error thrown 
+*/
 bool checking_for_diagonal_top_version(t_map *map)
 {
     // print_map(map);
@@ -106,6 +109,7 @@ int check_map(t_map *map_check)
         exit (EXIT_FAILURE);
    else if( get_player_position(map_check) == 1)
         exit (EXIT_FAILURE);
+
     return (EXIT_SUCCESS);
 }
 
