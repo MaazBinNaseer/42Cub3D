@@ -1,22 +1,5 @@
 #include "../../inc/Cube3D.h"
 
-void draw_box_wall(t_mlx *mlx, int x, int y, int size)
-{
-    int i, j;
-
-    int black = 0x000000;
-    int white = 0xFFFFFF; 
-
-    for (i = 0; i < size; i++) {
-        for (j = 0; j < size; j++) {
-            if (i == 0 || i == size - 1 || j == 0 || j == size - 1)
-                mlx_pixel_put(mlx->mlx, mlx->window, x + i, y + j, black);
-            else
-                mlx_pixel_put(mlx->mlx, mlx->window, x + i, y + j, white);
-        }
-    }
-}
-
 void mlx_line(t_mlx *mlx, int x1, int y1, int x2, int y2, int color)
 {
     int dx = abs(x2 - x1);

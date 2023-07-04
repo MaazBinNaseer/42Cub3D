@@ -1,6 +1,7 @@
 #include "../../inc/Cube3D.h"
 
-int raycasting()
+void drawRays3D()
 {
     
+
 }
