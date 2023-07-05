@@ -22,13 +22,13 @@ int key_hook(int keycode, t_all *all)
     }
     else if (keycode == 97 || keycode == 38) // 'a'
     {
-        new_x += sin(new_angle) * 0.1;
-        new_y -= cos(new_angle) * 0.1;
+        new_x -= sin(new_angle) * 0.1;
+        new_y += cos(new_angle) * 0.1;
     }
     else if (keycode == 100 || keycode == 40) // 'd'
     {
-        new_x -= sin(new_angle) * 0.1;
-        new_y += cos(new_angle) * 0.1;
+        new_x += sin(new_angle) * 0.1;
+        new_y -= cos(new_angle) * 0.1;
     }
     else if (keycode == 65361) // '<-'
     {
@@ -42,19 +42,18 @@ int key_hook(int keycode, t_all *all)
         if(new_angle > 2*PI)
             new_angle -= 2*PI;
     }
-    // Check if the new position is within the map and not inside a wall
     if (new_x >= 0 && new_x < all->map_list->rows && new_y >= 0 && new_y < all->map_list->coloumns && all->map_list->map[(int)new_x][(int)new_y] != '1')
     {
         all->map_list->player_position.x = new_x;
         all->map_list->player_position.y = new_y;
         all->map_list->player_position.player_direction = new_angle;
     }
-    printf("The player's position after updating it: x = %f, y = %f, angle = %f\n", all->map_list->player_position.x, all->map_list->player_position.y, all->map_list->player_position.player_direction);
-    mlx_clear_window(all->mlx_list->mlx, all->mlx_list->window); // Clear the window
+    // printf("The player's position after updating it: x = %f, y = %f, angle = %f\n", all->map_list->player_position.x, all->map_list->player_position.y, all->map_list->player_position.player_direction);
+    mlx_clear_window(all->mlx_list->mlx, all->mlx_list->window); 
     draw_map(all->mlx_list, all->map_list);
     draw_player(all->mlx_list, all->map_list, all->map_list->player_position.y * 100, all->map_list->player_position.x * 100);
+    drawRays3D(all);
     return (0);
 }
-
 
 

@@ -108,9 +108,17 @@ int check_map(t_map *map_check);
 int create_window(t_mlx *mlx);
 void intialize_images(t_map *map, t_im *img, t_mlx *mlx);
 void draw_map(t_mlx *mlx, t_map *map);
+void mlx_line(t_mlx *mlx, int x1, int y1, int x2, int y2, int color);
 void draw_line(t_mlx *mlx, int x1, int y1, int x2, int y2);
 int key_hook(int keycode, t_all *all);
 void draw_player(t_mlx *mlx, t_map *map, float player_x, float player_y);
+
+/* --------------------------------------------------------
+*------------------------- RENDERING ------------------
+---------------------------------------------------------- */
+void drawRays3D(t_all *access);
+
+
 /* --------------------------------------------------------
 *-------------------------UTILS --------------------------
 ---------------------------------------------------------- */

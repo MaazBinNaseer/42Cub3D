@@ -34,6 +34,7 @@ void read_arguments_valid(char *arg)
             intialize_images(map, img, mlx);
             mlx_key_hook(mlx->window, key_hook, all);
             draw_map(mlx, map);
+            drawRays3D(all);
             mlx_loop(mlx->mlx);
         }
     else
