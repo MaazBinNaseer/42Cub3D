@@ -18,7 +18,6 @@ void read_arguments_valid(char *arg)
     intialize_list_map(map);
     t_config_properties *file = malloc(sizeof(t_config_properties));
     initialize_list_file(file);
-    t_im *img = malloc(sizeof(t_img)); 
     t_all *all= malloc(sizeof(t_all));
     all->map_list = map;
     all->mlx_list = mlx;  
@@ -31,10 +30,8 @@ void read_arguments_valid(char *arg)
                 exit(1) ;
             read_config_file(arg, file, map);
             create_window(mlx);
-            intialize_images(map, img, mlx);
             mlx_key_hook(mlx->window, key_hook, all);
-            draw_map(mlx, map);
-            drawRays3D(all);
+            draw_map(mlx, map, all);
             mlx_loop(mlx->mlx);
         }
     else

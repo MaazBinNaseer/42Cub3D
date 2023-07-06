@@ -37,10 +37,10 @@ void draw_box(t_mlx *mlx, int x, int y, int color, int size)
 }
 
 
-void draw_player(t_mlx *mlx, t_map *map, float player_x, float player_y)
+void draw_player(t_mlx *mlx, t_map *map, float player_x, float player_y, t_all *list)
 {
     int color = 0xFFFF0000;
-    int player_size = 32;
+    int player_size = 64;
 
     player_x = map->player_position.y * player_size;
     player_y = map->player_position.x * player_size;
@@ -52,15 +52,16 @@ void draw_player(t_mlx *mlx, t_map *map, float player_x, float player_y)
             mlx_pixel_put(mlx->mlx, mlx->window, px, py, color);
         }
     }
-    float center_x = player_x + player_size / 2;
-    float center_y = player_y + player_size / 2;
-    int line_length = 125;
-    int line_end_x = center_x + line_length * cos(map->player_position.player_direction);
-    int line_end_y = center_y + line_length * sin(map->player_position.player_direction);
-    mlx_line(mlx, center_x, center_y, line_end_x, line_end_y, 0x00FF00); // Line color is green
+    // float center_x = player_x + player_size / 2;
+    // float center_y = player_y + player_size / 2;
+    // int line_length = 125;
+    // int line_end_x = center_x + line_length * cos(map->player_position.player_direction);
+    // int line_end_y = center_y + line_length * sin(map->player_position.player_direction);
+    // mlx_line(mlx, center_x, center_y, line_end_x, line_end_y, 0x00FF00);
+    drawRays3D(list);
 }
 
-void draw_map(t_mlx *mlx, t_map *map)
+void draw_map(t_mlx *mlx, t_map *map, t_all *list)
 {
     int i, j;
     int size = 64; // This is the unit of the map
@@ -77,7 +78,7 @@ void draw_map(t_mlx *mlx, t_map *map)
             } else if (map->map[i][j] == 'S') {
                 color = 0x000000; 
                 draw_box(mlx, j * size, i * size, color, size);
-                draw_player(mlx, map, i * size, j * size);
+                draw_player(mlx, map, i * size, j * size, list);
             }
         }
     }
@@ -88,23 +89,4 @@ void draw_map(t_mlx *mlx, t_map *map)
     for (j = 0; j <= map->coloumns; j++) {
         mlx_line(mlx, j * size, 0, j * size, map->rows * size, color); // Vertical lines
     }
-}
-
-
-
-
-/*
-todo: Find a way to print an image on the screen 
-*/
-void intialize_images(t_map *map, t_im *img, t_mlx *mlx)
-{
-    int width = 64;
-    img->wall = mlx_xpm_file_to_image(mlx->mlx, "./xpms/wall_2.xpm", &width, &width);
-    img->path = mlx_xpm_file_to_image(mlx->mlx, "./xpms/path.xpm",&width, &width);
-    map->img = img;
-    if(img->wall == NULL)
-        {
-            printf(RED "Intialize fail\n" RESET);
-            exit(1);
-        }
 }
