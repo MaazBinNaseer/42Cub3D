@@ -41,7 +41,6 @@ void drawRays3D(t_all *access)
             }
             else
             {
-            //    int mp = my * access->map_list->rows + mx;
                 if(access->map_list->map[my][mx] == '1')
                     dof = 8;
                 else
@@ -53,20 +52,18 @@ void drawRays3D(t_all *access)
             }
         }
         // printf("---- Final Rays are Rx: %0.2f and Ry: %0.2f ------\n", rx, ry);
-        float player_center_x = access->map_list->player_position.x * 64 + 32;
+        float player_center_x = access->map_list->player_position.x * 64 + 32 ;
         float player_center_y = access->map_list->player_position.y * 64 + 32;
         for(int i = -2; i <= 2; i++) {
-    for(int j = -2; j <= 2; j++) {
-        mlx_pixel_put(access->mlx_list->mlx,access->mlx_list->window, (int)player_center_x + i, player_center_y + j, 0xFF0000); // Color is set to red for visibility
-    }
-}
+        for(int j = -2; j <= 2; j++) {
+            mlx_pixel_put(access->mlx_list->mlx,access->mlx_list->window, (int)player_center_x + i, player_center_y + j, 0xFF0000); // Color is set to red for visibility
+            }
+        }
         float ray_length = sqrt(pow(rx - player_center_x, 2) + pow(ry - player_center_y, 2));
         float ray_end_x = player_center_x + (ray_length * 3) * cos(access->map_list->player_position.player_direction);
         float ray_end_y = player_center_y + (ray_length * 3) * sin(access->map_list->player_position.player_direction);
         mlx_line(access->mlx_list, player_center_x, player_center_y, ray_end_x, ray_end_y, 0xFFC0CB); 
-
-    }
-    
+    }  
 }
 
 //      printf("The values of are:\n player_center_x: %0.2f\n  player_center_y: %0.2f\n ray_end_x: %0.2f\n ray_end_y: %0.2f\n player_position(x: %0.2f, y: %0.2f)\n", player_center_x, player_center_y, ray_end_x, ray_end_y, access->map_list->player_position.x, access->map_list->player_position.y);

@@ -16,29 +16,33 @@ todo: Issues with the movement of the player (need to make it smooth)
 */
 int key_hook(int keycode, t_all *all)
 {
+    float  deltaTime = 0.567;
     float new_x = all->map_list->player_position.x;
     float new_y = all->map_list->player_position.y;
     float new_angle = all->map_list->player_position.player_direction;
     float speed = 0.25;
-        if (keycode == 119 || keycode == 25) // 'w'
+    float moveStep = speed * deltaTime;
+
+
+    if (keycode == 119 || keycode == 25) // 'w' - Move forward
     {
-        new_x += cos(new_angle) * speed;
-        new_y += sin(new_angle) * speed;
+        new_x += cos(new_angle) * moveStep;
+        new_y += sin(new_angle) * moveStep;
     }
-    else if (keycode == 115 || keycode == 39) // 's'
+    else if (keycode == 115 || keycode == 39) // 's' - Move backward
     {
-        new_x -= cos(new_angle) * speed;
-        new_y -= sin(new_angle) * speed;
+        new_x -= cos(new_angle) * moveStep;
+        new_y -= sin(new_angle) * moveStep;
     }
-    else if (keycode == 97 || keycode == 38) // 'a'
+    else if (keycode == 97 || keycode == 38) // 'a' - Strafe left
     {
-        new_x -= cos(new_angle) * speed;
-        new_y += sin(new_angle) * speed;
+        new_x -= cos(new_angle + PI/2) * moveStep; // Add 90 degrees to the player angle
+        new_y -= sin(new_angle + PI/2) * moveStep;
     }
-    else if (keycode == 100 || keycode == 40) // 'd'
+    else if (keycode == 100 || keycode == 40) // 'd' - Strafe right
     {
-        new_x += cos(new_angle) * speed;
-        new_y -= sin(new_angle) * speed;
+        new_x += cos(new_angle + PI/2) * moveStep; // Add 90 degrees to the player angle
+        new_y += sin(new_angle + PI/2) * moveStep;
     }
     else if (keycode == 65361) // '<-'
     {
@@ -56,9 +60,9 @@ int key_hook(int keycode, t_all *all)
         all->map_list->player_position.y = new_y;
         all->map_list->player_position.player_direction = new_angle;
     }
-    printf("The player's position after updating it: x = %f, y = %f, angle = %f\n", all->map_list->player_position.x, all->map_list->player_position.y, all->map_list->player_position.player_direction);
-    mlx_clear_window(all->mlx_list->mlx, all->mlx_list->window); 
+    printf("The player's position after updating it: x = %0.2f, y = %0.2f, angle = %0.2f\n", all->map_list->player_position.x, all->map_list->player_position.y, all->map_list->player_position.player_direction);
     draw_map(all->mlx_list, all->map_list, all);
+    // mlx_clear_window(all->mlx_list->mlx, all->mlx_list->window); 
     draw_player(all->mlx_list, all->map_list, all->map_list->player_position.y, all->map_list->player_position.x, all);
     return (0);
 }

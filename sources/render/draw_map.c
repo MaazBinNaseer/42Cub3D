@@ -42,8 +42,8 @@ void draw_player(t_mlx *mlx, t_map *map, float player_x, float player_y, t_all *
     int color = 0xFFFF0000;
     int player_size = 64;
 
-    player_x = map->player_position.y * player_size;
-    player_y = map->player_position.x * player_size;
+    player_x = map->player_position.x * player_size;
+    player_y = map->player_position.y * player_size;
 
     for (float px = player_x; px < player_x + player_size; px++)
     {
