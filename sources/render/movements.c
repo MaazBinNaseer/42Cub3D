@@ -10,7 +10,6 @@ void updatePlayerDirection(t_all *access, float rotation_angle) {
     }
     return ;
 }
-
 /*
 todo: Issues with the movement of the player (need to make it smooth)
 */
@@ -46,12 +45,12 @@ int key_hook(int keycode, t_all *all)
     }
     else if (keycode == 65361) // '<-'
     {
-        updatePlayerDirection(all, -0.523599);
+        updatePlayerDirection(all, -0.785398);
         new_angle = all->map_list->player_position.player_direction;
     }
     else if (keycode == 65363) // '->'
     {
-        updatePlayerDirection(all, 0.523599);
+        updatePlayerDirection(all, 0.785398);
         new_angle = all->map_list->player_position.player_direction;
     }
     if (new_x >= 0 && new_x < all->map_list->rows && new_y >= 0 && new_y < all->map_list->coloumns && all->map_list->map[(int)new_x][(int)new_y] != '1')
@@ -60,9 +59,9 @@ int key_hook(int keycode, t_all *all)
         all->map_list->player_position.y = new_y;
         all->map_list->player_position.player_direction = new_angle;
     }
-    printf("The player's position after updating it: x = %0.2f, y = %0.2f, angle = %0.2f\n", all->map_list->player_position.x, all->map_list->player_position.y, all->map_list->player_position.player_direction);
+    // printf("The player's position after updating it: x = %0.2f, y = %0.2f, angle = %0.2f\n", all->map_list->player_position.x, all->map_list->player_position.y, all->map_list->player_position.player_direction);
+    mlx_clear_window(all->mlx_list->mlx, all->mlx_list->window); 
     draw_map(all->mlx_list, all->map_list, all);
-    // mlx_clear_window(all->mlx_list->mlx, all->mlx_list->window); 
     draw_player(all->mlx_list, all->map_list, all->map_list->player_position.y, all->map_list->player_position.x, all);
     return (0);
 }

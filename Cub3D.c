@@ -14,6 +14,9 @@ void read_arguments_valid(char *arg)
     t_mlx *mlx = malloc(sizeof(t_mlx));
     mlx->mlx = NULL;
     mlx->window = NULL;
+    mlx->addr = NULL;
+    mlx->line_length = 0;
+    mlx->bits_per_pixel = 1;
     t_map *map = (malloc(sizeof(t_map)));
     intialize_list_map(map);
     t_config_properties *file = malloc(sizeof(t_config_properties));

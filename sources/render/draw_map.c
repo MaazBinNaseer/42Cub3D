@@ -40,8 +40,8 @@ void draw_box(t_mlx *mlx, int x, int y, int color, int size)
 void draw_player(t_mlx *mlx, t_map *map, float player_x, float player_y, t_all *list)
 {
     int color = 0xFFFF0000;
-    int player_size = 64;
-
+    int player_size = 32;
+    // calculate_distance(list);
     player_x = map->player_position.x * player_size;
     player_y = map->player_position.y * player_size;
 
@@ -52,13 +52,9 @@ void draw_player(t_mlx *mlx, t_map *map, float player_x, float player_y, t_all *
             mlx_pixel_put(mlx->mlx, mlx->window, px, py, color);
         }
     }
-    // float center_x = player_x + player_size / 2;
-    // float center_y = player_y + player_size / 2;
-    // int line_length = 125;
-    // int line_end_x = center_x + line_length * cos(map->player_position.player_direction);
-    // int line_end_y = center_y + line_length * sin(map->player_position.player_direction);
-    // mlx_line(mlx, center_x, center_y, line_end_x, line_end_y, 0x00FF00);
-    drawRays3D(list);
+    drawRays_horizontal3D(list);
+    // drawRays_vertical3D(list);
+    // printf("Distance from the wall %0.2f\n", distance);
 }
 
 void draw_map(t_mlx *mlx, t_map *map, t_all *list)
@@ -90,3 +86,10 @@ void draw_map(t_mlx *mlx, t_map *map, t_all *list)
         mlx_line(mlx, j * size, 0, j * size, map->rows * size, color); // Vertical lines
     }
 }
+
+   // float center_x = player_x + player_size / 2;
+    // float center_y = player_y + player_size / 2;
+    // int line_length = 125;
+    // int line_end_x = center_x + line_length * cos(map->player_position.player_direction);
+    // int line_end_y = center_y + line_length * sin(map->player_position.player_direction);
+    // mlx_line(mlx, center_x, center_y, line_end_x, line_end_y, 0x00FF00);

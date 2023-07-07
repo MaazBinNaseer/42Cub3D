@@ -71,6 +71,8 @@ typedef struct s_mlx
     void	*img;
     void    *window;
 	char	*addr;
+    int		bits_per_pixel;
+	int		line_length;
 	int		width;
 	int		height;
     char    *path_to_tiles;
@@ -106,6 +108,7 @@ int check_map(t_map *map_check);
 *------------------------- RENDERING ------------------
 ---------------------------------------------------------- */
 int create_window(t_mlx *mlx);
+void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
 void intialize_images(t_map *map, t_im *img, t_mlx *mlx);
 void draw_map(t_mlx *mlx, t_map *map, t_all *list);
 void mlx_line(t_mlx *mlx, int x1, int y1, int x2, int y2, int color);
@@ -116,10 +119,12 @@ void draw_player(t_mlx *mlx, t_map *map, float player_x, float player_y, t_all *
 /* --------------------------------------------------------
 *------------------------- RENDERING ------------------
 ---------------------------------------------------------- */
-void drawRays3D(t_all *access);
+// void drawRays3D(t_all *access);
 void updatePlayerDirection(t_all *access, float rotation_angle);
-
-
+float drawRays_vertical3D(t_all *access);
+// float drawRays_horizontal3D(t_all *access);
+float calculate_distance (t_all *access);
+float* drawRays_horizontal3D(t_all *access);
 /* --------------------------------------------------------
 *-------------------------UTILS --------------------------
 ---------------------------------------------------------- */
