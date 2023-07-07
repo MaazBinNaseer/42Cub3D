@@ -40,7 +40,7 @@ void draw_box(t_mlx *mlx, int x, int y, int color, int size)
 void draw_player(t_mlx *mlx, t_map *map, float player_x, float player_y, t_all *list)
 {
     int color = 0xFFFF0000;
-    int player_size = 32;
+    int player_size = 64;
     // calculate_distance(list);
     player_x = map->player_position.x * player_size;
     player_y = map->player_position.y * player_size;
@@ -53,7 +53,7 @@ void draw_player(t_mlx *mlx, t_map *map, float player_x, float player_y, t_all *
         }
     }
     drawRays_horizontal3D(list);
-    // drawRays_vertical3D(list);
+    drawRays_vertical3D(list);
     // printf("Distance from the wall %0.2f\n", distance);
 }
 

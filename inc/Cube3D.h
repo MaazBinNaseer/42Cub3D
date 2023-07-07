@@ -119,12 +119,12 @@ void draw_player(t_mlx *mlx, t_map *map, float player_x, float player_y, t_all *
 /* --------------------------------------------------------
 *------------------------- RENDERING ------------------
 ---------------------------------------------------------- */
-// void drawRays3D(t_all *access);
+void drawRays3D(t_all *access);
 void updatePlayerDirection(t_all *access, float rotation_angle);
 float drawRays_vertical3D(t_all *access);
-// float drawRays_horizontal3D(t_all *access);
+float drawRays_horizontal3D(t_all *access);
 float calculate_distance (t_all *access);
-float* drawRays_horizontal3D(t_all *access);
+
 /* --------------------------------------------------------
 *-------------------------UTILS --------------------------
 ---------------------------------------------------------- */

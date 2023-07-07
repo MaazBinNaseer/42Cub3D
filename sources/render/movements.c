@@ -62,7 +62,7 @@ int key_hook(int keycode, t_all *all)
     // printf("The player's position after updating it: x = %0.2f, y = %0.2f, angle = %0.2f\n", all->map_list->player_position.x, all->map_list->player_position.y, all->map_list->player_position.player_direction);
     mlx_clear_window(all->mlx_list->mlx, all->mlx_list->window); 
     draw_map(all->mlx_list, all->map_list, all);
-    draw_player(all->mlx_list, all->map_list, all->map_list->player_position.y, all->map_list->player_position.x, all);
+    draw_player(all->mlx_list, all->map_list, all->map_list->player_position.x, all->map_list->player_position.y, all);
     return (0);
 }
 
