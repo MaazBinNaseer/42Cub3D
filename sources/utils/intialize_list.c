@@ -30,6 +30,7 @@ void intialize_list_mlx(t_mlx *mlx)
     mlx->window = NULL;
     mlx->addr = NULL;
     mlx->line_length = 0;
-    mlx->bits_per_pixel = 1;
+    mlx->bits_per_pixel = 0;
+    mlx->endian = 0;
 }
 

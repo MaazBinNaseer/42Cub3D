@@ -17,7 +17,6 @@ todo: Intialized list call should have a separate function call
 void read_arguments_valid(char *arg)
 {
     int length = 0;
-    
     t_all *all = malloc(sizeof(t_all)) ;
     t_config_properties *file = malloc(sizeof(t_config_properties));
     t_mlx *mlx = malloc(sizeof(t_mlx));
