@@ -1,6 +1,13 @@
 #include "inc/Cube3D.h"
 
-// #include <stdio.h>
+void intialize_lists(t_all *all, t_map *map, t_config_properties *file ,t_mlx *mlx)
+{  
+    initialize_list_file(file);
+    intialize_list_map(map);
+    intialize_list_mlx(mlx);
+    all->map_list = map;
+    all->mlx_list = mlx;
+}
 
 /* ---------------------------------------------------------------
 * @brief: To allow the user to handle incorrect inputs
@@ -11,19 +18,11 @@ void read_arguments_valid(char *arg)
 {
     int length = 0;
     
-    t_mlx *mlx = malloc(sizeof(t_mlx));
-    mlx->mlx = NULL;
-    mlx->window = NULL;
-    mlx->addr = NULL;
-    mlx->line_length = 0;
-    mlx->bits_per_pixel = 1;
-    t_map *map = (malloc(sizeof(t_map)));
-    intialize_list_map(map);
+    t_all *all = malloc(sizeof(t_all)) ;
     t_config_properties *file = malloc(sizeof(t_config_properties));
-    initialize_list_file(file);
-    t_all *all= malloc(sizeof(t_all));
-    all->map_list = map;
-    all->mlx_list = mlx;  
+    t_mlx *mlx = malloc(sizeof(t_mlx));
+    t_map *map = malloc(sizeof(t_map));
+    intialize_lists(all, map, file, mlx);
     while(arg[length] != '\0')
         length++;
     if(length >= 4 && ft_strncmp(arg + length - 4, ".cub", 4) == 0)

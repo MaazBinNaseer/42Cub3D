@@ -136,8 +136,8 @@ float get_player_position(t_map *map_read)
             if (map_read->map[i][j] == 'N' || map_read->map[i][j] == 'S' ||
                 map_read->map[i][j] == 'E' || map_read->map[i][j] == 'W')
             {
-                map_read->player_position.x = (float)i + 0.5f;
-                map_read->player_position.y = (float)j + 0.5f;
+                map_read->player_position.x = (float)i;
+                map_read->player_position.y = (float)j;
                 map_read->player++;
                 printf("The player position is x: %f | y: %f -- \n", map_read->player_position.x, map_read->player_position.y);
                 break;

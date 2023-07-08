@@ -37,25 +37,25 @@ void draw_box(t_mlx *mlx, int x, int y, int color, int size)
 }
 
 
-void draw_player(t_mlx *mlx, t_map *map, float player_x, float player_y, t_all *list)
+void draw_player(t_mlx *mlx, t_map *map, float player_x, float player_y, t_all *list, int size)
 {
+    (void)list;
     int color = 0xFFFF0000;
-    int player_size = 64;
-    // calculate_distance(list);
-    player_x = map->player_position.x * player_size;
-    player_y = map->player_position.y * player_size;
+    int player_size = 32;
 
-    for (float px = player_x; px < player_x + player_size; px++)
+    printf("The player position is (x: %0.2f, y: %0.2f)\n", map->player_position.x, map->player_position.y);
+    player_x = player_x * size + size / 2.0;
+    player_y = player_y * size + size / 2.0;
+
+    for (float px = player_x - player_size / 2.0; px < player_x + player_size / 2.0; px++)
     {
-        for (float py = player_y; py < player_y + player_size; py++)
+        for (float py = player_y - player_size / 2.0; py < player_y + player_size / 2.0; py++)
         {
             mlx_pixel_put(mlx->mlx, mlx->window, px, py, color);
         }
     }
-    drawRays_horizontal3D(list);
-    drawRays_vertical3D(list);
-    // printf("Distance from the wall %0.2f\n", distance);
 }
+
 
 void draw_map(t_mlx *mlx, t_map *map, t_all *list)
 {
@@ -72,9 +72,10 @@ void draw_map(t_mlx *mlx, t_map *map, t_all *list)
                 color = 0xFFFFFF;
                 draw_box(mlx, j * size, i * size, color, size);
             } else if (map->map[i][j] == 'S') {
-                color = 0x000000; 
+                color = 0x000000;
+                printf("The value of the player is at (i: %d, j: %d)\n", i, j);
                 draw_box(mlx, j * size, i * size, color, size);
-                draw_player(mlx, map, i * size, j * size, list);
+                draw_player(mlx, map, j, i, list, size);
             }
         }
     }

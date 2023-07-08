@@ -48,19 +48,30 @@ typedef struct s_pos
     float player_direction;
 } t_pos;
 
-typedef struct s_im
+typedef struct s_images
 {
     void *wall;
     void *path;
-} t_im;
+} t_images;
 
+typedef struct s_rays
+{
+    char		dir;
+	int			color;
+	int			start[2];
+	float		end[2];
+	float		ra;
+	float		dist;
+	// mlx_image_t	*img;
+
+} t_rays;
 typedef struct s_map
 {
     char **map;
     int rows;
     int coloumns;
     int player;
-    t_im *img;
+    t_images *img;
     t_pos player_position;
 } t_map;
 
@@ -83,6 +94,7 @@ typedef struct s_all
 {
     t_mlx *mlx_list;
     t_map *map_list;
+    t_rays *rays;
 } t_all;
 
 /* --------------------------------------------------------
@@ -95,35 +107,32 @@ bool set_order_of_file(const char* filename);
 /* --------------------------------------------------------
 *------------------------- MAP READING ------------------
 ---------------------------------------------------------- */
-void read_map(int fd, t_map *map, char *first_map_line);
-int check_map_is_surrounded_rows(t_map *map_read);
-bool check_for_zeros_surrounded_map(t_map *map_read);
-int check_map_is_surrounded_columns(t_map *map_read);
-float get_player_position(t_map *map_read);
-bool check_for_error_map(t_map *map_read);
-int check_map(t_map *map_check);
+void    read_map(int fd, t_map *map, char *first_map_line);
+int     check_map_is_surrounded_rows(t_map *map_read);
+bool    check_for_zeros_surrounded_map(t_map *map_read);
+int     check_map_is_surrounded_columns(t_map *map_read);
+float   get_player_position(t_map *map_read);
+bool    check_for_error_map(t_map *map_read);
+int     check_map(t_map *map_check);
 
 
 /* --------------------------------------------------------
 *------------------------- RENDERING ------------------
 ---------------------------------------------------------- */
-int create_window(t_mlx *mlx);
+int     create_window(t_mlx *mlx);
 void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
-void intialize_images(t_map *map, t_im *img, t_mlx *mlx);
-void draw_map(t_mlx *mlx, t_map *map, t_all *list);
-void mlx_line(t_mlx *mlx, int x1, int y1, int x2, int y2, int color);
-void draw_line(t_mlx *mlx, int x1, int y1, int x2, int y2);
-int key_hook(int keycode, t_all *all);
-void draw_player(t_mlx *mlx, t_map *map, float player_x, float player_y, t_all *list);
+void    updatePlayerDirection(t_all *access, float rotation_angle);
+void    intialize_images(t_map *map, t_images *img, t_mlx *mlx);
+void    draw_map(t_mlx *mlx, t_map *map, t_all *list);
+void    mlx_line(t_mlx *mlx, int x1, int y1, int x2, int y2, int color);
+void    draw_line(t_mlx *mlx, int x1, int y1, int x2, int y2);
+int     key_hook(int keycode, t_all *all);
+void    draw_player(t_mlx *mlx, t_map *map, float player_x, float player_y, t_all *list, int size);
 
 /* --------------------------------------------------------
-*------------------------- RENDERING ------------------
+*------------------------- RAYCASTING ------------------
 ---------------------------------------------------------- */
-void drawRays3D(t_all *access);
-void updatePlayerDirection(t_all *access, float rotation_angle);
-float drawRays_vertical3D(t_all *access);
-float drawRays_horizontal3D(t_all *access);
-float calculate_distance (t_all *access);
+
 
 /* --------------------------------------------------------
 *-------------------------UTILS --------------------------
@@ -131,6 +140,7 @@ float calculate_distance (t_all *access);
 void intialize_list_map(t_map *map_file);
 void initialize_list_file(t_config_properties *file);
 void intialize_all(t_all *all);
+void intialize_list_mlx(t_mlx *mlx);
 void free_map(t_map *map_read);
 void print_map(t_map *map);
 void cleanup(t_config_properties *file, t_map *map);
