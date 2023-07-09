@@ -22,6 +22,7 @@ void read_arguments_valid(char *arg)
     t_mlx *mlx = malloc(sizeof(t_mlx));
     t_map *map = malloc(sizeof(t_map));
     intialize_lists(all, map, file, mlx);
+    
     while(arg[length] != '\0')
         length++;
     if(length >= 4 && ft_strncmp(arg + length - 4, ".cub", 4) == 0)
@@ -31,8 +32,10 @@ void read_arguments_valid(char *arg)
                 exit(1) ;
             read_config_file(arg, file, map);
             create_window(mlx);
+            all->mlx_list->offscreen_buffer = mlx_new_image(all->mlx_list->mlx, 1080, 1000);
+            all->mlx_list->addr = mlx_get_data_addr(all->mlx_list->offscreen_buffer, &(mlx->bits_per_pixel), &(mlx->line_length), &(mlx->endian));
             mlx_key_hook(mlx->window, key_hook, all);
-            draw_map(mlx, map, all);
+            draw_map(all->mlx_list->offscreen_buffer, all->map_list, all);
             mlx_loop(mlx->mlx);
         }
     else
@@ -51,3 +54,9 @@ int main(int argc, char **argv)
         printf("No arguments provided.\n");
     return 0;
 }
+
+/*
+            printf("all: %p\n", (void*)all);
+            printf("all->mlx_list: %p\n", (void*)all->mlx_list);
+            printf("all->mlx_list->mlx: %p\n", (void*)all->mlx_list->mlx);
+*/

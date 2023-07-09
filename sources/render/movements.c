@@ -81,10 +81,8 @@ int key_hook(int keycode, t_all *all)
     all->map_list->player_position.x = new_x;
     all->map_list->player_position.y = new_y;
     all->map_list->player_position.player_direction = new_angle;
-
-    mlx_clear_window(all->mlx_list->mlx, all->mlx_list->window); 
-    draw_map(all->mlx_list, all->map_list, all);
-    draw_player(all->mlx_list, all->map_list, all->map_list->player_position.x, all->map_list->player_position.y, all, size);
+    mlx_put_image_to_window(all->mlx_list->mlx, all->mlx_list->window, all->mlx_list->offscreen_buffer, 0, 0);
+    draw_player(all->mlx_list, all->map_list, all->map_list->player_position.x, all->map_list->player_position.y, size);
     return (0);
 }
 

@@ -88,6 +88,7 @@ typedef struct s_mlx
 	int		height;
     char    *path_to_tiles;
 	int		endian;
+    void    *offscreen_buffer; 
 }   t_mlx;
 
 typedef struct s_all
@@ -122,12 +123,13 @@ int     check_map(t_map *map_check);
 int     create_window(t_mlx *mlx);
 void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
 void    updatePlayerDirection(t_all *access, float rotation_angle);
-void    intialize_images(t_map *map, t_images *img, t_mlx *mlx);
-void    draw_map(t_mlx *mlx, t_map *map, t_all *list);
-void    mlx_line(t_mlx *mlx, int x1, int y1, int x2, int y2, int color);
+void    draw_map(void *offscreen_buffer, t_map *map, t_all *all);
+// void    mlx_line(t_mlx *mlx, int x1, int y1, int x2, int y2, int color);
+
 void    draw_line(t_mlx *mlx, int x1, int y1, int x2, int y2);
 int     key_hook(int keycode, t_all *all);
-void    draw_player(t_mlx *mlx, t_map *map, float player_x, float player_y, t_all *list, int size);
+void    draw_player(t_mlx *mlx, t_map *map, float player_x, float player_y, int size);
+void    draw_grid(t_all *all, t_map *map, void *offscreen_buffer, int size);
 
 /* --------------------------------------------------------
 *------------------------- RAYCASTING ------------------
@@ -137,12 +139,13 @@ void    draw_player(t_mlx *mlx, t_map *map, float player_x, float player_y, t_al
 /* --------------------------------------------------------
 *-------------------------UTILS --------------------------
 ---------------------------------------------------------- */
-void intialize_list_map(t_map *map_file);
-void initialize_list_file(t_config_properties *file);
-void intialize_all(t_all *all);
-void intialize_list_mlx(t_mlx *mlx);
-void free_map(t_map *map_read);
-void print_map(t_map *map);
-void cleanup(t_config_properties *file, t_map *map);
+void    intialize_list_map(t_map *map_file);
+void    initialize_list_file(t_config_properties *file);
+void    intialize_all(t_all *all);
+void    intialize_list_mlx(t_mlx *mlx);
+void    intialize_images(t_map *map, t_images *img, t_mlx *mlx);
+void    free_map(t_map *map_read);
+void    print_map(t_map *map);
+void    cleanup(t_config_properties *file, t_map *map);
 
 #endif

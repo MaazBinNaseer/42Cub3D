@@ -1,7 +1,8 @@
 #include "../../inc/Cube3D.h"
 
-void mlx_line(t_mlx *mlx, int x1, int y1, int x2, int y2, int color)
+void mlx_line(t_mlx *mlx, void *offscreen_buffer, int x1, int y1, int x2, int y2, int color)
 {
+    (void)offscreen_buffer;
     int dx = abs(x2 - x1);
     int dy = abs(y2 - y1);
     int sx = (x1 < x2) ? 1 : -1;
@@ -26,20 +27,22 @@ void mlx_line(t_mlx *mlx, int x1, int y1, int x2, int y2, int color)
     }
 }
 
-void draw_box(t_mlx *mlx, int x, int y, int color, int size)
-{
-    int i, j;
-    for (i = 0; i < size; i++) {
-        for (j = 0; j < size; j++) {
-            mlx_pixel_put(mlx->mlx, mlx->window, x + i, y + j, color);
+    void draw_box(t_all *all, int start_x, int start_y, int color, int size)
+    {
+        int x, y;
+
+        for (y = start_y; y < start_y + size; y++) {
+            for (x = start_x; x < start_x + size; x++) {
+                my_mlx_pixel_put(all->mlx_list, x, y, color);
+            }
         }
     }
-}
 
 
-void draw_player(t_mlx *mlx, t_map *map, float player_x, float player_y, t_all *list, int size)
+
+
+void draw_player(t_mlx *mlx, t_map *map, float player_x, float player_y, int size)
 {
-    (void)list;
     int color = 0xFFFF0000;
     int player_size = 32;
 
@@ -55,9 +58,20 @@ void draw_player(t_mlx *mlx, t_map *map, float player_x, float player_y, t_all *
         }
     }
 }
+void draw_grid(t_all *all, t_map *map, void *offscreen_buffer, int size)
+{
+    int i, j;
+    int color = 0x0000FF;
 
+    for (i = 0; i <= map->rows; i++) {
+        mlx_line(all->mlx_list, offscreen_buffer, 0, i * size, map->coloumns * size, i * size, color); // Horizontal lines
+    }
+    for (j = 0; j <= map->coloumns; j++) {
+        mlx_line(all->mlx_list, offscreen_buffer, j * size, 0, j * size, map->rows * size, color); // Vertical lines
+    }
+}
 
-void draw_map(t_mlx *mlx, t_map *map, t_all *list)
+void draw_map(void *offscreen_buffer, t_map *map, t_all *all)
 {
     int i, j;
     int size = 64; // This is the unit of the map
@@ -67,26 +81,22 @@ void draw_map(t_mlx *mlx, t_map *map, t_all *list)
         for (j = 0; j < map->coloumns; j++) {
             if (map->map[i][j] == '0') {
                 color = 0x000000;
-                draw_box(mlx, j * size, i * size, color, size);
+                draw_box(all, j * size, i * size, color, size);
             } else if (map->map[i][j] == '1') { // '1' represents walls
                 color = 0xFFFFFF;
-                draw_box(mlx, j * size, i * size, color, size);
+                draw_box(all, j * size, i * size, color, size);
             } else if (map->map[i][j] == 'S') {
                 color = 0x000000;
                 printf("The value of the player is at (i: %d, j: %d)\n", i, j);
-                draw_box(mlx, j * size, i * size, color, size);
-                draw_player(mlx, map, j, i, list, size);
+                draw_box(all, j * size, i * size, color, size);
+                draw_player(all->mlx_list,all->map_list, j, i, size);
             }
         }
     }
-    color = 0x0000FF;
-    for (i = 0; i <= map->rows; i++) {
-        mlx_line(mlx, 0, i * size, map->coloumns * size, i * size, color); // Horizontal lines
-    }
-    for (j = 0; j <= map->coloumns; j++) {
-        mlx_line(mlx, j * size, 0, j * size, map->rows * size, color); // Vertical lines
-    }
+    draw_grid(all, map, offscreen_buffer, size);
 }
+
+
 
    // float center_x = player_x + player_size / 2;
     // float center_y = player_y + player_size / 2;
