@@ -9,11 +9,23 @@ void intialize_lists(t_all *all, t_map *map, t_config_properties *file ,t_mlx *m
     all->mlx_list = mlx;
 }
 
-/* ---------------------------------------------------------------
-* @brief: To allow the user to handle incorrect inputs
-* @return: Should throw an error when the argument fails more than 2 
-todo: Intialized list call should have a separate function call 
-------------------------------------------------------------------*/
+void game_loop(t_all *all, t_map *map, t_mlx *mlx) {
+    // Draw the map and grid once on the offscreen buffer
+    draw_map(all->mlx_list->offscreen_buffer, map, all);
+    draw_grid(all, map, all->mlx_list->offscreen_buffer, TILE_SIZE);
+    
+    while (1) {
+        // Handle input
+        mlx_key_hook(mlx->window, key_hook, all);
+
+        // Render everything on the screen
+        mlx_put_image_to_window(mlx->mlx, mlx->window, all->mlx_list->offscreen_buffer, 0, 0);
+
+        // Run the event loop
+        mlx_loop(mlx->mlx);
+    }
+}
+
 void read_arguments_valid(char *arg)
 {
     int length = 0;
@@ -34,9 +46,7 @@ void read_arguments_valid(char *arg)
             create_window(mlx);
             all->mlx_list->offscreen_buffer = mlx_new_image(all->mlx_list->mlx, 1080, 1000);
             all->mlx_list->addr = mlx_get_data_addr(all->mlx_list->offscreen_buffer, &(mlx->bits_per_pixel), &(mlx->line_length), &(mlx->endian));
-            mlx_key_hook(mlx->window, key_hook, all);
-            draw_map(all->mlx_list->offscreen_buffer, all->map_list, all);
-            mlx_loop(mlx->mlx);
+            game_loop(all, map, mlx);
         }
     else
         printf("No such file exsist\n");
