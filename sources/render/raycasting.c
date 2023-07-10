@@ -47,9 +47,9 @@ static float rays_horizontal(t_rays *ray, t_map *map, int x, int y)
     ray_offset[0] = -ray_offset[1] * tan_inv;
     check_unit_wall(ray, map, ray_offset);
     ray_length = (sqrtf(powf((ray->end[0] - x), 2) + powf((ray->end[1] - y), 2)));
-    printf("Ray legth %0.2f\n", ray_length);
     return (ray_length);
 }
+
 
 static float rays_vertical(t_rays *rays, t_map *map, int x, int y)
 {
@@ -82,19 +82,33 @@ static float rays_vertical(t_rays *rays, t_map *map, int x, int y)
     return (ray_length);
 }
 
+float shortest_distance(t_rays *ray, t_map *map, int x, int y)
+{
+    float   distance_H;
+    float   distance_V;
+    int     end_h[2];
+
+    ray->start[0] = x;
+    ray->start[1] = y;
+    distance_H = rays_horizontal(ray, map, x, y);
+    end_h[0] = ray->end[0];
+    end_h[1] = ray->end[1];
+    ray->dir = 'S';
+    distance_V = rays_vertical(ray, map, x, y);
+    if(distance_H < distance_V)
+    {
+        ray->end[0] = end_h[0];
+        ray->end[1] = end_h[1];
+        ray->dir = 'E';
+        return (distance_H);
+    }
+    return (distance_V);
+}
 
 void draw_rays(t_rays *ray, t_mlx *mlx, t_map *map, int x, int y)
 {
-    // printf("Calling rays_horizontal()...\n");
-    fflush(stdout);
-    int color = 0x00FF00; // Green for horizontal rays
-
-    // Draw horizontal rays
-    rays_horizontal(ray, map, x, y);
-    mlx_line(mlx, mlx->offscreen_buffer , x, y, ray->end[0], ray->end[1], color);
-
-    // Change color for vertical rays
-    color = 0xFF0000; // Red for vertical rays
-    rays_vertical(ray, map, x, y);
+ 
+    int color = 0x00FF00;
+    shortest_distance(ray, map, x, y);
     mlx_line(mlx, mlx->offscreen_buffer , x, y, ray->end[0], ray->end[1], color);
 }

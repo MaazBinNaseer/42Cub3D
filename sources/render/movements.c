@@ -68,15 +68,6 @@ int key_hook(int keycode, t_all *all)
         }
         t += 0.1;
     }
-    if (all->map_list->player_position.y >= 0 && all->map_list->player_position.y < all->map_list->rows &&
-    all->map_list->player_position.x >= 0 && all->map_list->player_position.x < all->map_list->coloumns && 
-    all->map_list->map[(int)floor(all->map_list->player_position.y)][(int)floor(all->map_list->player_position.x)] == '1')
-    {
-    // Collision with wall, revert to old position
-        all->map_list->player_position.x = old_x;
-        all->map_list->player_position.y = old_y;
-        all->map_list->player_position.player_direction = old_angle;
-    }
 
     all->map_list->player_position.x = new_x;
     all->map_list->player_position.y = new_y;
