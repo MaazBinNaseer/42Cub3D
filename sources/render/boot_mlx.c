@@ -14,7 +14,6 @@ int close_windows(t_mlx *mlx)
 void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color)
 {
 	char	*dst;
-    // color = 0x00FFFFFF;
 	dst = mlx->addr + (y * mlx->line_length + x * (mlx->bits_per_pixel / 8));
     *(unsigned int*)dst = color;
 }

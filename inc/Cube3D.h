@@ -21,7 +21,9 @@
 /* ------------------------------------------------------
 # ----------------- MATH && MAP MACROS ------------------
 --------------------------------------------------------*/
-#define PI 3.14159
+#define PI 3.14159265358979323846
+#define PI_2 1.57079632679489661923
+#define MAXFLOAT 3.40282347e+38F
 #define TILE_SIZE 64
 /* --------------------------------------------------------
 # ------------------------- STRUCTS ------------------
@@ -124,11 +126,11 @@ int     create_window(t_mlx *mlx);
 void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
 void    updatePlayerDirection(t_all *access, float rotation_angle);
 void    draw_map(void *offscreen_buffer, t_map *map, t_all *all);
-// void    mlx_line(t_mlx *mlx, int x1, int y1, int x2, int y2, int color);
-
+void    mlx_line(t_mlx *mlx, void *offscreen_buffer, int x1, int y1, int x2, int y2, int color);
+void    draw_rays(t_rays *ray, t_mlx *mlx, t_map *map, int x, int y);
 void    draw_line(t_mlx *mlx, int x1, int y1, int x2, int y2);
+void    draw_player(t_all *all, float player_x, float player_y, int size);
 int     key_hook(int keycode, t_all *all);
-void    draw_player(t_mlx *mlx, t_map *map, float player_x, float player_y, int size);
 void    draw_grid(t_all *all, t_map *map, void *offscreen_buffer, int size);
 
 /* --------------------------------------------------------
@@ -144,6 +146,7 @@ void    initialize_list_file(t_config_properties *file);
 void    intialize_all(t_all *all);
 void    intialize_list_mlx(t_mlx *mlx);
 void    intialize_images(t_map *map, t_images *img, t_mlx *mlx);
+void    initialize_rays(t_rays *rays);
 void    free_map(t_map *map_read);
 void    print_map(t_map *map);
 void    cleanup(t_config_properties *file, t_map *map);

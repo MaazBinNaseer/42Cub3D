@@ -27,26 +27,24 @@ void mlx_line(t_mlx *mlx, void *offscreen_buffer, int x1, int y1, int x2, int y2
     }
 }
 
-    void draw_box(t_all *all, int start_x, int start_y, int color, int size)
-    {
-        int x, y;
+void draw_box(t_all *all, int start_x, int start_y, int color, int size)
+{
+    int x, y;
 
-        for (y = start_y; y < start_y + size; y++) {
-            for (x = start_x; x < start_x + size; x++) {
-                my_mlx_pixel_put(all->mlx_list, x, y, color);
-            }
+    for (y = start_y; y < start_y + size; y++) {
+        for (x = start_x; x < start_x + size; x++) {
+            my_mlx_pixel_put(all->mlx_list, x, y, color);
         }
     }
+}
 
 
-
-
-void draw_player(t_mlx *mlx, t_map *map, float player_x, float player_y, int size)
+void draw_player(t_all *all, float player_x, float player_y, int size)
 {
+    t_rays *rays = malloc(sizeof(t_rays));
+    initialize_rays(rays);
     int color = 0xFFFF0000;
     int player_size = 32;
-
-    printf("The player position is (x: %0.2f, y: %0.2f)\n", map->player_position.x, map->player_position.y);
     player_x = player_x * size + size / 2.0;
     player_y = player_y * size + size / 2.0;
 
@@ -54,10 +52,13 @@ void draw_player(t_mlx *mlx, t_map *map, float player_x, float player_y, int siz
     {
         for (float py = player_y - player_size / 2.0; py < player_y + player_size / 2.0; py++)
         {
-            mlx_pixel_put(mlx->mlx, mlx->window, px, py, color);
+            mlx_pixel_put(all->mlx_list->mlx, all->mlx_list->window, px, py, color);
+            // my_mlx_pixel_put(mlx, px, py, color);
         }
     }
+    draw_rays(rays, all->mlx_list, all->map_list, player_x, player_y);
 }
+
 void draw_grid(t_all *all, t_map *map, void *offscreen_buffer, int size)
 {
     int i, j;
@@ -89,7 +90,7 @@ void draw_map(void *offscreen_buffer, t_map *map, t_all *all)
                 color = 0x000000;
                 printf("The value of the player is at (i: %d, j: %d)\n", i, j);
                 draw_box(all, j * size, i * size, color, size);
-                draw_player(all->mlx_list,all->map_list, j, i, size);
+                draw_player(all, j, i, size);
             }
         }
     }

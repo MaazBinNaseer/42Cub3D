@@ -34,3 +34,15 @@ void intialize_list_mlx(t_mlx *mlx)
     mlx->offscreen_buffer= NULL;
 }
 
+void initialize_rays(t_rays *rays)
+{
+    // rays = malloc(sizeof(rays));
+    rays->color = 0;
+    rays->dir = 'S';
+    rays->end[0] = 0;
+    rays->end[1] = 0;
+    rays->start[0] = 0;
+    rays->start[1] = 0;
+    rays->ra = 0.0f;
+    rays->dist = 0;
+}
