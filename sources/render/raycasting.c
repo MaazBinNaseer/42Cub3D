@@ -1,114 +1,129 @@
 #include "../../inc/Cube3D.h"
 
-static void check_unit_wall(t_rays *ray, t_map *map, float ray_offset[2])
-{
-    int x;
-    int y;
 
-    while (true)
+static float rays_horizontal(t_mlx *mlx, t_rays *ray, t_map *map, float x, float y) 
+{
+   //* Finding the first coordinate 
+//    printf("What are the players coordinates: x: %0.2f", map->player_position.x);
+    int ay;
+    int ax; 
+    // printf("The value of x: %0.2f and y %0.2f\n", x , y);
+    ray->ra = map->player_position.player_direction;
+    if(ray->ra > 0 && ray->ra < PI)
     {
-        x = ray->end[0] / 32;
-        y = ray->end[1] / 32;
-        if(x < 0 || y < 0 || x >= map->coloumns || y >= map->rows || map->map[y][x] == '1')
+        ay = roundf(y / 64.0 ) * 64 - 1;
+    }
+    else
+    {
+        ay = roundf(y / 64.0) * 64 + 64;
+    }
+    if(ray->ra == 0 || roundf(ray->ra) == roundf(PI))
+        ray->ra = ray->ra + 0.35;
+    else if(roundf(ray->ra) == roundf(6.28))
+        ray->ra = 0.35;
+    ax = x + roundf((y - ay) /tan(ray->ra));
+    // printf("The value of ay is %d and ax is %d\n", (ay / 64), (ax / 64));
+    int Cx;
+    int Cy;
+    while(1)
+    {   
+        if(ray->ra >= 0 && ray->ra < PI) // taking Ya as rayoffset[0]
+            ray->offset[0] = -64;
+        else
+            ray->offset[0] = 64;
+        ray->offset[1] = roundf(64 / tan(ray->ra));
+        printf("The [Horizontal] rayoffset[1] is %0.2f\n", ray->offset[1]);
+        //* Finding the Cy and Cx
+        Cx = ax + ray->offset[1]; 
+        Cy = ay + ray->offset[0];
+        // printf("The value of Cy is %d and Cx is %d\n", (Cy / 64), (Cx / 64));
+        if((Cx / 64) < 0 || (Cy / 64) < 0 || (Cx / 64) >= map->coloumns || (Cy / 64) >= map->rows || map->map[Cy / 64][Cx / 64] == '1')
+        {  
             break;
-        ray->end[0] += ray_offset[0];
-        ray->end[1] += ray_offset[1];
+        }
+        ax = Cx;
+        ay = Cy;
     }
+    float ray_length = sqrtf(powf((Cx - x), 2) + powf((Cy - y), 2));
+    int color = 0x00FF00;
+    mlx_line(mlx, mlx->offscreen_buffer , x, y, Cx, Cy, color);
+    return(ray_length);
 }
 
-static float rays_horizontal(t_rays *ray, t_map *map, int x, int y) 
+
+
+static float rays_vertical(t_mlx *mlx, t_rays *ray, t_map *map, float x, float y)
 {
-    float tan_inv;
-    float ray_offset[2];
-    float ray_length;
+    int ay;
+    int ax; 
+    ray->ra = map->player_position.player_direction;
 
-    ray->ra = map->player_position.player_direction - 30 * (PI / 180);
-    if (ray->ra < 0)
-        ray->ra += (float)PI * 2;
-    tan_inv = -1 / tan(ray->ra);
-    if(ray->ra < PI && ray->ra > 0)
+    if(ray->ra > PI_2 && ray->ra < 3 * PI_2)
     {
-        ray->end[1] = y / 32 * 32 + 32;
-        ray->end[0] = (y - ray->end[1]) * tan_inv + x;
-        ray_offset[1] = 32;
+        ax = roundf(x / 64.0 ) * 64 - 1;
     }
-    else if (ray->ra > PI && ray->ra != PI * 2)
+    else
     {
-        ray->end[1] = y / 32 * 32 - 0.0001f;
-        ray->end[0] = (y - ray->end[1]) * tan_inv + x;
-        ray_offset[1] = -32;
+        ax = roundf(x / 64.0) * 64 + 64;
     }
-    if (ray->ra == 0 || ray->ra == PI)
-    {
-        ray->end[0] = x;
-        ray->end[1] = y;
-        return (MAXFLOAT);
+    if(ray->ra == 0 || roundf(ray->ra) == roundf(PI))
+        ray->ra = ray->ra + 0.5;
+    else if(roundf(ray->ra) == roundf(6.28))
+        ray->ra = 0.5;
+    ay = y + roundf((x - ax) /tan(ray->ra));
+    int Cx;
+    int Cy;
+    while(1)
+    {   
+        if(ray->ra > PI_2 && ray->ra < 3 * PI_2) // taking Ya as rayoffset[0]
+            ray->offset[1] = -64;
+        else
+            ray->offset[1] = 64;
+        ray->offset[0] = roundf(64 / tan(ray->ra));
+        printf("The [Vertical] rayoffset[0] is %0.2f\n", ray->offset[0]);
+        //* Finding the Cy and Cx
+        Cx = ax + ray->offset[1]; 
+        Cy = ay + ray->offset[0];
+        if((Cx / 64) < 0 || (Cy / 64) < 0 || (Cx / 64) >= map->coloumns || (Cy / 64) >= map->rows || map->map[Cy / 64][Cx / 64] == '1')
+        {  
+            break;
+        }
+        ax = Cx;
+        ay = Cy;
     }
-    ray_offset[0] = -ray_offset[1] * tan_inv;
-    check_unit_wall(ray, map, ray_offset);
-    ray_length = (sqrtf(powf((ray->end[0] - x), 2) + powf((ray->end[1] - y), 2)));
-    return (ray_length);
+    float ray_length = sqrtf(powf((Cx - x), 2) + powf((Cy - y), 2));
+    int color = 0xFFA500;
+    mlx_line(mlx, mlx->offscreen_buffer , x, y, Cx, Cy, color);
+    return(ray_length);
 }
 
+// float shortest_distance(t_rays *ray, t_map *map, int x, int y)
+// {
+//     float   distance_H;
+//     float   distance_V;
+//     int     end_h[2];
 
-static float rays_vertical(t_rays *rays, t_map *map, int x, int y)
-{
-    float tan_inv;
-    float ray_offset[2];
-    float ray_length;
-
-    rays->ra = map->player_position.player_direction - 30 * (PI / 180);
-    tan_inv = -tan(rays->ra);
-    if(rays->ra > PI_2  && rays->ra < (3 * PI_2))
-    {
-        rays->end[0] = x / 32 * 32 - 0.5f;
-        ray_offset[0] = -32;
-    }
-    else if (rays->ra < PI_2 || rays->ra > (3 * PI_2))
-    {
-        rays->end[0] = x / 32 * 32 + 32;
-        ray_offset[0] = 32;
-    }
-    rays->end[1] = (rays->end[0] - x) * tan_inv + y;
-    if(rays->ra == PI_2 || rays->ra == (3 * PI_2))
-    {
-        rays->end[0] = x;
-        rays->end[1] = y;
-        return (MAXFLOAT);
-    }
-    ray_offset[1] = -ray_offset[0] * tan_inv;
-    check_unit_wall(rays, map, ray_offset);
-    ray_length = sqrtf(powf((rays->end[0] - x), 2) + powf((rays->end[1] - y), 2));
-    return (ray_length);
-}
-
-float shortest_distance(t_rays *ray, t_map *map, int x, int y)
-{
-    float   distance_H;
-    float   distance_V;
-    int     end_h[2];
-
-    ray->start[0] = x;
-    ray->start[1] = y;
-    distance_H = rays_horizontal(ray, map, x, y);
-    end_h[0] = ray->end[0];
-    end_h[1] = ray->end[1];
-    ray->dir = 'S';
-    distance_V = rays_vertical(ray, map, x, y);
-    if(distance_H < distance_V)
-    {
-        ray->end[0] = end_h[0];
-        ray->end[1] = end_h[1];
-        ray->dir = 'E';
-        return (distance_H);
-    }
-    return (distance_V);
-}
+//     ray->start[0] = x;
+//     ray->start[1] = y;
+//     distance_H = rays_horizontal(ray, map, x, y);
+//     end_h[0] = ray->end[0];
+//     end_h[1] = ray->end[1];
+//     ray->dir = 'S';
+//     // distance_V = rays_vertical(ray, map, x, y);
+//     if(distance_H < distance_V)
+//     {
+//         ray->end[0] = end_h[0];
+//         ray->end[1] = end_h[1];
+//         ray->dir = 'E';
+//         return (distance_H);
+//     }
+//     return (distance_V);
+// }
 
 void draw_rays(t_rays *ray, t_mlx *mlx, t_map *map, int x, int y)
 {
- 
-    int color = 0x00FF00;
-    shortest_distance(ray, map, x, y);
-    mlx_line(mlx, mlx->offscreen_buffer , x, y, ray->end[0], ray->end[1], color);
+    rays_horizontal(mlx, ray, map, x, y);
+    rays_vertical(mlx, ray, map, x, y);
+
+    
 }

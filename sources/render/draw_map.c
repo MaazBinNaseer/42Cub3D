@@ -44,11 +44,10 @@ void draw_player(t_all *all, float player_x, float player_y, int size)
     t_rays *rays = malloc(sizeof(t_rays));
     initialize_rays(rays);
     int color = 0xFFFF0000;
-    int player_size = 32;
-    player_x = player_x * size + size / 2.0;
-    player_y = player_y * size + size / 2.0;
-
-    for (float px = player_x - player_size / 2.0; px < player_x + player_size / 2.0; px++)
+    int player_size = 64;
+    player_x = player_x * size ; 
+    player_y = player_y * size;
+  for (float px = player_x - player_size / 2.0; px < player_x + player_size / 2.0; px++)
     {
         for (float py = player_y - player_size / 2.0; py < player_y + player_size / 2.0; py++)
         {
@@ -56,6 +55,12 @@ void draw_player(t_all *all, float player_x, float player_y, int size)
             // my_mlx_pixel_put(mlx, px, py, color);
         }
     }
+    // float center_x = player_x + player_size / 8;
+    // float center_y = player_y + player_size / 8;
+    // int line_length = 125;
+    // int line_end_x = center_x + line_length * cos(all->map_list->player_position.player_direction);
+    // int line_end_y = center_y + line_length * sin(all->map_list->player_position.player_direction);
+    // mlx_line(all->mlx_list, all->mlx_list->offscreen_buffer, (int)center_x, (int)center_y, (int)line_end_x, (int)line_end_y, 0x00FF00);
     draw_rays(rays, all->mlx_list, all->map_list, player_x, player_y);
 }
 

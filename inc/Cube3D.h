@@ -64,6 +64,7 @@ typedef struct s_rays
 	float		end[2];
 	float		ra;
 	float		dist;
+    float       offset[2];
 	// mlx_image_t	*img;
 
 } t_rays;
