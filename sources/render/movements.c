@@ -20,7 +20,7 @@ int key_hook(int keycode, t_all *all)
     float new_y = old_y;
     float new_angle = old_angle;
 
-    printf("The value for the old_x: %0.2f and old_y: %0.2f\n", old_x, old_y);
+    // printf("The value for the old_x: %0.2f and old_y: %0.2f\n", old_x, old_y);
     if (keycode == 119 || keycode == 25) // 'w' - Move forward
     {
         new_x -= cos(new_angle) * moveStep;

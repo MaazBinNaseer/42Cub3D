@@ -95,7 +95,7 @@ void draw_map(void *offscreen_buffer, t_map *map, t_all *all)
                 color = 0x000000;
                 printf("The value of the player is at (i: %d, j: %d)\n", i, j);
                 draw_box(all, j * size, i * size, color, size);
-                draw_player(all, j, i, size);
+                draw_player(all, i, j, size);
             }
         }
     }

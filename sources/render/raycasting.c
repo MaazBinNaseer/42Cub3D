@@ -1,46 +1,47 @@
 #include "../../inc/Cube3D.h"
 
+int is_valid_tile(t_map *map, int x, int y) {
+    int tileX = x / 64;
+    int tileY = y / 64;
 
-static float rays_horizontal(t_mlx *mlx, t_rays *ray, t_map *map, float x, float y) 
-{
-   //* Finding the first coordinate 
-//    printf("What are the players coordinates: x: %0.2f", map->player_position.x);
+    if (tileX < 0 || tileY < 0 || tileX >= map->coloumns || tileY >= map->rows)
+        return 0;
+
+    if (map->map[tileY][tileX] == '1')
+        return 0; 
+
+    return 1;  
+}
+
+static float rays_horizontal(t_mlx *mlx, t_rays *ray, t_map *map, float x, float y) {
     int ay;
     int ax; 
-    // printf("The value of x: %0.2f and y %0.2f\n", x , y);
     ray->ra = map->player_position.player_direction;
+
     if(ray->ra > 0 && ray->ra < PI)
-    {
         ay = roundf(y / 64.0 ) * 64 - 1;
-    }
     else
-    {
         ay = roundf(y / 64.0) * 64 + 64;
-    }
+
     if(ray->ra == 0 || roundf(ray->ra) == roundf(PI))
         ray->ra = ray->ra + 0.35;
     else if(roundf(ray->ra) == roundf(6.28))
         ray->ra = 0.35;
+
     ax = x + roundf((y - ay) /tan(ray->ra));
-    // printf("The value of ay is %d and ax is %d\n", (ay / 64), (ax / 64));
+
     int Cx;
     int Cy;
-    while(1)
-    {   
-        if(ray->ra >= 0 && ray->ra < PI) // taking Ya as rayoffset[0]
+    while(1) {   
+        if(ray->ra >= 0 && ray->ra < PI) 
             ray->offset[0] = -64;
         else
             ray->offset[0] = 64;
         ray->offset[1] = roundf(64 / tan(ray->ra));
-        printf("The [Horizontal] rayoffset[1] is %0.2f\n", ray->offset[1]);
-        //* Finding the Cy and Cx
         Cx = ax + ray->offset[1]; 
         Cy = ay + ray->offset[0];
-        // printf("The value of Cy is %d and Cx is %d\n", (Cy / 64), (Cx / 64));
-        if((Cx / 64) < 0 || (Cy / 64) < 0 || (Cx / 64) >= map->coloumns || (Cy / 64) >= map->rows || map->map[Cy / 64][Cx / 64] == '1')
-        {  
+        if (!is_valid_tile(map, Cx, Cy))
             break;
-        }
         ax = Cx;
         ay = Cy;
     }
@@ -50,22 +51,14 @@ static float rays_horizontal(t_mlx *mlx, t_rays *ray, t_map *map, float x, float
     return(ray_length);
 }
 
-
-
-static float rays_vertical(t_mlx *mlx, t_rays *ray, t_map *map, float x, float y)
-{
+static float rays_vertical(t_mlx *mlx, t_rays *ray, t_map *map, float x, float y) {
     int ay;
     int ax; 
     ray->ra = map->player_position.player_direction;
-
     if(ray->ra > PI_2 && ray->ra < 3 * PI_2)
-    {
         ax = roundf(x / 64.0 ) * 64 - 1;
-    }
     else
-    {
         ax = roundf(x / 64.0) * 64 + 64;
-    }
     if(ray->ra == 0 || roundf(ray->ra) == roundf(PI))
         ray->ra = ray->ra + 0.5;
     else if(roundf(ray->ra) == roundf(6.28))
@@ -75,19 +68,15 @@ static float rays_vertical(t_mlx *mlx, t_rays *ray, t_map *map, float x, float y
     int Cy;
     while(1)
     {   
-        if(ray->ra > PI_2 && ray->ra < 3 * PI_2) // taking Ya as rayoffset[0]
+        if(ray->ra > PI_2 && ray->ra < 3 * PI_2)
             ray->offset[1] = -64;
         else
             ray->offset[1] = 64;
         ray->offset[0] = roundf(64 / tan(ray->ra));
-        printf("The [Vertical] rayoffset[0] is %0.2f\n", ray->offset[0]);
-        //* Finding the Cy and Cx
         Cx = ax + ray->offset[1]; 
         Cy = ay + ray->offset[0];
-        if((Cx / 64) < 0 || (Cy / 64) < 0 || (Cx / 64) >= map->coloumns || (Cy / 64) >= map->rows || map->map[Cy / 64][Cx / 64] == '1')
-        {  
-            break;
-        }
+        if (!is_valid_tile(map, Cx, Cy))
+            break;   
         ax = Cx;
         ay = Cy;
     }
@@ -96,6 +85,30 @@ static float rays_vertical(t_mlx *mlx, t_rays *ray, t_map *map, float x, float y
     mlx_line(mlx, mlx->offscreen_buffer , x, y, Cx, Cy, color);
     return(ray_length);
 }
+
+
+#define TWO_PI 6.28318530718 // 2*PI
+#define NUM_RAYS 10 // number of rays to cast
+
+
+void draw_rays(t_rays *ray, t_mlx *mlx, t_map *map, int x, int y)
+{
+  // calculate the angle increment for each ray
+    float angle_increment = TWO_PI / NUM_RAYS;
+
+    for (int i = 0; i < NUM_RAYS; i++) {
+        // calculate the direction of this ray
+        float ray_angle = i * angle_increment;
+
+        // set the player's direction to the ray angle
+        map->player_position.player_direction = ray_angle;
+
+        // cast the ray horizontally and vertically
+        rays_horizontal(mlx, ray, map, x, y);
+        rays_vertical(mlx, ray, map, x, y);
+    }
+}
+
 
 // float shortest_distance(t_rays *ray, t_map *map, int x, int y)
 // {
@@ -119,11 +132,3 @@ static float rays_vertical(t_mlx *mlx, t_rays *ray, t_map *map, float x, float y
 //     }
 //     return (distance_V);
 // }
-
-void draw_rays(t_rays *ray, t_mlx *mlx, t_map *map, int x, int y)
-{
-    rays_horizontal(mlx, ray, map, x, y);
-    rays_vertical(mlx, ray, map, x, y);
-
-    
-}
