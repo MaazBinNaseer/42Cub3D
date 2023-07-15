@@ -27,6 +27,22 @@ void mlx_line(t_mlx *mlx, void *offscreen_buffer, int x1, int y1, int x2, int y2
     }
 }
 
+void draw_direction(t_mlx *mlx, t_map *map, float player_x, float player_y, int size)
+{
+    float player_angle = map->player_position.player_direction;
+
+    // Calculate end point of the direction line
+    // The line length could be adjusted as needed
+    float end_x = player_x + cos(player_angle) * size;
+    float end_y = player_y + sin(player_angle) * size;
+
+    // Draw the line
+    int color = 0x800000; // Choose the color as you like
+    mlx_line(mlx, mlx->offscreen_buffer, player_x, player_y, end_x, end_y, color);
+}
+
+
+
 void draw_box(t_all *all, int start_x, int start_y, int color, int size)
 {
     int x, y;
@@ -38,7 +54,6 @@ void draw_box(t_all *all, int start_x, int start_y, int color, int size)
     }
 }
 
-
 void draw_player(t_all *all, float player_x, float player_y, int size)
 {
     t_rays *rays = malloc(sizeof(t_rays));
@@ -47,7 +62,7 @@ void draw_player(t_all *all, float player_x, float player_y, int size)
     int player_size = 64;
     player_x = player_x * size ; 
     player_y = player_y * size;
-  for (float px = player_x - player_size / 2.0; px < player_x + player_size / 2.0; px++)
+    for (float px = player_x - player_size / 2.0; px < player_x + player_size / 2.0; px++)
     {
         for (float py = player_y - player_size / 2.0; py < player_y + player_size / 2.0; py++)
         {
@@ -55,12 +70,7 @@ void draw_player(t_all *all, float player_x, float player_y, int size)
             // my_mlx_pixel_put(mlx, px, py, color);
         }
     }
-    // float center_x = player_x + player_size / 8;
-    // float center_y = player_y + player_size / 8;
-    // int line_length = 125;
-    // int line_end_x = center_x + line_length * cos(all->map_list->player_position.player_direction);
-    // int line_end_y = center_y + line_length * sin(all->map_list->player_position.player_direction);
-    // mlx_line(all->mlx_list, all->mlx_list->offscreen_buffer, (int)center_x, (int)center_y, (int)line_end_x, (int)line_end_y, 0x00FF00);
+    draw_direction(all->mlx_list, all->map_list, player_x, player_y, size);
     draw_rays(rays, all->mlx_list, all->map_list, player_x, player_y);
 }
 

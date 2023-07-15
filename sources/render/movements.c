@@ -1,5 +1,9 @@
 #include "../../inc/Cube3D.h"
 
+
+
+
+
 void updatePlayerDirection(t_all *access, float rotation_angle) {
     access->map_list->player_position.player_direction += rotation_angle;
     if (access->map_list->player_position.player_direction < 0) {
@@ -23,13 +27,13 @@ int key_hook(int keycode, t_all *all)
     // printf("The value for the old_x: %0.2f and old_y: %0.2f\n", old_x, old_y);
     if (keycode == 119 || keycode == 25) // 'w' - Move forward
     {
-        new_x -= cos(new_angle) * moveStep;
-        new_y -= sin(new_angle) * moveStep;
+        new_x += cos(new_angle) * moveStep;
+        new_y += sin(new_angle) * moveStep;
     }
     else if (keycode == 115 || keycode == 39) // 's' - Move backward
     {
         new_x -= cos(new_angle) * moveStep;
-        new_y += sin(new_angle) * moveStep;
+        new_y -= sin(new_angle) * moveStep;
     }
     else if (keycode == 97 || keycode == 38) // 'a' - Strafe left
     {
@@ -55,6 +59,7 @@ int key_hook(int keycode, t_all *all)
     all->map_list->player_position.y = new_y;
     all->map_list->player_position.x = new_x;
     all->map_list->player_position.player_direction = new_angle;
+   
     mlx_put_image_to_window(all->mlx_list->mlx, all->mlx_list->window, all->mlx_list->offscreen_buffer, 0, 0);
     draw_player(all, all->map_list->player_position.x, all->map_list->player_position.y, size);
     return (0);
