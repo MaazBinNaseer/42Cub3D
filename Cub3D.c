@@ -11,8 +11,9 @@ void intialize_lists(t_all *all, t_map *map, t_config_properties *file ,t_mlx *m
 
 void game_loop(t_all *all, t_map *map, t_mlx *mlx) {
     // Draw the map and grid once on the offscreen buffer
-    draw_map(all->mlx_list->offscreen_buffer, map, all);
-    draw_grid(all, map, all->mlx_list->offscreen_buffer, TILE_SIZE);
+    // draw_map(all->mlx_list->offscreen_buffer, map, all);
+    // draw_grid(all, map, all->mlx_list->offscreen_buffer, TILE_SIZE);
+    (void)map;
     
     while (1) {
         // Handle input

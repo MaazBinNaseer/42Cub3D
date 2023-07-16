@@ -54,25 +54,27 @@ void draw_box(t_all *all, int start_x, int start_y, int color, int size)
     }
 }
 
-void draw_player(t_all *all, float player_x, float player_y, int size)
+void draw_player(t_all *all, float player_x, float player_y, float player_angle, int size)
 {
     t_rays *rays = malloc(sizeof(t_rays));
     initialize_rays(rays);
-    int color = 0xFFFF0000;
-    int player_size = 64;
+    // int color = 0xFFFF0000;
+    // int player_size = 64;
     player_x = player_x * size ; 
     player_y = player_y * size;
-    for (float px = player_x - player_size / 2.0; px < player_x + player_size / 2.0; px++)
-    {
-        for (float py = player_y - player_size / 2.0; py < player_y + player_size / 2.0; py++)
-        {
-            mlx_pixel_put(all->mlx_list->mlx, all->mlx_list->window, px, py, color);
-            // my_mlx_pixel_put(mlx, px, py, color);
-        }
-    }
-    draw_direction(all->mlx_list, all->map_list, player_x, player_y, size);
-    draw_rays(rays, all->mlx_list, all->map_list, player_x, player_y);
+    player_angle = all->map_list->player_position.player_direction;
+    // for (float px = player_x - player_size / 2.0; px < player_x + player_size / 2.0; px++)
+    // {
+    //     for (float py = player_y - player_size / 2.0; py < player_y + player_size / 2.0; py++)
+    //     {
+    //         mlx_pixel_put(all->mlx_list->mlx, all->mlx_list->window, px, py, color);
+    //         // my_mlx_pixel_put(mlx, px, py, color);
+    //     }
+    // }
+    // draw_direction(all->mlx_list, all->map_list, player_x, player_y, size);
+    draw_rays(all->mlx_list, rays, all->map_list, player_x, player_y, player_angle);
 }
+
 
 void draw_grid(t_all *all, t_map *map, void *offscreen_buffer, int size)
 {
@@ -100,12 +102,13 @@ void draw_map(void *offscreen_buffer, t_map *map, t_all *all)
                 draw_box(all, j * size, i * size, color, size);
             } else if (map->map[i][j] == '1') { // '1' represents walls
                 color = 0xFFFFFF;
-                draw_box(all, j * size, i * size, color, size);
+               draw_walls(all->mlx_list, all->rays, map, (float)i, (float)j, all->map_list->player_position.player_direction);
+
             } else if (map->map[i][j] == 'S') {
                 color = 0x000000;
                 printf("The value of the player is at (i: %d, j: %d)\n", i, j);
-                draw_box(all, j * size, i * size, color, size);
-                draw_player(all, i, j, size);
+                // draw_box(all, j * size, i * size, color, size);
+                draw_player(all, i, j, all->map_list->player_position.player_direction, size);
             }
         }
     }

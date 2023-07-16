@@ -1,9 +1,5 @@
 #include "../../inc/Cube3D.h"
 
-
-
-
-
 void updatePlayerDirection(t_all *access, float rotation_angle) {
     access->map_list->player_position.player_direction += rotation_angle;
     if (access->map_list->player_position.player_direction < 0) {
@@ -61,7 +57,7 @@ int key_hook(int keycode, t_all *all)
     all->map_list->player_position.player_direction = new_angle;
    
     mlx_put_image_to_window(all->mlx_list->mlx, all->mlx_list->window, all->mlx_list->offscreen_buffer, 0, 0);
-    draw_player(all, all->map_list->player_position.x, all->map_list->player_position.y, size);
+    draw_player(all, all->map_list->player_position.x, all->map_list->player_position.y, all->map_list->player_position.player_direction ,size);
     return (0);
 }
 
