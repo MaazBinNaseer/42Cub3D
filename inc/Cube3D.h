@@ -138,8 +138,9 @@ void    draw_grid(t_all *all, t_map *map, void *offscreen_buffer, int size);
 *------------------------- RAYCASTING ------------------
 ---------------------------------------------------------- */
 void cast_rays(t_mlx *mlx, t_rays *ray, t_map *map, int x, int y);
-
-
+float get_shortest_distance_to_wall(t_mlx *mlx, t_rays *ray, t_map *map, float x, float y, float angle);
+float rays_horizontal(t_mlx *mlx, t_rays *ray, t_map *map, float x, float y, float angle);
+float rays_vertical(t_mlx *mlx, t_rays *ray, t_map *map, float x, float y, float angle);
 
 
 /* --------------------------------------------------------
