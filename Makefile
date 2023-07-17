@@ -1,6 +1,6 @@
 NAME	=	Cub3D
 CC		=	gcc
-CFLAGS	=	-Wall -Wextra -Werror -g -Ofast
+CFLAGS	=	-Wall -Wextra -Werror -g3 
 
 PARSING	=	map_read.c read_map_check.c read_config_file.c parsing_utils.c
 RENDERING = boot_mlx.c draw_map.c movements.c raycasting.c distance.c
