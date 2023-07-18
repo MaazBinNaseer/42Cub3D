@@ -32,77 +32,163 @@
 # ------------------------- STRUCTS ------------------
 ---------------------------------------------------------- */
 
+typedef struct s_map
+{
+    char 		**map;
+    int 		rows;
+    int 		coloumns;
+    int 		player;
+    t_pos 		player_position;
+} t_map;
+
+typedef	enum				e_error
+{
+	SUCCESS,
+	INVALID_ARG,
+	WRONG_MAP,
+	WRONG_INPUT,
+	MALLOC_FAIL,
+	IMG_FAIL,
+	OPEN_ERR,
+	MLX_FAIL,
+	WRITE_FAIL,
+	WRONG_TEXTURE
+}							t_error;
+
 typedef struct s_config_properties
 {
-    char *north_texture;
-    char *south_texture;
-    char *west_texture;
-    char *east_texture;
-    char *floor_texture;
-    char *ceiling_texture;
-    int map_set;
+    char 	*north_texture;
+    char 	*south_texture;
+    char 	*west_texture;
+    char 	*east_texture;
+    char 	*floor_texture;
+    char 	*ceiling_texture;
+    int 	map_set;
 } t_config_properties;
-
 
 typedef struct s_pos
 {
-    float x;
-    float y;
-    double dx;
-    double dy;
-    float player_direction;
+    float 		x;
+    float 		y;
+    double 		dx;
+    double 		dy;
+    float 		player_direction;
 } t_pos;
 
-typedef struct s_images
+typedef struct				s_img
 {
-    void *wall;
-    void *path;
-} t_images;
+	void					*img_ptr;
+	int						*img_data;
+	int						bpp;
+	int						size_line;
+	int						endian;
+	int						width;
+	int						height;
+}							t_img;
 
-typedef struct s_rays
+typedef union				u_colour
 {
-    char		dir;
-	int			color;
-	int			start[2];
-	float		end[2];
-	float		ra;
-	float		dist;
-    float       offset[2];
-	// mlx_image_t	*img;
+	unsigned int			all;
+	char					tab[4];
+	t_rgb					rgb;
+}							t_colour;
 
-} t_rays;
-typedef struct s_map
+typedef struct				s_rgb
 {
-    char **map;
-    int rows;
-    int coloumns;
-    int player;
-    t_images *img;
-    t_pos player_position;
-} t_map;
+	unsigned char			r;
+	unsigned char			g;
+	unsigned char			b;
+	unsigned char			a;
+}							t_rgb;
 
 
-typedef struct s_mlx
+typedef struct				s_pos
 {
-    void    *mlx;
-    void	*img;
-    void    *window;
-	char	*addr;
-    int		bits_per_pixel;
-	int		line_length;
-	int		width;
-	int		height;
-    char    *path_to_tiles;
-	int		endian;
-    void    *offscreen_buffer; 
-}   t_mlx;
+	double					x;
+	double					y;
+}							t_pos;
 
-typedef struct s_all
+typedef struct				s_pos_i
 {
-    t_mlx *mlx_list;
-    t_map *map_list;
-    t_rays *rays;
-} t_all;
+	int						x;
+	int						y;
+	int						id;
+}							t_pos_i;
+
+typedef struct				s_move
+{
+	int						up;
+	int						down;
+	int						left;
+	int						right;
+	int						strafl;
+	int						strafr;
+}							t_move;
+
+typedef struct				s_rc
+{
+	t_pos					plane;
+	t_pos					step;
+	t_pos					dir;
+	t_pos_i					textur;
+	t_pos					rpos;
+	t_pos					rdir;
+	t_pos					rdisd;
+	t_pos					rdist;
+	t_pos_i					rmap;
+	int						wall;
+	int						wstart;
+	int						wend;
+	double					camera;
+	int						hit;
+	double					rh;
+	double					step_textur;
+	double					textur_pos;
+	double					dist;
+	double					speed;
+	double					*zbuffer;
+	int						*sp_order;
+	double					*sp_distance;
+
+}							t_rc;
+
+typedef	struct				s_save
+{
+	int						height;
+	int						width;
+	unsigned char			*file_header;
+	unsigned char			*img_header;
+	int						fd;
+	int						pad;
+}							t_save;
+
+typedef	struct				s_info
+{
+	void					*mlx;
+	void					*window;
+	double					width;
+	double					height;
+	int						flag_save;
+	int						kol_sprite;
+	t_map					map;
+	t_img					*img;
+	t_pos					pos;
+	// t_data					data;
+	t_move					move;
+	t_colour				colour_floor;
+	t_colour				colour_ceiling;
+	// t_spdata				sp;
+	// t_sprite				*tab_sprite;
+	// t_textur				*textur1;
+	// t_textur				*textur2;
+	// t_textur				*textur3;
+	// t_textur				*textur4;
+	// t_textur				*sprite;
+	unsigned int			colour;
+	t_rc					rc;
+	int						error;
+}							t_info;
+
 
 /* --------------------------------------------------------
 *------------------------- CONFIG FILE ------------------
@@ -126,34 +212,25 @@ int     check_map(t_map *map_check);
 /* --------------------------------------------------------
 *------------------------- RENDERING ------------------
 ---------------------------------------------------------- */
-int     create_window(t_mlx *mlx);
-void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
-void    updatePlayerDirection(t_all *access, float rotation_angle);
-void    draw_map(void *offscreen_buffer, t_map *map, t_all *all);
-void    mlx_line(t_mlx *mlx, void *offscreen_buffer, int x1, int y1, int x2, int y2, int color);
-// void    draw_rays(t_rays *ray, t_mlx *mlx, t_map *map, int x, int y, float player_angle);
-void draw_rays(t_mlx *mlx, t_rays *ray, t_map *map, int x, int y, float player_angle);
-void    draw_line(t_mlx *mlx, int x1, int y1, int x2, int y2);
-void draw_player(t_all *all, float player_x, float player_y, float player_angle, int size);
-int     key_hook(int keycode, t_all *all);
-void    draw_grid(t_all *all, t_map *map, void *offscreen_buffer, int size);
+int     create_window(t_info *mlx);
+
 
 /* --------------------------------------------------------
 *------------------------- RAYCASTING ------------------
 ---------------------------------------------------------- */
-void cast_rays(t_mlx *mlx, t_rays *ray, t_map *map, int x, int y);
-float get_shortest_distance_to_wall(t_mlx *mlx, t_rays *ray, t_map *map, float x, float y, float angle);
-// void draw_walls(t_mlx *mlx, t_rays *ray, t_map *map, float x, float y, int ray_index);
-void draw_walls(t_mlx *mlx, t_rays *ray, t_map *map, int x, int y, int ray_index);
+void	init_raycast(t_info *info, int x);
+void	direction_ray(t_info *info);
+void	wall_textur(t_info *info);
+void	size_ray(t_info *info);
+
+
+
 /* --------------------------------------------------------
 *-------------------------UTILS --------------------------
 ---------------------------------------------------------- */
 void    intialize_list_map(t_map *map_file);
 void    initialize_list_file(t_config_properties *file);
-void    intialize_all(t_all *all);
-void    intialize_list_mlx(t_mlx *mlx);
-void    intialize_images(t_map *map, t_images *img, t_mlx *mlx);
-void    initialize_rays(t_rays *rays);
+void    intialize_list_mlx(t_info *mlx);
 void    free_map(t_map *map_read);
 void    print_map(t_map *map);
 void    cleanup(t_config_properties *file, t_map *map);
