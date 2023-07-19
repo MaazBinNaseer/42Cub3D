@@ -3,39 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhill <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/29 12:19:18 by nhill             #+#    #+#             */
-/*   Updated: 2020/11/06 16:53:24 by nhill            ###   ########.fr       */
+/*   Created: 2022/07/25 15:27:06 by mbin-nas          #+#    #+#             */
+/*   Updated: 2022/07/28 14:19:00 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
-void	*ft_memmove(void *destination, const void *source, size_t n)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	unsigned char	*b;
-	unsigned char	*a;
-	size_t			i;
+	unsigned char	*ptr1;
+	unsigned char	*ptr2;
+	size_t			n;
 
-	a = (unsigned char*)destination;
-	b = (unsigned char*)source;
-	i = 0;
-	if (destination == NULL && source == NULL)
-		return (NULL);
-	i = n;
-	if (a > b)
+	ptr1 = (unsigned char *)src;
+	ptr2 = (unsigned char *)dst;
+	n = 0;
+	if (!ptr1 && !ptr2)
+		return (0);
+	if ((size_t)ptr2 > (size_t)ptr1)
 	{
-		while (i > 0)
-		{
-			i--;
-			a[i] = b[i];
-		}
+		while (len-- > 0)
+			ptr2[len] = ptr1[len];
 	}
 	else
 	{
-		i = 0;
-		ft_memcpy(a, b, n);
+		while (n < len)
+		{
+			ptr2[n] = ptr1[n];
+			n++;
+		}
 	}
-	return (destination);
+	return (ptr2);
 }

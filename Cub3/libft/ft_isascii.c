@@ -3,16 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhill <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/28 13:08:03 by nhill             #+#    #+#             */
-/*   Updated: 2020/11/06 16:55:38 by nhill            ###   ########.fr       */
+/*   Created: 2022/07/18 14:55:13 by mbin-nas          #+#    #+#             */
+/*   Updated: 2022/07/27 14:52:58 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+/*
+DESCRIPTION
+     The isascii() function tests for an ASCII character,
+	which is any character between 0
+     and octal 0177 inclusive.
 
-int		ft_isascii(int ch)
+*/
+#include "libft.h"
+#include <stdio.h>
+
+int	ft_isascii(int ditto)
 {
-	return (ch >= 0 && ch <= 127);
+	return (ditto >= 0 && ditto <= 127);
 }

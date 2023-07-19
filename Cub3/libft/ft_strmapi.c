@@ -3,32 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhill <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/29 16:30:37 by nhill             #+#    #+#             */
-/*   Updated: 2020/11/06 17:00:54 by nhill            ###   ########.fr       */
+/*   Created: 2022/08/01 13:46:55 by mbin-nas          #+#    #+#             */
+/*   Updated: 2022/08/01 13:46:58 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+char	*ft_strmapi(char const *str, char (*f)(unsigned int, char))
 {
-	char	*rez;
-	size_t	i;
-	size_t	l;
+	int		i;
+	char	*str1;
 
 	i = 0;
-	if (!s || !f)
+	if (!str || !f)
+		return (0);
+	str1 = malloc(ft_strlen(str) + 1);
+	if (!str1 || str1 == NULL)
 		return (NULL);
-	l = ft_strlen(s);
-	if (!(rez = (char *)malloc((l + 1) * sizeof(char))))
-		return (NULL);
-	while (i < l)
+	while (str1 != NULL && str[i] != '\0')
 	{
-		rez[i] = f(i, s[i]);
+		str1[i] = f(i, str[i]);
 		i++;
 	}
-	rez[i] = '\0';
-	return (rez);
+	str1[i] = '\0';
+	return (str1);
 }
+
+char	f(unsigned int i, char c)
+{
+	char	str;
+
+	i = 2;
+	str = c + i;
+	return (str);
+}
+
+// int main()
+// {
+// 	char str1[] = "abc";
+// 	char* str2;
+// 	str2 = ft_strmapi(str1, *f);
+// 	printf("%s\n", str2);
+//     return(0);
+// }

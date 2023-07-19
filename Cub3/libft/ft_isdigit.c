@@ -3,19 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhill <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/28 13:20:37 by nhill             #+#    #+#             */
-/*   Updated: 2020/11/06 16:55:16 by nhill            ###   ########.fr       */
+/*   Created: 2022/07/18 13:25:21 by mbin-nas          #+#    #+#             */
+/*   Updated: 2022/07/27 14:53:08 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdio.h>
 
-int		ft_isdigit(int ch)
+int	ft_isdigit(int x)
 {
-	if (ch >= '0' && ch <= '9')
-		return (1);
+	int	number;
+
+	number = 1;
+	if (x >= '0' && x <= '9')
+		return (number);
 	else
 		return (0);
 }
+
+// int main()
+// {
+//     int r = '7';
+//     int z = 'A';
+
+//     printf("The value of the r is : %d\nThe value of the z is: %d\n",
+		// ft_isdigit(r), ft_isdigit(z));
+//     return (0);
+// }

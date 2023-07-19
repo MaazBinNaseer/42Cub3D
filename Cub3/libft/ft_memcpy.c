@@ -3,31 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhill <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/29 11:50:29 by nhill             #+#    #+#             */
-/*   Updated: 2020/11/06 16:52:39 by nhill            ###   ########.fr       */
+/*   Created: 2022/07/19 16:08:27 by mbin-nas          #+#    #+#             */
+/*   Updated: 2022/07/27 14:57:01 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
-void	*ft_memcpy(void *destination, const void *source, size_t n)
+void	*ft_memcpy(void *dst, const void *src, size_t num)
 {
-	unsigned char	*b;
-	unsigned char	*a;
-	int				i;
+	size_t	i;
+	char	*csrc;
+	char	*cdest;
 
-	a = (unsigned char*)destination;
-	b = (unsigned char*)source;
-	i = 0;
-	if (a == NULL && b == NULL)
+	if (!src && !dst)
 		return (NULL);
-	while (n > 0)
+	csrc = (char *)src;
+	cdest = (char *)dst;
+	i = 0;
+	while (i < num)
 	{
-		a[i] = b[i];
+		cdest[i] = (unsigned char)csrc[i];
 		i++;
-		n--;
 	}
-	return (destination);
+	return (cdest);
 }
+
+// int main()
+// {
+//     char mystring[50] = "YELLLO TO FUN WORLD BABY!!!!!!!";
+//     char dst[50] = "HELLO LADIES, ITS JOHNNY!";
+//     printf("Before: %s\n", dst);
+//     ft_memcpy(dst, mystring, 30);
+//     printf("After: %s\n", dst);
+//     return(0);
+// }

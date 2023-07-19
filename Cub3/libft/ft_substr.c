@@ -3,38 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhill <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/29 13:44:21 by nhill             #+#    #+#             */
-/*   Updated: 2020/11/06 16:58:55 by nhill            ###   ########.fr       */
+/*   Created: 2022/07/28 15:21:39 by mbin-nas          #+#    #+#             */
+/*   Updated: 2022/08/04 17:41:48 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <strings.h>
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char const *string, unsigned int start, size_t len)
 {
-	size_t	i;
-	char	*str;
-	size_t	j;
+	char	*dest;
+	int		c;
 
-	if (s)
-		j = ft_strlen(s);
-	else
-		j = 0;
-	if (j < start)
-		len = 0;
-	if (len > j - start)
-		len = j - start;
-	if (!(str = (char *)malloc(sizeof(*str) * (len + 1))))
+	c = 0;
+	if (!string)
 		return (NULL);
-	i = 0;
-	s += start;
-	while (i < len)
+	if (len > ft_strlen(string))
+		len = ft_strlen(string);
+	if (start >= ft_strlen(string))
+		len = 0;
+	dest = malloc(sizeof(char) * (len + 1));
+	if (!dest)
+		return (NULL);
+	while (c < (int)len)
 	{
-		str[i] = s[i];
-		i++;
+		*(dest + c) = *(string + start);
+		string++;
+		c++;
 	}
-	str[i] = '\0';
-	return (str);
+	*(dest + c) = '\0';
+	return (dest);
 }
+
+// int main()
+// {
+//     char str1[] = "Welcome to Qatar World Cup 2021";
+//     int start = 5; cd
+//     int n = 10;
+
+//     char *dest = ft_substr(str1, start, n);
+//     printf("My function string : %s\n", dest);
+//     return(0);
+// }

@@ -3,29 +3,55 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhill <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/28 17:08:17 by nhill             #+#    #+#             */
-/*   Updated: 2020/11/06 16:56:23 by nhill            ###   ########.fr       */
+/*   Created: 2022/07/20 16:08:39 by mbin-nas          #+#    #+#             */
+/*   Updated: 2022/08/03 14:40:51 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+DESCRIPTION
+     The strchr() function locates the first occurrence of c 
+		(converted to a char) in
+     the string pointed to by s.  
+		The terminating null character is considered to be
+     part of the string; therefore if c is `\0',the functions 
+		locate the terminating \0'.
+
+     The strrchr() function is identical to strchr(),
+	except it locates the last occur-
+     rence of c.
+
+RETURN VALUES
+     The functions strchr() and strrchr() return a 
+		pointer to the located character,
+	or
+     NULL if the character does not appear in the string.
+*/
 #include "libft.h"
 
-char	*ft_strchr(const char *str, int ch)
+char	*ft_strchr(const char *str, int c)
 {
-	char	*s;
-	char	res;
+	unsigned char	ch;
 
-	s = (char *)str;
-	res = (char)ch;
-	while (*s)
-	{
-		if (*s == res)
-			return (s);
-		s++;
-	}
-	if (res == '\0')
-		return (s);
-	return (NULL);
+	ch = c;
+	while (*str && (unsigned char)*str != ch)
+		str++;
+	if (ch == (unsigned char)*str)
+		return ((char *)str);
+	else
+		return (NULL);
 }
+
+// int main()
+// {
+//     const char string[] = "The string is wow";
+//     int x = 'w';
+//     const char *p;
+
+//     p = ft_strchr(string, x);
+//     printf("String starting from %c is: %s\n", x, p);
+//     return (0);
+
+// }

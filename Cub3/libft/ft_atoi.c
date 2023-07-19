@@ -3,46 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhill <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/28 14:31:43 by nhill             #+#    #+#             */
-/*   Updated: 2020/11/09 19:03:22 by nhill            ###   ########.fr       */
+/*   Created: 2022/06/01 15:39:07 by mbin-nas          #+#    #+#             */
+/*   Updated: 2022/08/03 14:40:55 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_isspace(int c)
+int	ft_atoi(const char *str)
 {
-	if (c && ((c == 32) || ((c >= 9) && (c <= 13))))
-		return (1);
-	return (0);
-}
+	int			i;
+	long long	result;
+	int			sign;
 
-int			ft_atoi(const char *str)
-{
-	unsigned int	ch;
-	unsigned int	l_ch;
-	int				i;
-	int				zn;
-
-	ch = 0;
 	i = 0;
-	zn = 1;
-	while (str[i] && (ft_isspace(str[i])))
+	result = 0;
+	sign = 1;
+	while (str[i] == ' ' || (str[i] >= '\t' && str[i] <= '\r'))
 		i++;
-	if ((str[i] == '+') || (str[i] == '-'))
+	if (str[i] == '+' || str[i] == '-')
 	{
 		if (str[i] == '-')
-			zn = -zn;
+			sign = -1;
 		i++;
 	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{
-		l_ch = ch;
-		ch = ch * 10 + (unsigned int)(str[i++] - '0');
-		if (l_ch > ch)
-			return (zn > 0 ? -1 : 0);
+		if (sign == -1 && (result) * sign <= LLONG_MIN / 10)
+			return (0);
+		if (result >= LLONG_MAX / 10)
+			return (-1);
+		result = (result * 10) + (str[i] - '0');
+		i++;
 	}
-	return (ch * zn);
+	return (result * sign);
 }
+
+// int	main(void)
+// {
+// 	char	x[];
+// 	int		z;
+
+// 	x[] = " ------------------------2b34ab567";
+// 	z = ft_atoi(x);
+// 	printf("We are printing the value: %d", z);
+// 	return (0);
+// }

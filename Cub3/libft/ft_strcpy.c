@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   ft_strcpy.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhill <nhill@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/29 14:15:52 by nhill             #+#    #+#             */
-/*   Updated: 2021/02/23 18:01:46 by nhill            ###   ########.fr       */
+/*   Created: 2022/08/01 18:32:00 by mbin-nas          #+#    #+#             */
+/*   Updated: 2022/08/05 16:43:41 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char		*ft_strcpy(char *dest, char *src)
+char *ft_strcpy(char *s1, char *s2)
 {
-	int i;
+    int i;
 
-	i = 0;
-	while (src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
+    i = 0;
+    if (!s2)
+        return NULL;
+    while (s2[i] != '\0')
+    {
+        s1[i] = s2[i];
+        i++;
+    }
+    s1[i] = s2[i];
+    return s1;
 }

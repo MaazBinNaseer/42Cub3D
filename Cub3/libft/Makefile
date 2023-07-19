@@ -3,60 +3,61 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nhill <nhill@student.42.fr>                +#+  +:+       +#+         #
+#    By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/10/31 16:28:39 by nhill             #+#    #+#              #
-#    Updated: 2021/02/23 18:01:16 by nhill            ###   ########.fr        #
+#    Created: 2022/07/25 12:56:27 by mbin-nas          #+#    #+#              #
+#    Updated: 2022/08/08 14:02:53 by mbin-nas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libft.a
+# -.- Makefile -.-
+NAME= libft.a 
 
+#DECLARED VARIABLES  
+CFILES= 	ft_putchar_fd.c         ft_strmapi.c		ft_putendl_fd.c \
+			ft_atoi.c               ft_strncmp.c		ft_strnstr.c \
+			ft_bzero.c              ft_putnbr_fd.c      ft_strrchr.c \
+			ft_calloc.c             ft_putstr_fd.c      ft_strtrim.c \
+			ft_isalnum.c            ft_split.c          ft_substr.c \
+			ft_isalpha.c            ft_strchr.c         ft_tolower.c \
+			ft_isascii.c            ft_strdup.c         ft_striteri.c \
+			ft_isdigit.c            ft_memchr.c         ft_toupper.c \
+			ft_isprint.c            ft_memcmp.c         ft_strjoin.c \
+			ft_memmove.c            ft_strlcpy.c		ft_itoa.c \
+			ft_memset.c             ft_strlen.c			ft_strlcat.c \
+			ft_memcpy.c             get_next_line.c     get_next_line_utils.c \
+			main.c					ft_strcpy.c
+		
+OBJECTS= $(CFILES:.c=.o)
+BONUS = ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c ft_lstdelone.c \
+		ft_lstiter.c ft_lstmap.c ft_lstnew.c ft_lstsize.c \
+		ft_lstlast.c
+
+BONUS_OJS = $(BONUS:.c=.o)
+CFLAGS = -Wall -Wextra -Werror 
 CC = gcc
 
+YELLOW   =   \033[1;33m 
+RESET   =   \033[0m 
 
-SRC =    ft_strdup.c 		ft_bzero.c 			ft_isalpha.c  	ft_isdigit.c  \
-		   ft_memccpy.c  		ft_memcmp.c   		ft_memmove.c  	ft_strchr.c   \
-   		ft_strlcpy.c  		ft_strncmp.c  		ft_strrchr.c  	ft_toupper.c  \
-   		ft_atoi.c     		ft_isalnum.c  		ft_isascii.c  	ft_isprint.c  \
-   		ft_memchr.c   		ft_memcpy.c   		ft_memset.c   	ft_strlcat.c  \
-   		ft_strlen.c   		ft_strnstr.c  		ft_tolower.c 	ft_calloc.c   \
-   		ft_strdup.c 		ft_substr.c 		ft_strjoin.c 	ft_strtrim.c  \
-   		ft_split.c 			ft_itoa.c 			ft_strmapi.c   	ft_putchar_fd.c\
-   		ft_putstr_fd.c 	ft_putendl_fd.c 	ft_putnbr_fd.c		ft_lstnew.c \
-         ft_lstadd_front.c    ft_lstadd_front.c    ft_lstadd_back.c ft_lstsize.c\
-         ft_lstlast.c         ft_lstdelone.c       ft_lstclear.c  ft_lstiter.c\
-         ft_lstmap.c			ft_strcpy.c
+#generating the compile files 
+$(NAME): $(OBJECTS)
+	@echo " $(YELLOW) Building Libft $(RESET)"
+	ar -rcs $(NAME) $(OBJECTS)
+	@echo " $(YELLOW) [ Libft built completed ]$(RESET)"
 
-OBJ = $(SRC:.c=.o)
-
-BONUS_OBJ = $(BONSRC:.c=.o)
-
-FLAGS = -Wall -Wextra -Werror -c
-
+all: $(NAME) 
+# Generating Object files 
 %.o: %.c
-	$(CC) $(FLAGS) $< -o $@
+	$(CC) $(CFLAGS) -c $< $^
+	
+bonus: $(BONUS_OJS)
+		ar -rcs $(NAME) $(BONUS_OJS)
 
-all: $(NAME)
-
-$(NAME): $(OBJ)
-	ar rcs $(NAME) $(OBJ)
-	ranlib $(NAME)
-
-bonus: $(BONUS_OBJ)
-	ar rcs $(NAME) $(BONUS_OBJ)
-
-clean:
-	rm -f $(OBJ) $(BONUS_OBJ)
-	@echo "$(F_GREEN)Cleaned! $(F_NONE)"
-
-fclean: clean
-	rm -f $(NAME)
-	@echo "$(F_ORANGE)FCleaned! $(F_NONE)"
-
-re: fclean all
-
-norm:
-	norminette *.c *.h
-
-.PHONY: clean fclean
+#clearing out all the .O files 
+clean: 
+	rm -rf $(NAME) $(OBJECTS) $(BONUS_OJS)
+fclean: clean 
+	rm -rf $(NAME)
+	
+re: clean all 

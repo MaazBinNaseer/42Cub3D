@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhill <nhill@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 21:18:16 by nhill             #+#    #+#             */
-/*   Updated: 2021/03/16 16:35:04 by nhill            ###   ########.fr       */
+/*   Updated: 2023/07/19 18:43:43 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define COMPRESSION 24
 # define SCREEN_PATH "screen.bmp"
 # define RIGHTS 0644
-# define BUFFER_SIZE 1
+// # define BUFFER_SIZE 1
 # define PINK 9961608
 # define BLACK 000000
 
@@ -224,7 +224,7 @@ typedef	struct				s_info
 	int						error;
 }							t_info;
 
-int							get_next_line(int fd, char **line);
+int							get_next_line_new(int fd, char **line);
 int							tab_size(char **tab);
 char						*ft_strdup_without_space(const char *s);
 t_img						*fn_new_image(t_info *info, int width, int height);

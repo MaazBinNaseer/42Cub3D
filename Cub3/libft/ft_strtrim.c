@@ -3,51 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhill <nhill@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/29 15:50:36 by nhill             #+#    #+#             */
-/*   Updated: 2021/02/23 17:43:36 by nhill            ###   ########.fr       */
+/*   Created: 2022/08/01 13:47:43 by mbin-nas          #+#    #+#             */
+/*   Updated: 2022/08/01 13:47:43 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_find(char s, char *set)
+char	ft_readchar(char c, char const *str)
 {
-	int		i;
+	size_t	i;
 
 	i = 0;
-	while (i < ft_strlen(set))
+	while (str[i])
 	{
-		if (s == set[i])
+		if (str[i] == c)
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
-char	*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char const *str1, char const *str2)
 {
-	char	*rez;
-	int		i;
-	int		j;
-	int		l;
+	char	*str;
+	size_t	i;
+	size_t	starting;
+	size_t	ending;
 
-	i = 0;
-	j = 0;
-	if (!s1)
-		return (rez = ft_calloc(1, 1));
-	while (s1[i] && (ft_find(s1[i], (char *)set) == 1))
-		i++;
-	l = ft_strlen(s1) - 1;
-	while (l > 0 && (ft_find(s1[l], (char *)set) == 1))
-		l--;
-	if (!s1[i])
-		return (rez = ft_calloc(1, 1));
-	if (!(rez = (char *)malloc((l - i + 2) * sizeof(char))))
+	if (!str1 || !str2)
+		return (0);
+	starting = 0;
+	while (str1[starting] && ft_readchar(str1[starting], str2))
+		starting++;
+	ending = ft_strlen(str1);
+	while (ending > starting && ft_readchar(str1[ending - 1], str2))
+		ending--;
+	str = (char *)malloc(sizeof(*str1) * (ending - starting + 1));
+	if (!str)
 		return (NULL);
-	while (i < l + 1)
-		rez[j++] = s1[i++];
-	rez[j] = '\0';
-	return (rez);
+	i = 0;
+	while (starting < ending)
+		str[i++] = str1[starting++];
+	str[i] = 0;
+	return (str);
 }
+
+// int main()
+// {
+//     char *str1 = "l      l";
+//     char *str2 = "l";
+
+//     printf("%s\n", ft_strtrim(str1, str2));
+//     return (0);
+
+// }

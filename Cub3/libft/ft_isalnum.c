@@ -3,20 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhill <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/28 13:12:04 by nhill             #+#    #+#             */
-/*   Updated: 2020/11/06 16:55:28 by nhill            ###   ########.fr       */
+/*   Created: 2022/07/18 14:45:33 by mbin-nas          #+#    #+#             */
+/*   Updated: 2022/07/27 14:51:34 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
-int		ft_isalnum(int ch)
+int	ft_isalnum(int value)
 {
-	if ((ch >= '0' && ch <= '9') || (ch >= 'A' && ch <= 'Z')
-			|| (ch >= 'a' && ch <= 'z'))
-		return (1);
+	int	num;
+
+	num = 1;
+	if ((value >= 'A' && value <= 'Z') || (value >= 'a' && value <= 'z'))
+		return (num);
+	else if (value >= '0' && value <= '9')
+		return (num);
 	else
 		return (0);
 }
+
+// // int main()
+// // {
+// //     char x = ' ';
+// //     char z = '\t';
+// //     char m = 'O';
+// //     char n = '8';
+
+// //     printf("The value of x, z, m ,n is: %d, %d, %d, %d\n", ft_isalnum(x),
+// 		ft_isalnum(z), ft_isalnum(m), ft_isalnum(n);
+// //     return (0);
+
+// // }

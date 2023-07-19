@@ -3,27 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhill <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/28 12:47:10 by nhill             #+#    #+#             */
-/*   Updated: 2020/11/06 16:35:59 by nhill            ###   ########.fr       */
+/*   Created: 2022/07/19 11:55:11 by mbin-nas          #+#    #+#             */
+/*   Updated: 2022/07/27 14:57:40 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+DESCRIPTION
+     The memset() function writes len bytes of value c 
+	 (converted to an unsigned char) to the string b.
+
+RETURN VALUES
+     The memset() function returns its first argument.
+*/
 #include "libft.h"
+#include <stdio.h>
 
-void	*ft_memset(void *dest, int c, size_t n)
+void	*ft_memset(void *str, int num, size_t length)
 {
-	unsigned char	*src;
-	int				i;
+	size_t	move;
 
-	i = 0;
-	src = (unsigned char*)dest;
-	while (n > 0)
+	move = 0;
+	if (!str && !num)
+		return (NULL);
+	while (move < length)
 	{
-		src[i] = (unsigned char)c;
-		i++;
-		n--;
+		*(unsigned char *)(str + move) = (unsigned char)num;
+		move++;
 	}
-	return (dest);
+	return (str);
 }
+
+// int main()
+// {
+//     char myarray[50] = "Welcome to world of 42";
+//     printf("Before: %s\n", myarray);
+//     ft_memset(myarray + 2 , 'w', 10*sizeof(char));
+//     printf("After: %s\n", myarray);
+//     return (0);
+// }

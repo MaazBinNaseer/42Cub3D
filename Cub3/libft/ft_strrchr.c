@@ -3,29 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhill <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/28 16:22:53 by nhill             #+#    #+#             */
-/*   Updated: 2020/11/06 16:56:35 by nhill            ###   ########.fr       */
+/*   Created: 2022/07/21 12:51:59 by mbin-nas          #+#    #+#             */
+/*   Updated: 2022/07/27 15:10:25 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
-char	*ft_strrchr(const char *str, int ch)
+char	*ft_strrchr(const char *str, int c)
 {
-	char	*s;
-	char	res;
+	int	i;
 
-	s = (char *)str;
-	while (*s)
-		s++;
-	res = (char)ch;
-	while (s >= str)
+	i = 0;
+	while (str[i])
+		i++;
+	while (i >= 0)
 	{
-		if (*s == res)
-			return (s);
-		s--;
+		if (str[i] == (char)c)
+			return ((char *)&str[i]);
+		i--;
 	}
-	return (NULL);
+	return (0);
 }
+
+// int	main(void)
+// {
+// 	const char string[] = "The string is wow";
+// 	int x = 'e';
+// 	const char *p;
+
+// 	p = ft_strrchr(string, x);
+// 	printf("String starting from %c is: %s\n", x, p);
+// 	//Returning Null
+// 	int y = 'z';
+// 	p = ft_strrchr(string, y);
+// 	printf("String starting from %c is: %s\n", y, p);
+
+// 	p = strrchr(string, x);
+// 	printf("String starting from %c is: %s\n", x, p);
+// 	return (0);
+// }

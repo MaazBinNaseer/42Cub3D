@@ -3,50 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhill <nhill@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/29 13:54:53 by nhill             #+#    #+#             */
-/*   Updated: 2021/03/06 19:04:54 by nhill            ###   ########.fr       */
+/*   Created: 2022/07/27 12:55:51 by mbin-nas          #+#    #+#             */
+/*   Updated: 2022/07/27 15:04:33 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
-static int	ft_strlen_w_ls(const char *str)
-{
-	int i;
-	int flag;
-
-	i = 0;
-	flag = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] != ' ')
-			flag = 1;
-		i++;
-	}
-	if (flag == 1 && str[i] == ' ')
-	{
-		while (str[i] != ' ')
-			i--;
-	}
-	return (i);
-}
-
-char		*ft_strdup(const char *str)
+char	*ft_strdup(const char *src)
 {
 	char	*ptr;
-	int		i;
+	size_t	len;
+	char	*dest;
 
-	ptr = NULL;
-	i = 0;
-	if (!(ptr = (char *)malloc(sizeof(*ptr) * (ft_strlen_w_ls(str) + 1))))
+	ptr = (char *)src;
+	len = ft_strlen(ptr) + 1;
+	dest = malloc(len * sizeof(char));
+	if (!dest)
 		return (NULL);
-	while (str[i] != '\0')
-	{
-		ptr[i] = str[i];
-		i++;
-	}
-	ptr[i] = '\0';
-	return (ptr);
+	ft_memcpy(dest, src, len);
+	return (dest);
 }

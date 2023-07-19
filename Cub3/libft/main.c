@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/03 16:24:20 by mbin-nas          #+#    #+#             */
-/*   Updated: 2022/08/08 14:15:59 by mbin-nas         ###   ########.fr       */
+/*   Created: 2022/09/27 18:46:30 by mbin-nas          #+#    #+#             */
+/*   Updated: 2022/10/24 16:43:07 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "get_next_line.h"
 
-t_list	*ft_lstnew(void *content)
-{
-	t_list	*new;
+// int	main(void)
+// {
+// 	int		fd;
+// 	char	*line;
 
-	new = (t_list *)malloc(sizeof(t_list));
-	if (!(new))
-		return (0);
-	new->next = NULL;
-	new->content = content;
-	return (new);
-}
+// 	fd = open("test.txt", O_RDONLY);
+	
+// 	// printf("%d\n", fd);
+// 	line = get_next_line(fd);
+// 	// printf("%s", line);
+// 	// free(line);
+// 	while (line != NULL)
+// 	{
+// 		line = get_next_line(fd);
+// 		printf("%s", line);
+// 		free(line);
+// 	}
+// 	return (0);
+// }

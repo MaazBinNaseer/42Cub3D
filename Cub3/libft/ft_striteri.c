@@ -1,25 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/03 16:24:20 by mbin-nas          #+#    #+#             */
-/*   Updated: 2022/08/08 14:15:59 by mbin-nas         ###   ########.fr       */
+/*   Created: 2022/08/01 13:48:32 by mbin-nas          #+#    #+#             */
+/*   Updated: 2022/08/01 13:48:35 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstnew(void *content)
+void	ft_striteri(char *str, void (*f)(unsigned int, char *))
 {
-	t_list	*new;
+	int	i;
 
-	new = (t_list *)malloc(sizeof(t_list));
-	if (!(new))
-		return (0);
-	new->next = NULL;
-	new->content = content;
-	return (new);
+	i = 0;
+	if (!str)
+		return ;
+	while (str[i] != '\0')
+	{
+		f(i, &str[i]);
+		i++;
+	}
 }
+
+// int main()
+// {
+//     char str1[] = "abcdefghijklm";
+// 	ft_striteri(str1, NULL);
+// 	printf("%s\n", str1);
+//     return(0);
+
+// }

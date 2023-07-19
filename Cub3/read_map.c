@@ -41,7 +41,7 @@ static int		fn_read(t_info *info, int fd)
 	flag_map = 0;
 	while (ret != 0)
 	{
-		ret = get_next_line(fd, &line);
+		ret = get_next_line_new(fd, &line);
 		i = 0;
 		while ((line[i] == ' ' || line[i] == '\t') && line[i])
 			i++;

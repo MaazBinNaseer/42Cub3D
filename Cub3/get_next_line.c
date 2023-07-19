@@ -38,7 +38,7 @@ static void		get_line_create(char **str, char **line)
 	}
 }
 
-int				get_next_line(int fd, char **line)
+int				get_next_line_new(int fd, char **line)
 {
 	int				bytes;
 	char			*buf;

@@ -3,26 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhill <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/29 11:35:27 by nhill             #+#    #+#             */
-/*   Updated: 2020/11/06 16:52:20 by nhill            ###   ########.fr       */
+/*   Created: 2022/07/19 12:08:13 by mbin-nas          #+#    #+#             */
+/*   Updated: 2022/08/03 14:40:58 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+DESCRIPTION
+     The bzero() function writes n zeroed bytes to the string s.  If n is zero,
+	bzero() does
+     nothing.
+*/
 #include "libft.h"
 
-void	ft_bzero(void *s, size_t n)
+void	ft_bzero(void *str, size_t num)
 {
-	unsigned char	*src;
-	int				i;
+	size_t	x;
 
-	i = 0;
-	src = (unsigned char*)s;
-	while (n > 0)
+	x = 0;
+	while (x < num)
 	{
-		src[i] = '\0';
-		i++;
-		n--;
+		*(char *)(str + x) = 0;
+		x++;
 	}
 }
+
+// int main()
+// {
+//     char str[15] = "abcdefgh";
+//     printf("I am printing a string: %s\n", str);
+//     ft_bzero(str, 6);
+//     printf("I am printing a string: %c\n", str[5]);
+//     return (0);
+// }

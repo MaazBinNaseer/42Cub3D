@@ -3,26 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhill <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/29 12:38:31 by nhill             #+#    #+#             */
-/*   Updated: 2020/11/06 16:53:42 by nhill            ###   ########.fr       */
+/*   Created: 2022/07/22 15:59:59 by mbin-nas          #+#    #+#             */
+/*   Updated: 2022/07/25 16:06:11 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
-void	*ft_memchr(const void *arr, int c, size_t n)
+void	*ft_memchr(const void *str, int c, size_t numb)
 {
-	unsigned char	*a;
+	unsigned char	ch;
+	unsigned char	*ms;
+	size_t			i;
 
-	a = (unsigned char*)arr;
-	while (n > 0)
+	ch = c;
+	ms = (unsigned char *)str;
+	i = 0;
+	while (i < numb)
 	{
-		if (*a == (unsigned char)c)
-			return (a);
-		n--;
-		a++;
+		if ((unsigned char)*ms == ch)
+			return ((char *)ms);
+		i++;
+		ms++;
 	}
 	return (NULL);
 }
+
+// int main()
+// {
+//      const char string[] = "The string is wow";
+//     int x = 't';
+//     const char *p;
+
+//     p = ft_memchr(string, x, 3);
+//     printf("String starting from %c is: %s\n", x, p);
+//     return (0);
+
+// }

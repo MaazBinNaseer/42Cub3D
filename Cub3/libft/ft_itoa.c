@@ -3,66 +3,95 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhill <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/29 16:29:59 by nhill             #+#    #+#             */
-/*   Updated: 2020/11/06 17:00:33 by nhill            ###   ########.fr       */
+/*   Created: 2022/08/01 13:48:03 by mbin-nas          #+#    #+#             */
+/*   Updated: 2022/08/01 15:14:44 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
-static int	ft_len(long ch)
+int	ft_itoa_size(int n)
 {
-	int		i;
+	int	size;
 
-	i = 0;
-	while (ch > 0)
+	size = 0;
+	if (n == -2147483648)
+		return (11);
+	if (n < 0)
 	{
-		i++;
-		ch = ch / 10;
+		n = -n;
+		size++;
 	}
-	return (i);
+	if (n == 0)
+		return (1);
+	while (n > 9)
+	{
+		n = n / 10;
+		size++;
+	}
+	size++;
+	return (size);
 }
 
-static char	*ft_create_str(char *str, int i, long nn, int zn)
+char	*ft_itoa(int n)
 {
-	str[--i] = '\0';
-	if (nn == 0)
+	char		*str;
+	int			size;
+	long long	nb;
+
+	nb = n;
+	size = ft_itoa_size(nb);
+	str = malloc(sizeof(char) * size + 1);
+	if (nb == 0)
+		str[0] = '0';
+	if (!str || str == NULL)
+		return (NULL);
+	str[size] = '\0';
+	if (nb < 0)
 	{
-		str[--i] = '0';
-		return (str);
+		nb *= -1;
+		str[0] = '-';
 	}
-	while (i > 0)
+	size--;
+	while (nb)
 	{
-		str[--i] = nn % 10 + '0';
-		nn = nn / 10;
+		str[size] = (((nb % 10)) + '0');
+		size--;
+		nb = nb / 10;
 	}
-	if (zn < 0)
-		str[i] = '-';
 	return (str);
 }
 
-char		*ft_itoa(int n)
-{
-	char	*str;
-	int		zn;
-	int		i;
-	long	ch;
-	long	nn;
+// int main()
+// {
+//     int x = 456789;
+//     char *ptr;
+//     char *i1 = ft_itoa(-623);
+// 	char *i2 = ft_itoa(156);
+// 	char *i3 = ft_itoa(-0);
+//     // ptr = ft_itoa(x);
 
-	zn = 1;
-	i = 0;
-	nn = n;
-	if (nn <= 0)
-	{
-		i++;
-		zn = -zn;
-		nn = -nn;
-	}
-	ch = nn;
-	i = i + ft_len(ch);
-	if (!(str = (char *)malloc((++i) * sizeof(char))))
-		return (NULL);
-	return (str = ft_create_str(str, i, nn, zn));
-}
+//     // printf("Printing a string: %s\n", ptr);
+
+//     printf("Printing a string: %s\n", i1);
+//     if (strcmp(i1, "-623"))
+// 	{
+// 		printf("fail");;
+// 	}
+//     printf("Printing a string: %s\n", i2);
+// 	if (strcmp(i2, "156"))
+// 	{
+// 		printf("fail");
+// 	}
+//     printf("Printing a string: %s\n", i3);
+// 	if (strcmp("0", i3))
+// 	{
+// 		printf("fail");
+// 	}
+
+//     return (0);
+
+// }
