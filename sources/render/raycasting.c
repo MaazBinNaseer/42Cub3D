@@ -1,114 +1,118 @@
 #include "../../inc/Cube3D.h"
 
-static void check_unit_wall(t_rays *ray, t_map *map, float ray_offset[2])
+void	init_raycast(t_info *info, int x)
 {
-    int x;
-    int y;
-
-    while (true)
-    {
-        x = ray->end[0] / 32;
-        y = ray->end[1] / 32;
-        if(x < 0 || y < 0 || x >= map->coloumns || y >= map->rows || map->map[y][x] == '1')
-            break;
-        ray->end[0] += ray_offset[0];
-        ray->end[1] += ray_offset[1];
-    }
+	info->rc.camera = 2 * x / (double)(info->width) - 1;
+	info->rc.rpos.x = info->pos.x;
+	info->rc.rpos.y = info->pos.y;
+	info->rc.rdir.x = info->rc.dir.x + info->rc.plane.x * info->rc.camera;
+	info->rc.rdir.y = info->rc.dir.y + info->rc.plane.y * info->rc.camera;
+	info->rc.rmap.x = (int)info->rc.rpos.x;
+	info->rc.rmap.y = (int)info->rc.rpos.y;
+	info->rc.rdisd.x = fabs(1 / info->rc.rdir.x);
+	info->rc.rdisd.y = fabs(1 / info->rc.rdir.y);
+	info->rc.hit = 0;
 }
 
-static float rays_horizontal(t_rays *ray, t_map *map, int x, int y) 
+void	direction_ray(t_info *info)
 {
-    float tan_inv;
-    float ray_offset[2];
-    float ray_length;
+	if (info->rc.rdir.x < 0)
+	{
+		info->rc.step.x = -1;
+		info->rc.rdist.x = (info->rc.rpos.x - info->rc.rmap.x) *
+		info->rc.rdisd.x;
+	}
+	else
+	{
+		info->rc.step.x = 1;
+		info->rc.rdist.x = (info->rc.rmap.x + 1.0 - info->rc.rpos.x) *
+		info->rc.rdisd.x;
+	}
+	if (info->rc.rdir.y < 0)
+	{
+		info->rc.step.y = -1;
+		info->rc.rdist.y = (info->rc.rpos.y - info->rc.rmap.y) *
+		info->rc.rdisd.y;
+	}
+	else
+	{
+		info->rc.step.y = 1;
+		info->rc.rdist.y = (info->rc.rmap.y + 1.0 - info->rc.rpos.y) *
+			info->rc.rdisd.y;
+	}
+}
 
-    ray->ra = map->player_position.player_direction - 30 * (PI / 180);
-    if (ray->ra < 0)
-        ray->ra += (float)PI * 2;
-    tan_inv = -1 / tan(ray->ra);
-    if(ray->ra < PI && ray->ra > 0)
-    {
-        ray->end[1] = y / 32 * 32 + 32;
-        ray->end[0] = (y - ray->end[1]) * tan_inv + x;
-        ray_offset[1] = 32;
-    }
-    else if (ray->ra > PI && ray->ra != PI * 2)
-    {
-        ray->end[1] = y / 32 * 32 - 0.0001f;
-        ray->end[0] = (y - ray->end[1]) * tan_inv + x;
-        ray_offset[1] = -32;
-    }
-    if (ray->ra == 0 || ray->ra == PI)
-    {
-        ray->end[0] = x;
-        ray->end[1] = y;
-        return (MAXFLOAT);
-    }
-    ray_offset[0] = -ray_offset[1] * tan_inv;
-    check_unit_wall(ray, map, ray_offset);
-    ray_length = (sqrtf(powf((ray->end[0] - x), 2) + powf((ray->end[1] - y), 2)));
-    return (ray_length);
+void	hit_ray(t_info *info)
+{
+	while (info->rc.hit == 0)
+	{
+		if (info->rc.rdist.x < info->rc.rdist.y)
+		{
+			info->rc.rdist.x += info->rc.rdisd.x;
+			info->rc.rmap.x += info->rc.step.x;
+			if (info->rc.rdir.x < 0)
+				info->rc.wall = 0;
+			else
+				info->rc.wall = 2;
+		}
+		else
+		{
+			info->rc.rdist.y += info->rc.rdisd.y;
+			info->rc.rmap.y += info->rc.step.y;
+			if (info->rc.rdir.y < 0)
+				info->rc.wall = 1;
+			else
+				info->rc.wall = 3;
+		}
+		if (my_check_rc(info) == 1)
+			info->rc.hit = 1;
+	}
+}
+
+void	size_ray(t_info *info)
+{
+	if (info->rc.wall == 0 || info->rc.wall == 2)
+		info->rc.dist = (info->rc.rmap.x - info->rc.rpos.x
+					+ (1 - info->rc.step.x) / 2) / info->rc.rdir.x;
+	else
+		info->rc.dist = (info->rc.rmap.y - info->rc.rpos.y
+					+ (1 - info->rc.step.y) / 2) / info->rc.rdir.y;
+	info->rc.rh = ((info->height / info->rc.dist));
+	info->rc.wstart = ((-info->rc.rh)) / 2 + info->height / 2;
+	if (info->rc.wstart < 0)
+		info->rc.wstart = 0;
+	info->rc.wend = info->rc.rh / 2 + info->height / 2;
+	if (info->rc.wend >= info->height)
+		info->rc.wend = info->height - 1;
+	info->rc.textur.id = (info->map.map[info->rc.rmap.y]
+	[info->rc.rmap.x] - '0') - 1;
+}
+
+void	wall_textur(t_info *info)
+{
+	double wallx;
+
+	if (info->rc.wall == 0 || info->rc.wall == 2)
+		wallx = info->rc.rpos.y + info->rc.dist * info->rc.rdir.y;
+	else
+		wallx = info->rc.rpos.x + info->rc.dist * info->rc.rdir.x;
+	wallx -= floor((wallx));
+	info->rc.textur.x = (int)(wallx * 64.0);
+	if ((info->rc.wall == 0 || info->rc.wall == 2) && info->rc.rdir.x > 0)
+		info->rc.textur.x = 64 - info->rc.textur.x - 1;
+	if ((info->rc.wall == 1 || info->rc.wall == 3) && info->rc.rdir.y < 0)
+		info->rc.textur.x = 64 - info->rc.textur.x - 1;
+	if ((info->rc.wall == 0 || info->rc.wall == 2) && info->rc.rdir.x >= 0)
+		info->rc.textur.id = 1;
+	else if ((info->rc.wall == 0 || info->rc.wall == 2) && info->rc.rdir.x < 0)
+		info->rc.textur.id = 0;
+	else if ((info->rc.wall == 1 || info->rc.wall == 3) && info->rc.rdir.y < 0)
+		info->rc.textur.id = 2;
+	else
+		info->rc.textur.id = 3;
+	info->rc.step_textur = 1.0 * 64 / info->rc.rh;
+	info->rc.textur_pos = (info->rc.wstart - info->height / 2 +
+	info->rc.rh / 2) * info->rc.step_textur;
 }
 
 
-static float rays_vertical(t_rays *rays, t_map *map, int x, int y)
-{
-    float tan_inv;
-    float ray_offset[2];
-    float ray_length;
-
-    rays->ra = map->player_position.player_direction - 30 * (PI / 180);
-    tan_inv = -tan(rays->ra);
-    if(rays->ra > PI_2  && rays->ra < (3 * PI_2))
-    {
-        rays->end[0] = x / 32 * 32 - 0.5f;
-        ray_offset[0] = -32;
-    }
-    else if (rays->ra < PI_2 || rays->ra > (3 * PI_2))
-    {
-        rays->end[0] = x / 32 * 32 + 32;
-        ray_offset[0] = 32;
-    }
-    rays->end[1] = (rays->end[0] - x) * tan_inv + y;
-    if(rays->ra == PI_2 || rays->ra == (3 * PI_2))
-    {
-        rays->end[0] = x;
-        rays->end[1] = y;
-        return (MAXFLOAT);
-    }
-    ray_offset[1] = -ray_offset[0] * tan_inv;
-    check_unit_wall(rays, map, ray_offset);
-    ray_length = sqrtf(powf((rays->end[0] - x), 2) + powf((rays->end[1] - y), 2));
-    return (ray_length);
-}
-
-float shortest_distance(t_rays *ray, t_map *map, int x, int y)
-{
-    float   distance_H;
-    float   distance_V;
-    int     end_h[2];
-
-    ray->start[0] = x;
-    ray->start[1] = y;
-    distance_H = rays_horizontal(ray, map, x, y);
-    end_h[0] = ray->end[0];
-    end_h[1] = ray->end[1];
-    ray->dir = 'S';
-    distance_V = rays_vertical(ray, map, x, y);
-    if(distance_H < distance_V)
-    {
-        ray->end[0] = end_h[0];
-        ray->end[1] = end_h[1];
-        ray->dir = 'E';
-        return (distance_H);
-    }
-    return (distance_V);
-}
-
-void draw_rays(t_rays *ray, t_mlx *mlx, t_map *map, int x, int y)
-{
- 
-    int color = 0x00FF00;
-    shortest_distance(ray, map, x, y);
-    mlx_line(mlx, mlx->offscreen_buffer , x, y, ray->end[0], ray->end[1], color);
-}
