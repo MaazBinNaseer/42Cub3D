@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nhill <nhill@student.42.fr>                +#+  +:+       +#+         #
+#    By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/22 18:16:32 by nhill             #+#    #+#              #
-#    Updated: 2021/03/16 14:30:30 by nhill            ###   ########.fr        #
+#    Updated: 2023/07/19 20:46:11 by mbin-nas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ CFLAGS	=	-Wall -Werror -Wextra
 $(NAME):	${OBJS}
 			make -C minilibx_opengl_20191021
 			make -C libft
+			make bonus -C libft
 			gcc -framework OpenGL -framework AppKit -g -o $(NAME) $(OBJS) $(LIBFT) $(MINILIBX)
 
 all:		${NAME}
