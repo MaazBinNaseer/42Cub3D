@@ -1,49 +1,47 @@
-NAME	=	Cub3D
-CC		=	gcc
-CFLAGS	=	-Wall -Wextra -Werror -g3 
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/02/22 18:16:32 by nhill             #+#    #+#              #
+#    Updated: 2023/07/19 20:46:11 by mbin-nas         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-PARSING	=	map_read.c read_map_check.c read_config_file.c parsing_utils.c
-RENDERING = boot_mlx.c render_drawing.c movements.c raycasting.c distance.c
-UTILS   =	intialize_list.c
-MAIN    =	Cub3D.c
-OBJPATH = 	./obj/
-LIBFT = 	./sources/utils/Libft
+NAME = cub3D
 
-GREEN   =   \033[1;32m 
-RESET   =   \033[0m 
+SRCS = utils.c sprite.c save.c read_map.c re_errors.c raycasting.c position.c path.c parse_map.c init.c header.c get_next_line.c get_data.c \
+		free.c events.c display.c cub3d.c colour.c check_data.c add_sprite.c move.c map_check.c
 
-SRC = 	$(addprefix sources/parsing/, $(PARSING)) \
-	 	$(addprefix sources/render/, $(RENDERING)) \
-	 	$(addprefix sources/utils/, $(UTILS)) \
-	 	$(addprefix , $(MAIN))
+OBJS	= ${SRCS:.c=.o}
 
-OBJ = 	$(patsubst %.c,$(OBJPATH)%.o,$(SRC))
+LIBFT	= libft/libft.a
 
-all		:	$(MAKELIBFT) $(OBJPATH) $(NAME)
+MINILIBX= minilibx_opengl_20191021/libmlx.a
 
-$(OBJPATH):
-		mkdir -p $(OBJPATH)sources/parsing/
-		mkdir -p $(OBJPATH)sources/render/
-		mkdir -p $(OBJPATH)sources/utils/
-		mkdir -p $(OBJPATH)
+CFLAGS	=	-Wall -Werror -Wextra
 
-$(NAME)	:	$(OBJ)
-		@echo "$(GREEN)Building $(NAME) $(RESET)..."
-		@make -C $(LIBFT)
-		$(CC) $(OBJ) -Lmlx_linux -lmlx_Linux -L/usr/lib $(LIBFT)/libft.a -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
-		@echo "$(GREEN)\033[1mCompilation complete$(RESET)"
+%.o: %.c	gcc $(CFLAGS) -o $@ -c $<
 
-$(OBJPATH)%.o: %.c
-		$(CC) $(CFLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@
+$(NAME):	${OBJS}
+			make -C minilibx_opengl_20191021
+			make -C libft
+			make bonus -C libft
+			gcc -framework OpenGL -framework AppKit -g -o $(NAME) $(OBJS) $(LIBFT) $(MINILIBX)
+
+all:		${NAME}
 
 clean:
-	rm -rf $(OBJPATH)
-	cd $(LIBFT) && $(MAKE) clean
+			rm -f ${OBJS}
+			make clean -C libft
 
-fclean: clean
-	rm -f $(NAME)
-	cd $(LIBFT) && $(MAKE) fclean
+fclean:		clean
+			rm -f ${NAME} cub.bmp
+			make clean -C minilibx_opengl_20191021
+			make fclean -C libft
 
-re:		fclean all
+re:			fclean all
 
-.PHONY	:	all clean fclean re
+.PHONY:		all clean fclean
