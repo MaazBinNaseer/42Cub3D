@@ -3,18 +3,18 @@
 static void	pixel_textur(t_textur *textur, t_info *info)
 {
 	info->colour = textur->textur_data[64 *
-	info->rc.textur.y + info->rc.textur.x];
+	info->raycast.textur.y + info->raycast.textur.x];
 }
 
 void		pixel_colour(t_info *info)
 {
-	if (info->rc.textur.id == 0)
+	if (info->raycast.textur.id == 0)
 		pixel_textur(info->textur3, info);
-	else if (info->rc.textur.id == 1)
+	else if (info->raycast.textur.id == 1)
 		pixel_textur(info->textur4, info);
-	else if (info->rc.textur.id == 2)
+	else if (info->raycast.textur.id == 2)
 		pixel_textur(info->textur1, info);
-	else if (info->rc.textur.id == 3)
+	else if (info->raycast.textur.id == 3)
 		pixel_textur(info->textur2, info);
 }
 

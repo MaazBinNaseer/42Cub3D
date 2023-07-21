@@ -70,7 +70,7 @@ static int		get_resolution(t_info *info)
 
 int				init_var(t_info *info, char *s)
 {
-	info->rc.speed = 0.05;
+	info->raycast.speed = 0.05;
 	if ((info->error = get_map(info, s)) != SUCCESS)
 		return (info->error);
 	if ((info->error = parse_map(info)) != SUCCESS)
@@ -85,7 +85,7 @@ int				init_var(t_info *info, char *s)
 		return (info->error);
 	if ((info->error = init_info_pos(info)) != SUCCESS)
 		return (info->error);
-	if (!(info->rc.zbuffer = malloc(sizeof(double) * info->width)))
+	if (!(info->raycast.zbuffer = malloc(sizeof(double) * info->width)))
 		return (MALLOC_FAIL);
 	if ((info->error = init_texture(info)) != SUCCESS)
 		return (info->error);

@@ -12,12 +12,12 @@ static int	display_col(t_info *info, int x)
 	int	y;
 
 	y = 0;
-	while (y < info->rc.wstart)
+	while (y < info->raycast.wstart)
 		put_pixel(info->img, info->colour_ceiling.all, x, y++);
-	while (y >= info->rc.wstart && y <= info->rc.wend)
+	while (y >= info->raycast.wstart && y <= info->raycast.wend)
 	{
-		info->rc.textur.y = (int)info->rc.textur_pos & (64 - 1);
-		info->rc.textur_pos += info->rc.step_textur;
+		info->raycast.textur.y = (int)info->raycast.textur_pos & (64 - 1);
+		info->raycast.textur_pos += info->raycast.step_textur;
 		pixel_colour(info);
 		put_pixel(info->img, info->colour, x, y);
 		y++;
@@ -41,7 +41,7 @@ int			fn_display_screen(t_info *info)
 		wall_textur(info);
 		if ((info->error = display_col(info, x++)))
 			return (info->error);
-		info->rc.zbuffer[x] = info->rc.dist;
+		info->raycast.zbuffer[x] = info->raycast.dist;
 	}
 	if ((info->error = init_sprite(info)))
 		return (info->error);

@@ -7,7 +7,7 @@ static void	add_sprite_part_two(t_info *info)
 
 	y = info->sp.drawstart_y;
 	if (info->sp.transy > 0 && info->sp.stripe > 0 && info->sp.stripe <
-	info->width && info->sp.transy < info->rc.zbuffer[info->sp.stripe])
+	info->width && info->sp.transy < info->raycast.zbuffer[info->sp.stripe])
 	{
 		while (y < info->sp.drawend_y)
 		{
@@ -43,16 +43,16 @@ static void	sprite_calc(t_info *info, int i)
 {
 	double inv;
 
-	info->sp.spcamx = info->tab_sprite[info->rc.sp_order[i]].pos_x
+	info->sp.spcamx = info->tab_sprite[info->raycast.sp_order[i]].pos_x
 	- info->pos.x;
-	info->sp.spcamy = info->tab_sprite[info->rc.sp_order[i]].pos_y
+	info->sp.spcamy = info->tab_sprite[info->raycast.sp_order[i]].pos_y
 	- info->pos.y;
-	inv = 1.0 / (info->rc.plane.x * info->rc.dir.y - info->rc.dir.x *
-		info->rc.plane.y);
-	info->sp.transx = inv * (info->rc.dir.y * info->sp.spcamx - info->rc.dir.x *
+	inv = 1.0 / (info->raycast.plane.x * info->raycast.dir.y - info->raycast.dir.x *
+		info->raycast.plane.y);
+	info->sp.transx = inv * (info->raycast.dir.y * info->sp.spcamx - info->raycast.dir.x *
 		info->sp.spcamy);
-	info->sp.transy = inv * (-info->rc.plane.y *
-	info->sp.spcamx + info->rc.plane.x * info->sp.spcamy);
+	info->sp.transy = inv * (-info->raycast.plane.y *
+	info->sp.spcamx + info->raycast.plane.x * info->sp.spcamy);
 	info->sp.spritescreenx = (int)((info->width / 2) * (1 + info->sp.transx /
 		info->sp.transy));
 	info->sp.sprite_height = abs((int)(info->height / info->sp.transy));

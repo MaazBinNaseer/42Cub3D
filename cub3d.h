@@ -220,7 +220,7 @@ typedef	struct				s_info
 	t_textur				*textur4;
 	t_textur				*sprite;
 	unsigned int			colour;
-	t_rc					rc;
+	t_rc					raycast;
 	int						error;
 }							t_info;
 

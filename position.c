@@ -4,23 +4,23 @@ static int		init_pos(t_info *info)
 {
 	if (info->map.player == 'N')
 	{
-		info->rc.dir.y = -1;
-		info->rc.plane.x = -0.80;
+		info->raycast.dir.y = -1;
+		info->raycast.plane.x = -0.80;
 	}
 	if (info->map.player == 'S')
 	{
-		info->rc.dir.y = 1;
-		info->rc.plane.x = 0.80;
+		info->raycast.dir.y = 1;
+		info->raycast.plane.x = 0.80;
 	}
 	if (info->map.player == 'E')
 	{
-		info->rc.dir.x = 1;
-		info->rc.plane.y = -0.80;
+		info->raycast.dir.x = 1;
+		info->raycast.plane.y = -0.80;
 	}
 	if (info->map.player == 'W')
 	{
-		info->rc.dir.x = -1;
-		info->rc.plane.y = 0.80;
+		info->raycast.dir.x = -1;
+		info->raycast.plane.y = 0.80;
 	}
 	return (SUCCESS);
 }

@@ -2,12 +2,12 @@
 
 int			my_check_rc(t_info *info)
 {
-	if (info->map.tab_map[info->rc.rmap.y][info->rc.rmap.x] != '0' &&
-		info->map.tab_map[info->rc.rmap.y][info->rc.rmap.x] != '2' &&
-		info->map.tab_map[info->rc.rmap.y][info->rc.rmap.x] != 'E' &&
-		info->map.tab_map[info->rc.rmap.y][info->rc.rmap.x] != 'N' &&
-		info->map.tab_map[info->rc.rmap.y][info->rc.rmap.x] != 'S' &&
-		info->map.tab_map[info->rc.rmap.y][info->rc.rmap.x] != 'W')
+	if (info->map.tab_map[info->raycast.rmap.y][info->raycast.rmap.x] != '0' &&
+		info->map.tab_map[info->raycast.rmap.y][info->raycast.rmap.x] != '2' &&
+		info->map.tab_map[info->raycast.rmap.y][info->raycast.rmap.x] != 'E' &&
+		info->map.tab_map[info->raycast.rmap.y][info->raycast.rmap.x] != 'N' &&
+		info->map.tab_map[info->raycast.rmap.y][info->raycast.rmap.x] != 'S' &&
+		info->map.tab_map[info->raycast.rmap.y][info->raycast.rmap.x] != 'W')
 		return (1);
 	return (0);
 }

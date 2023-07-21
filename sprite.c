@@ -56,14 +56,14 @@ static void		order_sprite(t_info *info)
 	i = 0;
 	while (i < info->kol_sprite)
 	{
-		info->rc.sp_order[i] = i;
-		info->rc.sp_distance[i] = ((info->pos.x - info->tab_sprite[i].pos_x) *
+		info->raycast.sp_order[i] = i;
+		info->raycast.sp_distance[i] = ((info->pos.x - info->tab_sprite[i].pos_x) *
 			(info->pos.x - info->tab_sprite[i].pos_x) +
 			(info->pos.y - info->tab_sprite[i].pos_y) *
 			(info->pos.y - info->tab_sprite[i].pos_y));
 		i++;
 	}
-	sort_sprite(info->rc.sp_order, info->rc.sp_distance, info->kol_sprite);
+	sort_sprite(info->raycast.sp_order, info->raycast.sp_distance, info->kol_sprite);
 	add_sprite(info);
 }
 
@@ -74,17 +74,17 @@ int				init_sprite(t_info *info)
 	i = 0;
 	if (!(info->tab_sprite = malloc(sizeof(t_sprite) * info->kol_sprite)))
 		return (MALLOC_FAIL);
-	if (!(info->rc.sp_order = malloc(sizeof(int) * info->kol_sprite)))
+	if (!(info->raycast.sp_order = malloc(sizeof(int) * info->kol_sprite)))
 		return (MALLOC_FAIL);
-	if (!(info->rc.sp_distance = malloc(sizeof(double) * info->kol_sprite)))
+	if (!(info->raycast.sp_distance = malloc(sizeof(double) * info->kol_sprite)))
 		return (MALLOC_FAIL);
 	place_sprite(info);
 	order_sprite(info);
 	if (info->tab_sprite)
 		free(info->tab_sprite);
-	if (info->rc.sp_order)
-		free(info->rc.sp_order);
-	if (info->rc.sp_distance)
-		free(info->rc.sp_distance);
+	if (info->raycast.sp_order)
+		free(info->raycast.sp_order);
+	if (info->raycast.sp_distance)
+		free(info->raycast.sp_distance);
 	return (SUCCESS);
 }

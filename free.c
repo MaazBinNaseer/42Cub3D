@@ -35,8 +35,8 @@ void	ft_tabdel(void **tab)
 
 void	free_tab(t_info *info)
 {
-	if (info->rc.zbuffer)
-		free(info->rc.zbuffer);
+	if (info->raycast.zbuffer)
+		free(info->raycast.zbuffer);
 	if (info->map.tab_map)
 		ft_tabdel((void *)info->map.tab_map);
 	if (info->data.r)
