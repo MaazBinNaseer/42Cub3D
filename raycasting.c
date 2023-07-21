@@ -13,7 +13,16 @@ void	init_raycast(t_info *info, int x)
 	info->rc.rdisd.y = fabs(1 / info->rc.rdir.y);
 	info->rc.hit = 0;
 }
-
+/*
+# @brief: Will calculate the direction of the ray that has been sent out to the grid intersection
+* @example:
+* 1. (info->rc.rdir.x < 0): Throwing the ray direction towards left in the x-axis.
+* and vice versa for the else statement. 
+* 2. (info->rc.rdir.y < 0): Throwing the ray direction upwards and vice versa. 
+? @return: 
+--> Calculates rc.rdist.x and rc.rdisty which represents the ray need to travel along the x-axis
+--> and y-axis to intersect the grid lines from horizontal and vertical points. 
+*/
 void	direction_ray(t_info *info)
 {
 	if (info->rc.rdir.x < 0)
@@ -42,6 +51,14 @@ void	direction_ray(t_info *info)
 	}
 }
 
+/*
+# @brief: The rays keeps going untill it hits a wall
+* @example: 
+* The ray keeps looping as it keeps hitting 0 which allows the user to increase the step and dist.x of the ray
+* which later entails calls the function to check the ray whether it hit either of the conditions 
+* specified which leads to loop out of the while loop. 
+--> rc.wall 0 and 2 means left and right, 1 and 3 means up and down for the rays to move.
+*/
 void	hit_ray(t_info *info)
 {
 	while (info->rc.hit == 0)

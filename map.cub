@@ -1,5 +1,5 @@
 R  1920 1080
-NO        ./textures/walls/110.xpm
+NO  ./textures/walls/110.xpm
 SO ./textures/walls/9.xpm
 WE ./textures/walls/112.xpm
 EA ./textures/walls/188.xpm

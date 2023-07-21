@@ -1,5 +1,3 @@
-
-
 #include "cub3d.h"
 
 static int	check_symbol(t_info *info, int i, int j)
