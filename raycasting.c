@@ -1,5 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycasting.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/24 13:43:22 by mbin-nas          #+#    #+#             */
+/*   Updated: 2023/07/26 13:36:39 by mbin-nas         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
+/*
+# @brief: Initialize the raycast
+* @param: t_info *info, x 
+*/
 void	init_raycast(t_info *info, int x)
 {
 	info->raycast.camera = 2 * x / (double)(info->width) - 1;
@@ -56,7 +72,7 @@ void	direction_ray(t_info *info)
 * @example: 
 * The ray keeps looping as it keeps hitting 0 which allows the user to increase the step and dist.x of the ray
 * which later entails calls the function to check the ray whether it hit either of the conditions 
-* specified which leads to loop out of the while loop. 
+* specified which leads to loop exiting out of loop. 
 --> rc.wall 0 and 2 means left and right, 1 and 3 means up and down for the rays to move.
 */
 void	hit_ray(t_info *info)
