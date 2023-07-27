@@ -55,7 +55,10 @@ static int		get_resolution(t_info *info)
 			if (!check_tab2(tab[l]))
 				return (WRONG_INPUT);
 		if (tab[0])
-			info->width = ft_atoi(tab[0]);
+			{
+				info->width = ft_atoi(tab[0]);
+				printf("info->width: %f\n", info->width);
+			}
 		if (tab[1])
 			info->height = ft_atoi(tab[1]);
 	}

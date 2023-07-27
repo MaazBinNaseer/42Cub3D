@@ -6,22 +6,29 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:06:56 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/07/26 14:06:57 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/07/27 17:35:31 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	fn_rotate(t_info *info, int advance)
+/*
+# @brief Rotates the player with the advance (angle of rotation)
+# @brief Info is the list containing the raycasting information 
+? @param  t_info_*info  @param  int_advance
+* @example Plane is storing the camera plane and Dir is storing x component of
+* of the direction vector and to presever the original direction. 
+*/
+static void	player_rotate(t_info *info, int advance)
 {
-	double	dir;
+	double	dir_vec;
 	double	plane;
 
-	dir = info->raycast.dir.x;
+	dir_vec = info->raycast.dir.x;
 	plane = info->raycast.plane.x;
 	info->raycast.dir.x = info->raycast.dir.x * cos(advance * 0.05)
 		- info->raycast.dir.y * sin(advance * 0.05);
-	info->raycast.dir.y = dir * sin(advance * 0.05)
+	info->raycast.dir.y = dir_vec * sin(advance * 0.05)
 		+ info->raycast.dir.y * cos(advance * 0.05);
 	info->raycast.plane.x = info->raycast.plane.x * cos(advance * 0.05)
 		- info->raycast.plane.y * sin(advance * 0.05);
@@ -51,9 +58,14 @@ static void	up_down(t_info *info)
 	}
 }
 
-static void	straf(t_info *info)
+/*
+* @brief: Movements of the player left and right 
+* @param: takes t_info info
+* @return: Should move the player left and right 
+*/
+static void	move_left_right(t_info *info)
 {
-	if (info->move.strafr == 1)
+	if (info->move.move_right == 1)
 	{
 		if (info->map.tab_map[(int)(info->pos.y - info->raycast.dir.x *
 			info->raycast.speed)][(int)(info->pos.x)] == '0')
@@ -62,7 +74,7 @@ static void	straf(t_info *info)
 			+ info->raycast.dir.y * info->raycast.speed)] == '0')
 			info->pos.x += info->raycast.dir.y * info->raycast.speed;
 	}
-	if (info->move.strafl == 1)
+	if (info->move.move_left == 1)
 	{
 		if (info->map.tab_map[(int)(info->pos.y + info->raycast.dir.x *
 			info->raycast.speed)][(int)(info->pos.x)] == '0')
@@ -73,14 +85,18 @@ static void	straf(t_info *info)
 	}
 }
 
-void		fn_move(t_info *info)
+/*
+# @brief Calls the other functions to move the player
+? @param t_info_*info
+*/
+void		player_move(t_info *info)
 {
 	if (info->move.up == 1 || info->move.down == 1)
 		up_down(info);
-	if (info->move.strafr == 1 || info->move.strafl == 1)
-		straf(info);
+	if (info->move.move_right == 1 || info->move.move_left == 1)
+		move_left_right(info);
 	if (info->move.left == 1)
-		fn_rotate(info, 1);
+		player_rotate(info, 1);
 	if (info->move.right == 1)
-		fn_rotate(info, -1);
+		player_rotate(info, -1);
 }

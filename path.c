@@ -75,3 +75,4 @@ int				path_fix(t_info *info)
 	fn_free_path(info->data.sp);
 	return (SUCCESS);
 }
+

@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 13:41:45 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/07/26 13:41:46 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/07/27 16:24:37 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ static int		key_hit(int key, t_info *info)
 	if (key == KEY_LEFT)
 		info->move.left = 1;
 	if (key == KEY_A)
-		info->move.strafl = 1;
+		info->move.move_left = 1;
 	if (key == KEY_RIGHT)
 		info->move.right = 1;
 	if (key == KEY_D)
-		info->move.strafr = 1;
+		info->move.move_right = 1;
 	if (key == KEY_ESCAPE)
 		deal_exit(info);
 	return (SUCCESS);
@@ -40,11 +40,11 @@ static int		key_release(int key, t_info *info)
 	if (key == KEY_LEFT)
 		info->move.left = 0;
 	if (key == KEY_A)
-		info->move.strafl = 0;
+		info->move.move_left = 0;
 	if (key == KEY_RIGHT)
 		info->move.right = 0;
 	if (key == KEY_D)
-		info->move.strafr = 0;
+		info->move.move_right = 0;
 	return (SUCCESS);
 }
 
@@ -53,7 +53,7 @@ static int		fn_run(t_info *info)
 	free_img(info);
 	if ((info->img = fn_new_image(info, info->width, info->height)) == NULL)
 		return (IMG_FAIL);
-	fn_move(info);
+	player_move(info);
 	fn_display_screen(info);
 	mlx_put_image_to_window(info->mlx_ptr, info->win_ptr, info->img->img_ptr, 0,
 		0);

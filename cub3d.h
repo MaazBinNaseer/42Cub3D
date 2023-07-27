@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 21:18:16 by nhill             #+#    #+#             */
-/*   Updated: 2023/07/19 18:43:43 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/07/27 16:24:37 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,8 +156,8 @@ typedef struct				s_move
 	int						down;
 	int						left;
 	int						right;
-	int						strafl;
-	int						strafr;
+	int						move_left;
+	int						move_right;
 }							t_move;
 
 typedef struct				s_rc
@@ -259,7 +259,7 @@ void						free_tab(t_info *info);
 void						ft_tabdel(void **tab);
 void						free_textur(t_info *info, t_textur *textur);
 void						free_img(t_info *info);
-void						fn_move(t_info *info);
+void						player_move(t_info *info);
 int							events(t_info *info);
 void						put_pixel(t_img *img, unsigned int colour,
 							int p_x, int p_y);
