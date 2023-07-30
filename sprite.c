@@ -81,9 +81,6 @@ static void		order_sprite(t_info *info)
 
 int				init_sprite(t_info *info)
 {
-	int		i;
-
-	i = 0;
 	if (!(info->tab_sprite = malloc(sizeof(t_sprite) * info->kol_sprite)))
 		return (MALLOC_FAIL);
 	if (!(info->raycast.sp_order = malloc(sizeof(int) * info->kol_sprite)))

@@ -59,9 +59,9 @@ static void	up_down(t_info *info)
 }
 
 /*
-* @brief: Movements of the player left and right 
-* @param: takes t_info info
-* @return: Should move the player left and right 
+* @brief Movements of the player left and right 
+* @param t_info_info
+* @return Should move the player left and right 
 */
 static void	move_left_right(t_info *info)
 {
@@ -88,6 +88,7 @@ static void	move_left_right(t_info *info)
 /*
 # @brief Calls the other functions to move the player
 ? @param t_info_*info
+. @return Returns the movement of the player
 */
 void		player_move(t_info *info)
 {

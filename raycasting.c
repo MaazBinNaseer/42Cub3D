@@ -13,8 +13,9 @@
 #include "cub3d.h"
 
 /*
-# @brief: Initialize the raycast
-* @param: t_info *info, x 
+# @brief Initialize the raycast
+* @param t_info_*info
+* @param int_x 
 */
 void	init_raycast(t_info *info, int x)
 {
@@ -30,12 +31,12 @@ void	init_raycast(t_info *info, int x)
 	info->raycast.hit = 0;
 }
 /*
-# @brief: Will calculate the direction of the ray that has been sent out to the grid intersection
-* @example:
+# @brief Will calculate the direction of the ray that has been sent out to the grid intersection
+* @example
 * 1. (info->rc.rdir.x < 0): Throwing the ray direction towards left in the x-axis.
 * and vice versa for the else statement. 
 * 2. (info->rc.rdir.y < 0): Throwing the ray direction upwards and vice versa. 
-? @return: 
+? @return
 --> Calculates rc.rdist.x and rc.rdisty which represents the ray need to travel along the x-axis
 --> and y-axis to intersect the grid lines from horizontal and vertical points. 
 */
@@ -68,11 +69,12 @@ void	direction_ray(t_info *info)
 }
 
 /*
-# @brief: The rays keeps going untill it hits a wall
-* @example: 
-* The ray keeps looping as it keeps hitting 0 which allows the user to increase the step and dist.x of the ray
-* which later entails calls the function to check the ray whether it hit either of the conditions 
-* specified which leads to loop exiting out of loop. 
+# @brief The rays keeps going untill it hits a wall
+* @example
+* The ray keeps looping as it keeps hitting 0 which allows the user to increase 
+* the step and dist.x of the ray which later entails calls the function to check 
+* the ray whether it hit either of the conditions specified which leads to loop exiting 
+* out of loop. 
 --> rc.wall 0 and 2 means left and right, 1 and 3 means up and down for the rays to move.
 */
 void	hit_ray(t_info *info)
@@ -101,7 +103,15 @@ void	hit_ray(t_info *info)
 			info->raycast.hit = 1;
 	}
 }
-
+/*
+# @brief It will calculate the size of the ray once hit the wall 
+* @details
+* - Checks which driection of the ray it hit the wall (x or y)
+* - Calculates the [prependicular distance] to the wall along the direction ray
+* - Using the info->height to calculate the raycast height in vertical sense
+* - Calculates the wall slice where to start the wall from and where to end
+* - Added the texxture.id to give different textures to the wall 
+*/
 void	size_ray(t_info *info)
 {
 	if (info->raycast.wall == 0 || info->raycast.wall == 2)

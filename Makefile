@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/02/22 18:16:32 by nhill             #+#    #+#              #
-#    Updated: 2023/07/19 20:46:11 by mbin-nas         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME = cub3D
 
 SRCS = utils.c sprite.c save.c read_map.c re_errors.c raycasting.c position.c path.c parse_map.c init.c header.c get_next_line.c get_data.c \
