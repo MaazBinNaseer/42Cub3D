@@ -6,14 +6,14 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 21:18:16 by nhill             #+#    #+#             */
-/*   Updated: 2023/07/27 16:24:37 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/08/01 13:55:32 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "minilibx_opengl_20191021/mlx.h"
+# include "minilibx_opengl/mlx.h"
 # include <math.h>
 # include <stdio.h>
 # include <stdlib.h>

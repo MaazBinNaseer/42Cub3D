@@ -7,14 +7,14 @@ OBJS	= ${SRCS:.c=.o}
 
 LIBFT	= libft/libft.a
 
-MINILIBX= minilibx_opengl_20191021/libmlx.a
+MINILIBX= minilibx_opengl/libmlx.a
 
 CFLAGS	=	-Wall -Werror -Wextra
 
 %.o: %.c	gcc $(CFLAGS) -o $@ -c $<
 
 $(NAME):	${OBJS}
-			make -C minilibx_opengl_20191021
+			make -C minilibx_opengl
 			make -C libft
 			make bonus -C libft
 			gcc -framework OpenGL -framework AppKit -g -o $(NAME) $(OBJS) $(LIBFT) $(MINILIBX)
@@ -27,7 +27,7 @@ clean:
 
 fclean:		clean
 			rm -f ${NAME} cub.bmp
-			make clean -C minilibx_opengl_20191021
+			make clean -C minilibx_opengl
 			make fclean -C libft
 
 re:			fclean all

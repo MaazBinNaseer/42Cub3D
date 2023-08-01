@@ -1,9 +1,9 @@
 R  1920 1080
-SO ./textures/walls/9.xpm
-NO  ./textures/walls/110.xpm
-WE ./textures/walls/112.xpm
-EA ./textures/walls/188.xpm
-S ./textures/sprites/20.xpm
+SO ./textures/walls/WOLF3D/redbrick.xpm
+NO ./textures/walls/WOLF3D/eagle.xpm
+WE ./textures/walls/WOLF3D/greystone.xpm
+EA ./textures/walls/WOLF3D/mossy.xpm
+S ./textures/sprites/18.xpm
 F 100, 100, 100
 C 170, 170, 210
 
