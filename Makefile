@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: smuhamma <smuhamma@student.42abudhabi.ae>  +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/08/02 14:21:58 by smuhamma          #+#    #+#              #
+#    Updated: 2023/08/02 14:21:59 by smuhamma         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = cub3D
 
 SRCS = utils.c sprite.c save.c read_map.c re_errors.c raycasting.c position.c path.c parse_map.c init.c header.c get_next_line.c get_data.c \
