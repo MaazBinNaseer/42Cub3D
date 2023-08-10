@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   re_errors.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smuhamma <smuhamma@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:22:52 by smuhamma          #+#    #+#             */
-/*   Updated: 2023/08/02 14:22:53 by smuhamma         ###   ########.fr       */
+/*   Updated: 2023/08/10 19:42:54 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		deal_exit(t_info *info)
+int	deal_exit(t_info *info)
 {
 	free_tab(info);
 	free_img(info);
@@ -28,7 +28,7 @@ int		deal_exit(t_info *info)
 	exit(0);
 }
 
-int		re_errors(int error, t_info *info)
+int	re_errors(int error, t_info *info)
 {
 	if (error == INVALID_ARG)
 		perror("Error\nInvalid argument passed to cub3d");
@@ -52,9 +52,9 @@ int		re_errors(int error, t_info *info)
 	return (error);
 }
 
-int		check_resolut(t_info *info, char ***tab)
+int	check_resolut(t_info *info, char ***tab)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (!ft_isdigit(info->data.r[i]))
@@ -63,9 +63,11 @@ int		check_resolut(t_info *info, char ***tab)
 			return (WRONG_INPUT);
 		i++;
 	}
-	if ((info->error = look_for_alpha(info->data.r, i)) != SUCCESS)
+	info->error = look_for_alpha(info->data.r, i);
+	if (info->error != SUCCESS)
 		return (info->error);
-	if (!(*tab = ft_split(info->data.r + i, ' ')))
+	*tab = ft_split(info->data.r + i, ' ');
+	if (!(*tab))
 		return (MALLOC_FAIL);
 	return (SUCCESS);
 }
