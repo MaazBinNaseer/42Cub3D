@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smuhamma <smuhamma@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 13:41:34 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/07/26 13:41:35 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/08/10 19:49:08 by smuhamma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int			my_check_rc(t_info *info)
+int	my_check_rc(t_info *info)
 {
 	if (info->map.tab_map[info->raycast.rmap.y][info->raycast.rmap.x] != '0' &&
 		info->map.tab_map[info->raycast.rmap.y][info->raycast.rmap.x] != '2' &&
@@ -24,7 +24,7 @@ int			my_check_rc(t_info *info)
 	return (0);
 }
 
-int			tab_size(char **tab)
+int	tab_size(char **tab)
 {
 	int		i;
 
@@ -34,16 +34,19 @@ int			tab_size(char **tab)
 	return (i);
 }
 
-t_img		*fn_new_image(t_info *info, int width, int height)
+t_img	*fn_new_image(t_info *info, int width, int height)
 {
-	t_img *img;
+	t_img	*img;
 
-	if (!(img = malloc(sizeof(t_img))))
+	img = malloc(sizeof(t_img));
+	if (!img)
 		return (NULL);
-	if (!(img->img_ptr = mlx_new_image(info->mlx_ptr, width, height)))
+	img->img_ptr = mlx_new_image(info->mlx_ptr, width, height);
+	if (!img->img_ptr)
 		return (NULL);
-	if (!(img->img_data = (int *)mlx_get_data_addr(img->img_ptr, &img->bpp,
-		&img->size_line, &img->endian)))
+	img->img_data = (int *)mlx_get_data_addr(img->img_ptr, &img->bpp,
+			&img->size_line, &img->endian);
+	if (!img->img_data)
 		return (NULL);
 	img->width = width;
 	img->height = height;
@@ -52,20 +55,23 @@ t_img		*fn_new_image(t_info *info, int width, int height)
 
 t_textur	*fn_new_textur(t_info *info, char *file)
 {
-	t_textur *textur;
+	t_textur	*textur;
 
-	if (!(textur = malloc(sizeof(t_textur))))
+	textur = malloc(sizeof(t_textur));
+	if (!textur)
 		return (NULL);
-	if (!(textur->textur_ptr = mlx_xpm_file_to_image(info->mlx_ptr, file,
-		&textur->width, &textur->height)))
+	textur->textur_ptr = mlx_xpm_file_to_image(info->mlx_ptr, file,
+			&textur->width, &textur->height);
+	if (!textur->textur_ptr)
 		return (NULL);
-	if (!(textur->textur_data = (int *)mlx_get_data_addr(textur->textur_ptr,
-		&textur->bpp, &textur->size_line, &textur->endian)))
+	textur->textur_data = (int *)mlx_get_data_addr(textur->textur_ptr,
+			&textur->bpp, &textur->size_line, &textur->endian);
+	if (!textur->textur_data)
 		return (NULL);
 	return (textur);
 }
 
-int			look_for_alpha(char *s, int i)
+int	look_for_alpha(char *s, int i)
 {
 	while (s[i])
 	{
