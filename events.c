@@ -6,13 +6,13 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 13:41:45 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/07/27 16:24:37 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/08/10 16:19:03 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int		key_hit(int key, t_info *info)
+static int	key_hit(int key, t_info *info)
 {
 	if (key == KEY_UP || key == KEY_W)
 		info->move.up = 1;
@@ -31,7 +31,7 @@ static int		key_hit(int key, t_info *info)
 	return (SUCCESS);
 }
 
-static int		key_release(int key, t_info *info)
+static int	key_release(int key, t_info *info)
 {
 	if (key == KEY_UP || key == KEY_W)
 		info->move.up = 0;
@@ -48,10 +48,11 @@ static int		key_release(int key, t_info *info)
 	return (SUCCESS);
 }
 
-static int		fn_run(t_info *info)
+static int	fn_run(t_info *info)
 {
 	free_img(info);
-	if ((info->img = fn_new_image(info, info->width, info->height)) == NULL)
+	info->img = fn_new_image(info, info->width, info->height);
+	if (info->img == NULL)
 		return (IMG_FAIL);
 	player_move(info);
 	fn_display_screen(info);
@@ -60,15 +61,17 @@ static int		fn_run(t_info *info)
 	return (SUCCESS);
 }
 
-int				events(t_info *info)
+int	events(t_info *info)
 {
-	if (!(info->win_ptr = mlx_new_window(info->mlx_ptr, info->width,
-	info->height, "Cub3D")))
+	info->win_ptr = mlx_new_window(info->mlx_ptr, info->width,
+			info->height, "Cub3D");
+	if (!info->win_ptr)
 		return (MLX_FAIL);
 	mlx_hook(info->win_ptr, 17, STRUCTURENOTIFYMASK, deal_exit, info);
 	mlx_hook(info->win_ptr, KEYPRESS, KEYPRESSMASK, key_hit, info);
 	mlx_hook(info->win_ptr, KEYRELEASE, KEYRELEASEMASK, key_release, info);
-	if ((info->error = mlx_loop_hook(info->mlx_ptr, fn_run, info)) != SUCCESS)
+	info->error = mlx_loop_hook(info->mlx_ptr, fn_run, info);
+	if (info->error != SUCCESS)
 		return (info->error);
 	mlx_loop(info->mlx_ptr);
 	return (SUCCESS);
