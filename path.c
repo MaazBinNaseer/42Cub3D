@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:22:28 by smuhamma          #+#    #+#             */
-/*   Updated: 2023/08/10 18:54:15 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/08/10 19:11:49 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	check_text_path(t_info *info)
 	return (SUCCESS);
 }
 
-static int	get_start_path(char *s)
+int	get_start_path(char *s)
 {
 	int		i;
 
@@ -53,13 +53,13 @@ static int	get_start_path(char *s)
 	return (i);
 }
 
-static void	fn_free_path(char *s)
+void	fn_free_path(char *s)
 {
 	free(s);
 	s = NULL;
 }
 
-int	path_fix_textures(t_info *info)
+int	path_fix_textures2(t_info *info)
 {
 	int		i;
 
@@ -71,21 +71,14 @@ int	path_fix_textures(t_info *info)
 		return (MALLOC_FAIL);
 	fn_free_path(info->data.n);
 	i = get_start_path(info->data.s);
-	if (!(info->data.so = ft_strtrim(info->data.s + i, " ")))
+	info->data.so = ft_strtrim(info->data.s + i, " ");
+	if (!(info->data.so))
 		return (MALLOC_FAIL);
 	fn_free_path(info->data.s);
 	i = get_start_path(info->data.w);
-	if (!(info->data.we = ft_strtrim(info->data.w + i, " ")))
+	info->data.we = ft_strtrim(info->data.w + i, " ");
+	if (!(info->data.we))
 		return (MALLOC_FAIL);
 	fn_free_path(info->data.w);
-	i = get_start_path(info->data.e);
-	if (!(info->data.ea = ft_strtrim(info->data.e + i, " ")))
-		return (MALLOC_FAIL);
-	fn_free_path(info->data.e);
-	i = get_start_path(info->data.sp);
-	if (!(info->data.spr = ft_strtrim(info->data.sp + i, " ")))
-		return (MALLOC_FAIL);
-	fn_free_path(info->data.sp);
 	return (SUCCESS);
 }
-

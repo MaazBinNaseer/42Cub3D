@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 21:18:16 by nhill             #+#    #+#             */
-/*   Updated: 2023/08/10 18:37:26 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/08/10 19:23:59 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,10 +258,14 @@ void				free_tab(t_info *info);
 void				ft_tabdel(void **tab);
 void				free_textur(t_info *info, t_textur *textur);
 void				free_img(t_info *info);
+int					path_fix_textures2(t_info *info);
+int					get_start_path(char *s);
 void				player_move(t_info *info);
 int					events(t_info *info);
 void				put_pixel(t_img *img, unsigned int colour, int p_x,
 						int p_y);
+void				fn_free_path(char *s);
+void				if_and_elseforest(t_info *info);
 int					closed_map(t_info *info);
 int					init_var2(t_info *info, char *s);
 int					my_check_rc(t_info *info);

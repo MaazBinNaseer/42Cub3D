@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   position.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smuhamma <smuhamma@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:22:33 by smuhamma          #+#    #+#             */
-/*   Updated: 2023/08/02 14:22:34 by smuhamma         ###   ########.fr       */
+/*   Updated: 2023/08/10 19:14:16 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int		init_pos(t_info *info)
+static int	init_pos(t_info *info)
 {
 	if (info->map.player == 'N')
 	{
@@ -37,13 +37,16 @@ static int		init_pos(t_info *info)
 	return (SUCCESS);
 }
 
-int				init_info_pos(t_info *info)
+int	init_info_pos(t_info *info)
 {
-	if (!(info->mlx_ptr = mlx_init()))
+	info->mlx_ptr = mlx_init();
+	if (!info->mlx_ptr)
 		return (MLX_FAIL);
-	if ((info->img = fn_new_image(info, info->width, info->height)) == NULL)
+	info->img = fn_new_image(info, info->width, info->height);
+	if (info->img == NULL)
 		return (IMG_FAIL);
-	if ((info->error = init_pos(info)) != SUCCESS)
+	info->error = init_pos(info);
+	if (info->error != SUCCESS)
 		return (info->error);
 	return (SUCCESS);
 }
