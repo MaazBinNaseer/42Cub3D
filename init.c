@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smuhamma <smuhamma@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:21:48 by smuhamma          #+#    #+#             */
-/*   Updated: 2023/08/10 18:39:24 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/08/10 20:20:54 by smuhamma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,12 @@ static int	get_resolution(t_info *info)
 
 int	init_var2(t_info *info, char *s)
 {
+	int	i[2];
+
+	i[0] = 0;
+	i[1] = 0;
 	info->raycast.speed = 0.05;
-	info->error = get_map(info, s);
+	info->error = get_map(info, s, i);
 	if (info->error != SUCCESS)
 		return (info->error);
 	info->error = parse_map(info);

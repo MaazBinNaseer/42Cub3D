@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smuhamma <smuhamma@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 21:18:16 by nhill             #+#    #+#             */
-/*   Updated: 2023/08/10 19:23:59 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/08/10 20:22:24 by smuhamma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,7 +231,7 @@ t_img				*fn_new_image(t_info *info, int width, int height);
 t_textur			*fn_new_textur(t_info *info, char *file);
 int					init_sprite(t_info *info);
 int					launch_save(t_info *info);
-int					get_map(t_info *info, char *file);
+int					get_map(t_info *info, char *file, int *i);
 int					deal_exit(t_info *info);
 int					re_errors(int error, t_info *info);
 void				wall_textur(t_info *info);
@@ -272,5 +272,6 @@ int					my_check_rc(t_info *info);
 int					check_resolut(t_info *info, char ***tab);
 void				check_resolut2(t_info *info);
 void				get_resolut2(char **tab, t_info *info);
+void				ft_info_map_val(t_info *info, int i);
 
 #endif

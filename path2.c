@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smuhamma <smuhamma@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 19:07:50 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/08/10 19:23:39 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/08/10 20:22:12 by smuhamma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,10 @@ void	if_and_elseforest(t_info *info)
 		info->raycast.textur.id = 2;
 	else
 		info->raycast.textur.id = 3;
+}
+
+void	ft_info_map_val(t_info *info, int i)
+{
+	info->map.tab_map[i] = 0;
+	info->map.kol_line = i;
 }

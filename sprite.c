@@ -6,17 +6,17 @@
 /*   By: smuhamma <smuhamma@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 13:40:19 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/08/02 14:23:20 by smuhamma         ###   ########.fr       */
+/*   Updated: 2023/08/10 19:52:33 by smuhamma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void		place_sprite(t_info *info)
+static void	place_sprite(t_info *info)
 {
-	int x;
-	int y;
-	int i;
+	int	x;
+	int	y;
+	int	i;
 
 	i = 0;
 	y = 0;
@@ -37,7 +37,7 @@ static void		place_sprite(t_info *info)
 	}
 }
 
-static void		sort_sprite(int *order, double *dist, int num)
+static void	sort_sprite(int *order, double *dist, int num)
 {
 	int		i;
 	int		temp;
@@ -61,7 +61,7 @@ static void		sort_sprite(int *order, double *dist, int num)
 	}
 }
 
-static void		order_sprite(t_info *info)
+static void	order_sprite(t_info *info)
 {
 	int		i;
 
@@ -69,23 +69,28 @@ static void		order_sprite(t_info *info)
 	while (i < info->kol_sprite)
 	{
 		info->raycast.sp_order[i] = i;
-		info->raycast.sp_distance[i] = ((info->pos.x - info->tab_sprite[i].pos_x) *
-			(info->pos.x - info->tab_sprite[i].pos_x) +
-			(info->pos.y - info->tab_sprite[i].pos_y) *
+		info->raycast.sp_distance[i] = ((info->pos.x - \
+			info->tab_sprite[i].pos_x) * \
+			(info->pos.x - info->tab_sprite[i].pos_x) + \
+			(info->pos.y - info->tab_sprite[i].pos_y) * \
 			(info->pos.y - info->tab_sprite[i].pos_y));
 		i++;
 	}
-	sort_sprite(info->raycast.sp_order, info->raycast.sp_distance, info->kol_sprite);
+	sort_sprite(info->raycast.sp_order, info->raycast.sp_distance,
+		info->kol_sprite);
 	add_sprite(info);
 }
 
-int				init_sprite(t_info *info)
+int	init_sprite(t_info *info)
 {
-	if (!(info->tab_sprite = malloc(sizeof(t_sprite) * info->kol_sprite)))
+	info->tab_sprite = malloc(sizeof(t_sprite) * info->kol_sprite);
+	if (!info->tab_sprite)
 		return (MALLOC_FAIL);
-	if (!(info->raycast.sp_order = malloc(sizeof(int) * info->kol_sprite)))
+	info->raycast.sp_order = malloc(sizeof(int) * info->kol_sprite);
+	if (!info->raycast.sp_order)
 		return (MALLOC_FAIL);
-	if (!(info->raycast.sp_distance = malloc(sizeof(double) * info->kol_sprite)))
+	info->raycast.sp_distance = malloc(sizeof(double) * info->kol_sprite);
+	if (!info->raycast.sp_distance)
 		return (MALLOC_FAIL);
 	place_sprite(info);
 	order_sprite(info);
