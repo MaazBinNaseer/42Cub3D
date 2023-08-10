@@ -6,15 +6,13 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 13:39:51 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/08/10 12:35:37 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/08/10 16:11:00 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-
-
-void		put_pixel(t_img *img, unsigned int colour, int p_x, int p_y)
+void	put_pixel(t_img *img, unsigned int colour, int p_x, int p_y)
 {
 	if (p_y >= img->height || p_x >= img->width || p_x < 0 || p_y < 0)
 		return ;
@@ -23,7 +21,7 @@ void		put_pixel(t_img *img, unsigned int colour, int p_x, int p_y)
 
 static int	display_col(t_info *info, int x)
 {
-	int	y;
+	int		y;
 
 	y = 0;
 	while (y < info->raycast.wstart)
@@ -41,7 +39,7 @@ static int	display_col(t_info *info, int x)
 	return (SUCCESS);
 }
 
-int			fn_display_screen(t_info *info)
+int	fn_display_screen(t_info *info)
 {
 	int	x;
 
@@ -53,11 +51,13 @@ int			fn_display_screen(t_info *info)
 		hit_ray(info);
 		size_ray(info);
 		wall_textur(info);
-		if ((info->error = display_col(info, x++)))
+		info->error = display_col(info, x++);
+		if (info->error != SUCCESS)
 			return (info->error);
 		info->raycast.zbuffer[x] = info->raycast.dist;
 	}
-	if ((info->error = init_sprite(info)))
+	info->error = init_sprite(info);
+	if (info->error != SUCCESS)
 		return (info->error);
 	return (SUCCESS);
 }

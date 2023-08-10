@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 13:37:39 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/08/10 12:43:37 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/08/10 16:05:34 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	get_colour(t_colour *colour, char *s)
 		i++;
 	if (look_for_alpha(s, i) != SUCCESS)
 		return (WRONG_INPUT);
-	tab = ft_split(s + i, ';');
+	tab = ft_split(s + i, ',');
 	if (!tab)
 		return (MALLOC_FAIL);
 	if (check_colour(tab) == WRONG_INPUT)
