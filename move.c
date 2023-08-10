@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:06:56 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/07/27 17:35:31 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/08/10 18:48:26 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,19 @@ static void	up_down(t_info *info)
 {
 	if (info->move.up == 1)
 	{
-		if (info->map.tab_map[(int)(info->pos.y)][(int)(info->pos.x +
+		if (info->map.tab_map[(int)(info->pos.y)][(int)(info->pos.x + \
 		info->raycast.dir.x * info->raycast.speed)] == '0')
 			info->pos.x += info->raycast.dir.x * info->raycast.speed;
-		if (info->map.tab_map[(int)(info->pos.y + info->raycast.dir.y *
+		if (info->map.tab_map[(int)(info->pos.y + info->raycast.dir.y * \
 			info->raycast.speed)][(int)(info->pos.x)] == '0')
 			info->pos.y += info->raycast.dir.y * info->raycast.speed;
 	}
 	if (info->move.down == 1)
 	{
-		if (info->map.tab_map[(int)(info->pos.y)][(int)(info->pos.x -
+		if (info->map.tab_map[(int)(info->pos.y)][(int)(info->pos.x - \
 		info->raycast.dir.x * info->raycast.speed)] == '0')
 			info->pos.x -= info->raycast.dir.x * info->raycast.speed;
-		if (info->map.tab_map[(int)(info->pos.y - info->raycast.dir.y *
+		if (info->map.tab_map[(int)(info->pos.y - info->raycast.dir.y * \
 			info->raycast.speed)][(int)(info->pos.x)] == '0')
 			info->pos.y -= info->raycast.dir.y * info->raycast.speed;
 	}
@@ -67,8 +67,8 @@ static void	move_left_right(t_info *info)
 {
 	if (info->move.move_right == 1)
 	{
-		if (info->map.tab_map[(int)(info->pos.y - info->raycast.dir.x *
-			info->raycast.speed)][(int)(info->pos.x)] == '0')
+		if (info->map.tab_map[(int)(info->pos.y - info->raycast.dir.x * \
+				info->raycast.speed)][(int)(info->pos.x)] == '0')
 			info->pos.y -= info->raycast.dir.x * info->raycast.speed;
 		if (info->map.tab_map[(int)(info->pos.y)][(int)(info->pos.x
 			+ info->raycast.dir.y * info->raycast.speed)] == '0')
@@ -76,7 +76,7 @@ static void	move_left_right(t_info *info)
 	}
 	if (info->move.move_left == 1)
 	{
-		if (info->map.tab_map[(int)(info->pos.y + info->raycast.dir.x *
+		if (info->map.tab_map[(int)(info->pos.y + info->raycast.dir.x * \
 			info->raycast.speed)][(int)(info->pos.x)] == '0')
 			info->pos.y -= -info->raycast.dir.x * info->raycast.speed;
 		if (info->map.tab_map[(int)(info->pos.y)][(int)(info->pos.x -
@@ -90,7 +90,7 @@ static void	move_left_right(t_info *info)
 ? @param t_info_*info
 . @return Returns the movement of the player
 */
-void		player_move(t_info *info)
+void	player_move(t_info *info)
 {
 	if (info->move.up == 1 || info->move.down == 1)
 		up_down(info);

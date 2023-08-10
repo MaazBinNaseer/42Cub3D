@@ -6,15 +6,15 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:22:28 by smuhamma          #+#    #+#             */
-/*   Updated: 2023/08/07 13:39:45 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/08/10 18:54:15 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int		check_text(char *s)
+static int	check_text(char *s)
 {
-	int i;
+	int		i;
 
 	i = 0;
 	while (ft_isalpha(s[i]))
@@ -28,7 +28,7 @@ static int		check_text(char *s)
 	return (SUCCESS);
 }
 
-static int		check_text_path(t_info *info)
+static int	check_text_path(t_info *info)
 {
 	if (check_text(info->data.n) == WRONG_INPUT)
 		return (WRONG_INPUT);
@@ -43,9 +43,9 @@ static int		check_text_path(t_info *info)
 	return (SUCCESS);
 }
 
-static int		get_start_path(char *s)
+static int	get_start_path(char *s)
 {
-	int i;
+	int		i;
 
 	i = 0;
 	while (s[i] != '.')
@@ -53,20 +53,21 @@ static int		get_start_path(char *s)
 	return (i);
 }
 
-static void		fn_free_path(char *s)
+static void	fn_free_path(char *s)
 {
 	free(s);
 	s = NULL;
 }
 
-int				path_fix_textures(t_info *info)
+int	path_fix_textures(t_info *info)
 {
-	int i;
+	int		i;
 
 	if (check_text_path(info) == WRONG_INPUT)
 		return (WRONG_INPUT);
 	i = get_start_path(info->data.n);
-	if (!(info->data.no = ft_strtrim(info->data.n + i, " ")))
+	info->data.no = ft_strtrim(info->data.n + i, " ");
+	if (!(info->data.no))
 		return (MALLOC_FAIL);
 	fn_free_path(info->data.n);
 	i = get_start_path(info->data.s);

@@ -6,15 +6,15 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:22:21 by smuhamma          #+#    #+#             */
-/*   Updated: 2023/08/02 14:50:08 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/08/10 18:52:08 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void		pos_from_map(t_info *info, int i, int j)
+static void	pos_from_map(t_info *info, int i, int j)
 {
-	if (info->map.flag_n == 0 && (info->map.tab_map[i][j] == 'N' ||
+	if (info->map.flag_n == 0 && (info->map.tab_map[i][j] == 'N' || \
 		info->map.tab_map[i][j] == 'S' || info->map.tab_map[i][j] == 'E'
 		|| info->map.tab_map[i][j] == 'W'))
 	{
@@ -28,25 +28,25 @@ static void		pos_from_map(t_info *info, int i, int j)
 		info->kol_sprite++;
 }
 
-static int		wrong_char(t_info *info, int i, int j)
+static int	wrong_char(t_info *info, int i, int j)
 {
-	if (!(info->map.tab_map[i][j] == '1' || info->map.tab_map[i][j] == '0' ||
-		info->map.tab_map[i][j] == '2' || info->map.tab_map[i][j] == 'N' ||
-		info->map.tab_map[i][j] == 'S' || info->map.tab_map[i][j] == 'E' ||
+	if (!(info->map.tab_map[i][j] == '1' || info->map.tab_map[i][j] == '0' || \
+		info->map.tab_map[i][j] == '2' || info->map.tab_map[i][j] == 'N' || \
+		info->map.tab_map[i][j] == 'S' || info->map.tab_map[i][j] == 'E' || \
 		info->map.tab_map[i][j] == 'W' || info->map.tab_map[i][j] == ' '))
 		return (WRONG_MAP);
 	if (info->map.flag_n == 1 && (info->map.tab_map[i][j] == 'N'
-		|| info->map.tab_map[i][j] == 'S' || info->map.tab_map[i][j] == 'E' ||
+		|| info->map.tab_map[i][j] == 'S' || info->map.tab_map[i][j] == 'E' || \
 		info->map.tab_map[i][j] == 'W'))
 		return (WRONG_MAP);
 	return (SUCCESS);
 }
 
-static int		loop(t_info *info)
+static int	loop(t_info *info)
 {
-	int i;
-	int j;
-	int k;
+	int		i;
+	int		j;
+	int		k;
 
 	i = 1;
 	j = 1;
@@ -57,7 +57,8 @@ static int		loop(t_info *info)
 		j = 1;
 		while (info->map.tab_map[i][j])
 		{
-			if ((info->error = wrong_char(info, i, j)) != SUCCESS)
+			info->error = wrong_char(info, i, j);
+			if (info->error != SUCCESS)
 				return (info->error);
 			pos_from_map(info, i, j);
 			j++;
@@ -68,13 +69,15 @@ static int		loop(t_info *info)
 	return (SUCCESS);
 }
 
-int				parse_map(t_info *info)
+int	parse_map(t_info *info)
 {
-	if ((info->error = closed_map(info)) != SUCCESS)
+	info->error = closed_map(info);
+	if (info->error != SUCCESS)
 		return (info->error);
-	info->map.k_total = ft_strlen(info->map.tab_map[0]) +
+	info->map.k_total = ft_strlen(info->map.tab_map[0]) + \
 		ft_strlen(info->map.tab_map[info->map.kol_line - 1]);
-	if ((info->error = loop(info)) != SUCCESS)
+	info->error = loop(info);
+	if (info->error != SUCCESS)
 		return (info->error);
 	if (info->map.flag_n == 0)
 		return (WRONG_MAP);

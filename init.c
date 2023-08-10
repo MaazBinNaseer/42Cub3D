@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smuhamma <smuhamma@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:21:48 by smuhamma          #+#    #+#             */
-/*   Updated: 2023/08/02 14:21:50 by smuhamma         ###   ########.fr       */
+/*   Updated: 2023/08/10 18:39:24 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int				init_save(t_info *info, int argc, char *s)
+int	init_save(t_info *info, int argc, char *s)
 {
 	if (argc == 3 && (ft_strncmp(s, "--save", ft_strlen(s)) == 0))
 		info->flag_save = 1;
@@ -21,25 +21,10 @@ int				init_save(t_info *info, int argc, char *s)
 	return (SUCCESS);
 }
 
-static int		init_texture(t_info *info)
+static int	check_tab2(char *tab)
 {
-	if ((info->textur1 = fn_new_textur(info, info->data.no)) == NULL)
-		return (WRONG_TEXTURE);
-	if ((info->textur2 = fn_new_textur(info, info->data.so)) == NULL)
-		return (WRONG_TEXTURE);
-	if ((info->textur3 = fn_new_textur(info, info->data.we)) == NULL)
-		return (WRONG_TEXTURE);
-	if ((info->textur4 = fn_new_textur(info, info->data.ea)) == NULL)
-		return (WRONG_TEXTURE);
-	if ((info->sprite = fn_new_textur(info, info->data.spr)) == NULL)
-		return (WRONG_TEXTURE);
-	return (SUCCESS);
-}
-
-static int		check_tab2(char *tab)
-{
-	int i;
-	int size;
+	int		i;
+	int		size;
 
 	i = 0;
 	size = ft_strlen(tab);
@@ -52,13 +37,14 @@ static int		check_tab2(char *tab)
 	return (1);
 }
 
-static int		get_resolution(t_info *info)
+static int	get_resolution(t_info *info)
 {
 	char	**tab;
 	int		l;
 
 	l = -1;
-	if ((info->error = check_resolut(info, &tab)) != SUCCESS)
+	info->error = check_resolut(info, &tab);
+	if (info->error != SUCCESS)
 		return (info->error);
 	if (tab_size(tab) == 2)
 	{
@@ -66,10 +52,7 @@ static int		get_resolution(t_info *info)
 			if (!check_tab2(tab[l]))
 				return (WRONG_INPUT);
 		if (tab[0])
-			{
-				info->width = ft_atoi(tab[0]);
-				printf("info->width: %f\n", info->width);
-			}
+			info->width = ft_atoi(tab[0]);
 		if (tab[1])
 			info->height = ft_atoi(tab[1]);
 	}
@@ -82,26 +65,26 @@ static int		get_resolution(t_info *info)
 	return (SUCCESS);
 }
 
-int				init_var(t_info *info, char *s)
+int	init_var2(t_info *info, char *s)
 {
 	info->raycast.speed = 0.05;
-	if ((info->error = get_map(info, s)) != SUCCESS)
+	info->error = get_map(info, s);
+	if (info->error != SUCCESS)
 		return (info->error);
-	if ((info->error = parse_map(info)) != SUCCESS)
+	info->error = parse_map(info);
+	if (info->error != SUCCESS)
 		return (info->error);
-	if ((info->error = get_colour(&info->colour_floor,
-		info->data.f)) != SUCCESS)
+	info->error = get_colour(&info->colour_floor, info->data.f);
+	if (info->error != SUCCESS)
 		return (info->error);
-	if ((info->error = get_colour(&info->colour_ceiling,
-		info->data.c)) != SUCCESS)
+	info->error = get_colour(&info->colour_ceiling, info->data.c);
+	if (info->error != SUCCESS)
 		return (info->error);
-	if ((info->error = get_resolution(info)) != SUCCESS)
+	info->error = get_resolution(info);
+	if (info->error != SUCCESS)
 		return (info->error);
-	if ((info->error = init_info_pos(info)) != SUCCESS)
-		return (info->error);
-	if (!(info->raycast.zbuffer = malloc(sizeof(double) * info->width)))
-		return (MALLOC_FAIL);
-	if ((info->error = init_texture(info)) != SUCCESS)
+	info->error = init_info_pos(info);
+	if (info->error != SUCCESS)
 		return (info->error);
 	return (SUCCESS);
 }

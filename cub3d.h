@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 21:18:16 by nhill             #+#    #+#             */
-/*   Updated: 2023/08/07 13:39:45 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/08/10 18:37:26 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,6 +263,7 @@ int					events(t_info *info);
 void				put_pixel(t_img *img, unsigned int colour, int p_x,
 						int p_y);
 int					closed_map(t_info *info);
+int					init_var2(t_info *info, char *s);
 int					my_check_rc(t_info *info);
 int					check_resolut(t_info *info, char ***tab);
 void				check_resolut2(t_info *info);
