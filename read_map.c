@@ -6,7 +6,7 @@
 /*   By: smuhamma <smuhamma@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:22:58 by smuhamma          #+#    #+#             */
-/*   Updated: 2023/08/10 20:22:05 by smuhamma         ###   ########.fr       */
+/*   Updated: 2023/08/10 20:48:03 by smuhamma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int	fn_read(t_info *info, int fd)
 	i[2] = 0;
 	while (i[1] != 0)
 	{
-		i[1] = get_next_line_new(fd, &line);
+		i[1] = get_next_line_new(fd, &line, 1);
 		i[0] = 0;
 		while ((line[i[0]] == ' ' || line[i[0]] == '\t') && line[i[0]])
 			i[0]++;

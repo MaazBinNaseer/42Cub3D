@@ -6,7 +6,7 @@
 /*   By: smuhamma <smuhamma@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 21:18:16 by nhill             #+#    #+#             */
-/*   Updated: 2023/08/10 20:22:24 by smuhamma         ###   ########.fr       */
+/*   Updated: 2023/08/10 20:48:30 by smuhamma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,7 +224,7 @@ typedef struct s_info
 	int				error;
 }					t_info;
 
-int					get_next_line_new(int fd, char **line);
+int					get_next_line_new(int fd, char **line, int bytes);
 int					tab_size(char **tab);
 char				*ft_strdup_without_space(const char *s);
 t_img				*fn_new_image(t_info *info, int width, int height);

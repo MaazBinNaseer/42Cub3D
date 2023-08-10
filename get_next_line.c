@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smuhamma <smuhamma@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:21:36 by smuhamma          #+#    #+#             */
-/*   Updated: 2023/08/10 20:06:00 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/08/10 20:48:20 by smuhamma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,25 +51,52 @@ static void	get_line_create(char **str, char **line)
 	}
 }
 
-int	get_next_line_new(int fd, char **line)
+// char	*new_cont(char *str, int *bytes, int fd)
+// {
+// 	char			*buf;
+
+// 	buf = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+// 	if (!buf)
+// 		return (NULL);
+// 	while (!(ft_strchr(str, '\n')))
+// 	{
+// 		*bytes = read(fd, buf, BUFFER_SIZE);
+// 		if (*bytes <= 0) 
+// 			break ;
+// 		str = get_str_fill(*bytes, str, buf);
+// 		return (str);
+// 	}
+// 	free(buf);
+// 	return (str);
+// }
+int	new_cont(char **str, char **line, int bytes)
 {
-	int				bytes;
-	char			*buf;
 	char			*str_temp;
+
+	str_temp = *str;
+	get_line_create(str, line);
+	free(str_temp);
+	if (!bytes && (!*str))
+		return (get_mem_free(str, 0));
+	return (1);
+}
+
+int	get_next_line_new(int fd, char **line, int bytes)
+{
+	char			*buf;
+	char			*str_temp;				
 	static char		*str;
 
-	bytes = 1;
-	if (BUFFER_SIZE <= 0 || fd < 0 || !(line) ||
-			(!str && !(str = ft_strdup(""))))
+	if (!str)
+		str = ft_strdup("");
+	if (BUFFER_SIZE <= 0 || fd < 0 || !(line) || (!str))
 		return (-1);
-	buf = (char*)malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (!buf)
-		return (-1);
+	buf = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	while (!(ft_strchr(str, '\n')))
 	{
 		bytes = read(fd, buf, BUFFER_SIZE);
 		if (bytes <= 0) 
-			break;
+			break ;
 		str = get_str_fill(bytes, str, buf);
 	}
 	free(buf);
