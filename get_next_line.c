@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:21:36 by smuhamma          #+#    #+#             */
-/*   Updated: 2023/08/10 16:36:38 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/08/10 20:06:00 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,19 @@ int	get_next_line_new(int fd, char **line)
 	static char		*str;
 
 	bytes = 1;
-	// str = ft_strdup("");
 	if (BUFFER_SIZE <= 0 || fd < 0 || !(line) ||
 			(!str && !(str = ft_strdup(""))))
 		return (-1);
 	buf = (char*)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buf)
 		return (-1);
-	// bytes = read(fd, buf, BUFFER_SIZE);
-	while (!(ft_strchr(str, '\n')) && (bytes = read(fd, buf, BUFFER_SIZE)) > 0)
+	while (!(ft_strchr(str, '\n')))
+	{
+		bytes = read(fd, buf, BUFFER_SIZE);
+		if (bytes <= 0) 
+			break;
 		str = get_str_fill(bytes, str, buf);
+	}
 	free(buf);
 	if (bytes < 0 || !str)
 		return (get_mem_free(&str, -1));
