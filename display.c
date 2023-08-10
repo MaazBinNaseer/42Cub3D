@@ -6,11 +6,13 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 13:39:51 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/07/26 13:39:55 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/08/10 12:35:37 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+
 
 void		put_pixel(t_img *img, unsigned int colour, int p_x, int p_y)
 {
