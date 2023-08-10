@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 13:37:39 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/07/26 13:37:40 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/08/10 13:10:35 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 static void	pixel_textur(t_textur *textur, t_info *info)
 {
-	info->colour = textur->textur_data[64 *
-	info->raycast.textur.y + info->raycast.textur.x];
+	info->colour = textur->textur_data[64 * info->raycast.textur.y 
+		+ info->raycast.textur.x];
 }
 
-void		pixel_colour(t_info *info)
+void	pixel_colour(t_info *info)
 {
 	if (info->raycast.textur.id == 0)
 		pixel_textur(info->textur3, info);
@@ -32,8 +32,8 @@ void		pixel_colour(t_info *info)
 
 static int	check_tab(char *tab)
 {
-	int i;
-	int size;
+	int		i;
+	int		size;
 
 	i = 0;
 	size = ft_strlen(tab);
@@ -52,10 +52,10 @@ static int	check_tab(char *tab)
 
 static int	check_colour(char **tab)
 {
-	int r;
-	int g;
-	int b;
-	int i;
+	int		r;
+	int		g;
+	int		b;
+	int		i;
 
 	i = -1;
 	if (tab_size(tab) == 3)
@@ -79,7 +79,7 @@ static int	check_colour(char **tab)
 	return (SUCCESS);
 }
 
-int			get_colour(t_colour *colour, char *s)
+int	get_colour(t_colour *colour, char *s)
 {
 	int		i;
 	char	**tab;
@@ -89,7 +89,8 @@ int			get_colour(t_colour *colour, char *s)
 		i++;
 	if (look_for_alpha(s, i) != SUCCESS)
 		return (WRONG_INPUT);
-	if (!(tab = ft_split(s + i, ',')))
+	tab = ft_split(s + i, ',');
+	if (!tab)
 		return (MALLOC_FAIL);
 	if (check_colour(tab) == WRONG_INPUT)
 		return (WRONG_INPUT);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smuhamma <smuhamma@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:22:28 by smuhamma          #+#    #+#             */
-/*   Updated: 2023/08/02 14:22:29 by smuhamma         ###   ########.fr       */
+/*   Updated: 2023/08/07 13:39:45 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void		fn_free_path(char *s)
 	s = NULL;
 }
 
-int				path_fix(t_info *info)
+int				path_fix_textures(t_info *info)
 {
 	int i;
 

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_data.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smuhamma <smuhamma@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:21:21 by smuhamma          #+#    #+#             */
-/*   Updated: 2023/08/02 14:21:24 by smuhamma         ###   ########.fr       */
+/*   Updated: 2023/08/10 13:46:53 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int		get_data_part4(t_info *info, char *line, int i, int *flag_map)
+static int	get_data_part4(t_info *info, char *line, int i, int *flag_map)
 {
 	if (line[i] == 'F' && line[i + 1] == ' ' && *flag_map == 0 &&
 		info->data.f == NULL)
@@ -39,6 +39,7 @@ static int		get_data_part4(t_info *info, char *line, int i, int *flag_map)
 		return (WRONG_INPUT);
 	return (SUCCESS);
 }
+
 
 static	int		get_data_part3(t_info *info, char *line, int i, int *flag_map)
 {

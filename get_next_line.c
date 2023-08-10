@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smuhamma <smuhamma@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:21:36 by smuhamma          #+#    #+#             */
-/*   Updated: 2023/08/02 14:21:42 by smuhamma         ###   ########.fr       */
+/*   Updated: 2023/08/10 14:13:15 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static	int		get_mem_free(char **str, int exit)
+static	int	get_mem_free(char **str, int exit)
 {
 	if (str && *str)
 	{
@@ -22,7 +22,7 @@ static	int		get_mem_free(char **str, int exit)
 	return (exit);
 }
 
-static char		*get_str_fill(int bytes, char *str, char *buf)
+static char	*get_str_fill(int bytes, char *str, char *buf)
 {
 	char	*str_temp;
 
@@ -34,14 +34,15 @@ static char		*get_str_fill(int bytes, char *str, char *buf)
 	return (str);
 }
 
-static void		get_line_create(char **str, char **line)
+static void	get_line_create(char **str, char **line)
 {
-	char	*n;
+	char	*new_line;
 
-	if ((n = ft_strchr(*str, '\n')))
+	new_line = ft_strchr(*str, '\n');
+	if (new_line)
 	{
-		*line = ft_substr(*str, 0, n - *str);
-		*str = ft_strdup(n + 1);
+		*line = ft_substr(*str, 0, new_line - *str);
+		*str = ft_strdup(new_line + 1);
 	}
 	else
 	{
@@ -50,7 +51,7 @@ static void		get_line_create(char **str, char **line)
 	}
 }
 
-int				get_next_line_new(int fd, char **line)
+int	get_next_line_new(int fd, char **line)
 {
 	int				bytes;
 	char			*buf;
@@ -58,12 +59,14 @@ int				get_next_line_new(int fd, char **line)
 	static char		*str;
 
 	bytes = 1;
-	if (BUFFER_SIZE <= 0 || fd < 0 || !(line) ||
-			(!str && !(str = ft_strdup(""))))
+	str = ft_strdup("");
+	if (BUFFER_SIZE <= 0 || fd < 0 || !(line) || !str)
 		return (-1);
-	if (!(buf = (char*)malloc((BUFFER_SIZE + 1) * sizeof(char))))
+	buf = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!buf || buf == NULL)
 		return (-1);
-	while (!(ft_strchr(str, '\n')) && (bytes = read(fd, buf, BUFFER_SIZE)) > 0)
+	bytes = read(fd, buf, BUFFER_SIZE);
+	while (!(ft_strchr(str, '\n')) && (bytes > 0))
 		str = get_str_fill(bytes, str, buf);
 	free(buf);
 	if (bytes < 0 || !str)

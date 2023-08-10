@@ -6,13 +6,13 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 13:37:35 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/07/26 13:37:36 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/08/10 12:39:09 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int		check_rgb(char *s, int i)
+static int	check_rgb(char *s, int i)
 {
 	i++;
 	while ((ft_isdigit(s[i]) != 1))
@@ -24,17 +24,17 @@ static int		check_rgb(char *s, int i)
 	return (SUCCESS);
 }
 
-static int		check_data_c(t_info *info)
+static int	check_data_c(t_info *info)
 {
-	int i;
-	int fl;
+	int		i;
+	int		fl;
 
 	i = 1;
 	fl = 0;
 	while (info->data.c[i])
 	{
 		if (!ft_isdigit(info->data.c[i]) && (info->data.c[i] != ' ')
-		&& (info->data.c[i] != ','))
+			&& (info->data.c[i] != ','))
 			return (WRONG_INPUT);
 		if (ft_isdigit(info->data.c[i]))
 			fl = 1;
@@ -50,17 +50,17 @@ static int		check_data_c(t_info *info)
 	return (SUCCESS);
 }
 
-static int		check_data_f(t_info *info)
+static int	check_data_f(t_info *info)
 {
-	int i;
-	int fl;
+	int		i;
+	int		fl;
 
 	i = 1;
 	fl = 0;
 	while (info->data.f[i])
 	{
-		if (!ft_isdigit(info->data.f[i]) &&
-		(info->data.f[i] != ' ') && (info->data.f[i] != ','))
+		if (!ft_isdigit(info->data.f[i]) 
+			&& (info->data.f[i] != ' ') && (info->data.f[i] != ','))
 			return (WRONG_INPUT);
 		if (ft_isdigit(info->data.f[i]))
 			fl = 1;
@@ -78,13 +78,13 @@ static int		check_data_f(t_info *info)
 	return (SUCCESS);
 }
 
-int				check_data(t_info *info)
+int	check_data(t_info *info)
 {
-	int i;
+	int		i;
 
-	if (!info->data.r || !info->data.n || !info->data.s || !info->data.w ||
-		!info->data.e || !info->data.sp || !info->data.f || !info->data.c ||
-		!info->map.list)
+	if (!info->data.r || !info->data.n || !info->data.s || !info->data.w 
+		|| !info->data.e || !info->data.sp || !info->data.f || !info->data.c 
+		|| !info->map.list)
 		return (WRONG_INPUT);
 	i = 1;
 	while (info->data.r[i])

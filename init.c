@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smuhamma <smuhamma@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:21:48 by smuhamma          #+#    #+#             */
-/*   Updated: 2023/08/02 14:21:50 by smuhamma         ###   ########.fr       */
+/*   Updated: 2023/08/10 15:39:10 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int				init_save(t_info *info, int argc, char *s)
+int	init_save(t_info *info, int argc, char *s)
 {
 	if (argc == 3 && (ft_strncmp(s, "--save", ft_strlen(s)) == 0))
 		info->flag_save = 1;
@@ -21,7 +21,7 @@ int				init_save(t_info *info, int argc, char *s)
 	return (SUCCESS);
 }
 
-static int		init_texture(t_info *info)
+static int	init_texture(t_info *info)
 {
 	if ((info->textur1 = fn_new_textur(info, info->data.no)) == NULL)
 		return (WRONG_TEXTURE);

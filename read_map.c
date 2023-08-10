@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smuhamma <smuhamma@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:22:58 by smuhamma          #+#    #+#             */
-/*   Updated: 2023/08/02 14:23:00 by smuhamma         ###   ########.fr       */
+/*   Updated: 2023/08/07 13:39:45 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int		fn_read(t_info *info, int fd)
 	}
 	if ((info->error = check_data(info)) != SUCCESS)
 		return (info->error);
-	if ((info->error = path_fix(info)) != SUCCESS)
+	if ((info->error = path_fix_textures(info)) != SUCCESS)
 		return (info->error);
 	return (SUCCESS);
 }
