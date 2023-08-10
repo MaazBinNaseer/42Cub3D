@@ -6,13 +6,13 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:07:35 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/07/26 14:07:36 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/08/10 16:39:46 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void		set_in_char(unsigned char *start, int value)
+static void	set_in_char(unsigned char *start, int value)
 {
 	start[0] = (unsigned char)(value);
 	start[1] = (unsigned char)(value >> 8);
@@ -25,10 +25,10 @@ unsigned char	*create_file_header(t_info *info, int pad)
 	int						file_size;
 	int						bpp;
 	static unsigned char	file_header[14] = {
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 	bpp = BYTES_PER_PIX;
-	file_size = 54 + (bpp * ((int)info->width + pad) *
+	file_size = 54 + (bpp * ((int)info->width + pad) * \
 		(int)info->height);
 	file_header[0] = (unsigned char)('B');
 	file_header[1] = (unsigned char)('M');
@@ -39,9 +39,9 @@ unsigned char	*create_file_header(t_info *info, int pad)
 
 unsigned char	*create_img_header(int height, int width)
 {
-	static unsigned char img_header[40] = {
+	static unsigned char	img_header[40] = {
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 	set_in_char(img_header, 40);
 	set_in_char(img_header + 4, width);
@@ -51,7 +51,7 @@ unsigned char	*create_img_header(int height, int width)
 	return (img_header);
 }
 
-int				write_headers(t_save *save)
+int	write_headers(t_save *save)
 {
 	if ((write(save->fd, save->file_header, FILE_HEADER_SIZE)) < 0)
 	{

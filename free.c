@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 13:41:52 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/07/26 13:41:53 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/08/10 16:20:38 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	free_textur(t_info *info, t_textur *textur)
 
 void	ft_tabdel(void **tab)
 {
-	int i;
+	int		i;
 
 	i = 0;
 	if (tab)

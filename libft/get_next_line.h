@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 14:16:58 by mbin-nas          #+#    #+#             */
-/*   Updated: 2022/10/24 17:08:24 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/08/10 16:34:31 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 //Defining the buffer size
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 20
+#  define BUFFER_SIZE 1
 # endif
 
 //Helper functions
